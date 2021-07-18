@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
-var package = require('./package.json');
+var packageJson = require('./package.json');
 
 // variables
 var isProduction = process.argv.indexOf('-p') >= 0 || process.env.NODE_ENV === 'production';
@@ -131,9 +131,9 @@ module.exports = {
         head: `<script src="//cdn.polyfill.io/v3/polyfill.min.js"></script>`,
       },
       meta: {
-        title: package.name,
-        description: package.description,
-        keywords: Array.isArray(package.keywords) ? package.keywords.join(',') : undefined,
+        title: packageJson.name,
+        description: packageJson.description,
+        keywords: Array.isArray(packageJson.keywords) ? packageJson.keywords.join(',') : undefined,
       },
     }),
   ],
