@@ -9,7 +9,7 @@ export namespace HomeProps {
 export const Home = ({ history, location }: HomeProps.Props) => {
   return (
     <div>
-      Home <button className="p-3">Submit</button>
+      <div className="text-blue-400 p-3">Hello, World!</div>
     </div>
   );
 };

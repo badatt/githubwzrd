@@ -49,33 +49,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-          {
-            loader: 'css-loader',
-            query: {
-              sourceMap: !isProduction,
-              importLoaders: 1,
-              modules: {
-                localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
-              },
-            },
-          },
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: [
-                require('postcss-import')({ addDependencyTo: webpack }),
-                require('postcss-url')(),
-                require('postcss-preset-env')({
-                  /* use stage 2 features (defaults) */
-                  stage: 2,
-                }),
-                require('postcss-reporter')(),
-                require('postcss-browser-reporter')({
-                  disabled: isProduction,
-                }),
-              ],
+              plugins: function () {
+                return [require('tailwindcss')('./tailwind.config.js'), require('autoprefixer')];
+              },
             },
           },
         ],
