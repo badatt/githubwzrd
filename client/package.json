@@ -33,8 +33,7 @@
     "react-router": "^5.1.2",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
-    "redux-thunk": "^2.3.0",
-    "styled-components": "^5.3.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -75,6 +74,7 @@
     "react-hot-loader": "^4.12.18",
     "redux-devtools-extension": "^2.13.8",
     "style-loader": "^1.2.1",
+    "tailwind-styled-components": "^2.0.3",
     "tailwindcss": "^2.2.4",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
