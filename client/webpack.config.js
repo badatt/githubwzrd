@@ -54,20 +54,7 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: [
-                require('postcss-import')({ addDependencyTo: webpack }),
-                require('postcss-url')(),
-                require('postcss-preset-env')({
-                  /* use stage 2 features (defaults) */
-                  stage: 2,
-                }),
-                require('postcss-reporter')(),
-                require('postcss-browser-reporter')({
-                  disabled: isProduction,
-                }),
-                require('tailwindcss')('./tailwind.config.js'),
-                require('autoprefixer'),
-              ],
+              plugins: [require('tailwindcss')('./tailwind.config.js'), require('autoprefixer')],
             },
           },
         ],

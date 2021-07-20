@@ -9,7 +9,7 @@ export namespace HomeProps {
 export const Home = ({ history, location }: HomeProps.Props) => {
   return (
     <div>
-      <div className="text-blue-400 p-3">Hello, World!</div>
+      <div className="text-blue-400">This is the entry point for the application</div>
     </div>
   );
 };

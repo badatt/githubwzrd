@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './style.css';
+import 'app/styles/global.css';
 import { RouteComponentProps } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTodoActions } from 'app/actions';
@@ -8,13 +9,13 @@ import { TodoModel } from 'app/models';
 import { Header, TodoList, Footer } from 'app/components';
 
 const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
-  (key) => TodoModel.Filter[key]
+  (key) => TodoModel.Filter[key],
 );
 
 const FILTER_FUNCTIONS: Record<TodoModel.Filter, (todo: TodoModel) => boolean> = {
   [TodoModel.Filter.SHOW_ALL]: () => true,
   [TodoModel.Filter.SHOW_ACTIVE]: (todo) => !todo.completed,
-  [TodoModel.Filter.SHOW_COMPLETED]: (todo) => todo.completed
+  [TodoModel.Filter.SHOW_COMPLETED]: (todo) => todo.completed,
 };
 
 export namespace App {
@@ -28,7 +29,7 @@ export const App = ({ history, location }: App.Props) => {
     const hash = location?.hash?.replace('#', '');
     return {
       todos: state.todos,
-      filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL
+      filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL,
     };
   });
 
@@ -40,7 +41,7 @@ export const App = ({ history, location }: App.Props) => {
     (filter: TodoModel.Filter): void => {
       history.push(`#${filter}`);
     },
-    [history]
+    [history],
   );
 
   const filteredTodos = React.useMemo(() => (filter ? todos.filter(FILTER_FUNCTIONS[filter]) : todos), [todos, filter]);
