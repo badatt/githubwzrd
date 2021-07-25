@@ -1,0 +1,29 @@
+{
+  "name": "infra",
+  "version": "0.1.0",
+  "license": "MIT",
+  "bin": {
+    "infra": "bin/infra.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk-sbx": "cp cdk.sbx.json cdk.json && npx cdk deploy sbx-githubwzrd -c targetEnv=sbx --profile codetaut-sbx",
+    "cdk": "cp cdk.prd.json cdk.json && npx cdk deploy prd-githubwzrd -c targetEnv=prd --profile badatt-dev-prd"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "aws-cdk": "1.95.1",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-cognito": "1.95.1",
+    "@badatt/infra-lib": "0.0.5",
+    "source-map-support": "^0.5.16"
+  }
+}
