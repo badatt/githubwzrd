@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
 const jwkToPem = require('jwk-to-pem');
 const auth = require('./auth.js');
+const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
 const axios = require('axios');
 var config;
@@ -13,63 +14,61 @@ exports.handler = async (event, context, callback) => {
   if (typeof config == 'undefined') {
     config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
   }
-  await mainProcess(event, context, callback);
+  await mainProcess(event, callback);
 };
 
-async function mainProcess(event, context, callback) {
+async function mainProcess(event, callback) {
+  const req = cf(event);
+
   // Get request, request headers, and querystring dictionary
-  const request = event.Records[0].cf.request;
-  const headers = request.headers;
-  if (event.Records[0].cf.config.hasOwnProperty('test')) {
+  //const request = event.Records[0].cf.request;
+  //const headers = request.headers;
+  /* if (event.Records[0].cf.config.hasOwnProperty('test')) {
     config.AUTH_REQUEST.redirect_uri = event.Records[0].cf.config.test + config.CALLBACK_PATH;
     config.TOKEN_REQUEST.redirect_uri = event.Records[0].cf.config.test + config.CALLBACK_PATH;
-  }
-  if (request.uri.startsWith(config.CALLBACK_PATH)) {
-    await handleLoginCallback(event, callback);
-  } else if ('cookie' in headers && 'TOKEN' in cookie.parse(headers['cookie'][0].value)) {
+  } */
+
+  if (req.uri.startsWith(config.CALLBACK_PATH)) {
+    await handleLoginCallback(req, callback);
+  } else if (req.isTokenExist) {
     // Verify the JWT, the payload email, and that the email ends with configured hosted domain
-    jwt.verify(
-      cookie.parse(headers['cookie'][0].value).TOKEN,
-      config.PUBLIC_KEY.trim(),
-      { algorithms: ['RS256'] },
-      function (err, decoded) {
-        if (err) {
-          switch (err.name) {
-            case 'TokenExpiredError':
-              console.log('Token expired, redirecting to OIDC provider.');
-              redirectTo(request, headers, callback);
-              break;
-            case 'JsonWebTokenError':
-              console.log('JWT error, unauthorized.');
-              unauthorized(err.message, callback);
-              break;
-            default:
-              console.log('Unknown JWT error, unauthorized.');
-              unauthorized('Unauthorized. User ' + decoded.sub + ' is not permitted.', callback);
-          }
-        } else {
-          console.log('Authorizing user.');
-          auth.isAuthorized(decoded, request, callback, unauthorized, internalServerError, config);
+    jwt.verify(req.token, config.PUBLIC_KEY.trim(), { algorithms: ['RS256'] }, function (err, decoded) {
+      if (err) {
+        switch (err.name) {
+          case 'TokenExpiredError':
+            console.log('Token expired, redirecting to OIDC provider.');
+            redirectTo(req.uri, callback);
+            break;
+          case 'JsonWebTokenError':
+            console.log('JWT error, unauthorized.');
+            unauthorized(err.message, callback);
+            break;
+          default:
+            console.log('Unknown JWT error, unauthorized.');
+            unauthorized('Unauthorized. User ' + decoded.sub + ' is not permitted.', callback);
         }
-      },
-    );
+      } else {
+        console.log('Authorizing user.');
+        auth.isAuthorized(decoded, req.request, callback, unauthorized, internalServerError, config);
+      }
+    });
   } else {
     console.log('Redirecting to GitHub.');
-    redirectTo(request, headers, callback);
+    redirectTo(req.uri, callback);
   }
 }
 
-async function handleLoginCallback(event, callback) {
-  const request = event.Records[0].cf.request;
-  const headers = request.headers;
-  const queryDict = qs.parse(request.querystring);
+async function handleLoginCallback({ qp, host }, callback) {
+  //const request = event.Records[0].cf.request;
+  //const headers = request.headers;
+  //const queryDict = qs.parse(request.querystring);
   console.log('Callback from GitHub received');
   /** Verify code is in querystring */
-  if (!queryDict.code || !queryDict.state) {
+  if (!qp.code || !qp.state) {
     unauthorized('No code or state found.', callback);
   }
-  config.TOKEN_REQUEST.code = queryDict.code;
-  config.TOKEN_REQUEST.state = queryDict.state;
+  config.TOKEN_REQUEST.code = qp.code;
+  config.TOKEN_REQUEST.state = qp.state;
   /** Exchange code for authorization token */
   const postData = qs.stringify(config.TOKEN_REQUEST);
   console.log('Requesting access token.');
@@ -120,20 +119,14 @@ async function handleLoginCallback(event, callback) {
         },
         config.PRIVATE_KEY.trim(),
         {
-          audience: headers.host[0].value,
+          audience: host,
           subject: auth.getSubject(username),
           expiresIn: config.SESSION_DURATION,
           algorithm: 'RS256',
         }, // Options
       ),
     );
-    redirect(
-      event.Records[0].cf.config.hasOwnProperty('test')
-        ? config.AUTH_REQUEST.redirect_uri + queryDict.state
-        : queryDict.state,
-      [signedCookie],
-      callback,
-    );
+    redirect(qp.state, [signedCookie], callback);
   } else {
     console.log('User not a member of required ORG. Unauthorized.');
     unauthorized(
@@ -143,8 +136,8 @@ async function handleLoginCallback(event, callback) {
   }
 }
 
-function redirectTo(request, headers, callback) {
-  config.AUTH_REQUEST.state = request.uri;
+function redirectTo(uri, callback) {
+  config.AUTH_REQUEST.state = uri;
   // Redirect to Authorization Server
   var querystring = qs.stringify(config.AUTH_REQUEST);
   redirect(
