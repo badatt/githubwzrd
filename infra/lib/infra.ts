@@ -7,6 +7,7 @@ import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cd
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 import { Code, Runtime } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
+import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { Effect, PolicyStatement } from '@aws-cdk/aws-iam';
 
 export class InfraStack extends BaseStack {
@@ -80,6 +81,34 @@ export class InfraStack extends BaseStack {
     */
 
     /**
+     * Dynamodb table storage
+     */
+
+    const userTable = new Table(this, 'UserTable', {
+      tableName: 'UserTable',
+      partitionKey: {
+        name: 'id',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'org',
+        type: AttributeType.STRING,
+      },
+    });
+
+    const userSessionTable = new Table(this, 'UserSessionTable', {
+      tableName: 'UserSessionTable',
+      partitionKey: {
+        name: 'id',
+        type: AttributeType.STRING,
+      },
+      sortKey: {
+        name: 'org',
+        type: AttributeType.STRING,
+      },
+    });
+
+    /**
      * Deploying web application
      */
 
@@ -94,6 +123,9 @@ export class InfraStack extends BaseStack {
         removalPolicy: RemovalPolicy.RETAIN,
       },
     });
+
+    userTable.grantReadWriteData(cloudfrontHttpRedirectLambda);
+    userSessionTable.grantReadWriteData(cloudfrontHttpRedirectLambda);
 
     const lambdaPolicy = new PolicyStatement({
       effect: Effect.ALLOW,
