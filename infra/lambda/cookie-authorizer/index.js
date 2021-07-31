@@ -3,14 +3,18 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
 const jwkToPem = require('jwk-to-pem');
+const axios = require('axios');
 const auth = require('./auth.js');
 const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
-const axios = require('axios');
+const { getSecretValue } = require('./aws.js');
+
 var config;
 
 exports.handler = async (event, context, callback) => {
   console.log(JSON.stringify(event));
+  const clientCreds = getSecretValue('GithubwzrdOauthAppCreds');
+  console.log(clientCreds);
   if (typeof config == 'undefined') {
     config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
   }
