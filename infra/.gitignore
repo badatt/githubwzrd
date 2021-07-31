@@ -10,3 +10,4 @@ cdk.context.json
 
 .yalc/
 yalc.lock
+!lambda/**/*.js

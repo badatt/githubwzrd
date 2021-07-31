@@ -1,19 +1,13 @@
 import { BaseStack, HostedZone, Certificate } from '@badatt/infra-lib/build/dist';
-import { StackProps, Construct, SecretValue } from '@aws-cdk/core';
-import { DnsValidatedCertificate, CertificateValidation } from '@aws-cdk/aws-certificatemanager';
-import { UserPool, UserPoolClientIdentityProvider, UserPoolDomain } from '@aws-cdk/aws-cognito';
+import { StackProps, Construct, SecretValue, Duration, PhysicalName, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
-import { UserPoolDomainTarget } from '@aws-cdk/aws-route53-targets';
-import { UserPoolIdentityProviderGithub } from './user-pool-identity-provider-github';
-
-// Parameters
-//const userPoolDomainName = "https://auth.domain.com";
-//const callbackUrls = ["https://www.domain.com"];
-//const logoutUrls = ["https://www.domain.com"];
-//const githubClientId = 'githubClientId';
-//const githubClientSecret = 'githubClientSecret';
-
-// Based on https://github.com/scenario-labs/cdk-user-pool-identity-provider-github
+import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
+import { Bucket, BlockPublicAccess, BucketAccessControl } from '@aws-cdk/aws-s3';
+import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
+import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
+import { Code, Runtime } from '@aws-cdk/aws-lambda';
+import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
+import { Effect, PolicyStatement } from '@aws-cdk/aws-iam';
 
 export class InfraStack extends BaseStack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -21,6 +15,12 @@ export class InfraStack extends BaseStack {
 
     const targetEnv = scope.node.tryGetContext('targetEnv');
     const rootDomain = scope.node.tryGetContext('rootDomain');
+
+    const hostedZone = new HostedZone(this, 'HostedZone', {
+      domainName: rootDomain,
+    });
+
+    /*
     const clientId = SecretValue.secretsManager('Githubwzrd', {
       jsonField: 'ClientId',
     });
@@ -35,10 +35,6 @@ export class InfraStack extends BaseStack {
       callbackUrls.push('http://localhost:3000');
       logoutUrls.push('http://localhost:3000');
     }
-
-    const hostedZone = new HostedZone(this, 'HostedZone', {
-      domainName: rootDomain,
-    });
 
     const userPoolDomainCertificate = new Certificate(this, 'UserPoolDomainCertificate', {
       domainName: userPoolDomainName,
@@ -63,7 +59,6 @@ export class InfraStack extends BaseStack {
       target: RecordTarget.fromAlias(new UserPoolDomainTarget(userPoolDomain)),
     });
 
-    // Github identity provider
     const userPoolIdentityProviderGithub = new UserPoolIdentityProviderGithub(this, 'UserPoolIdentityProviderGithub', {
       userPool,
       clientId: clientId.toString(),
@@ -71,7 +66,6 @@ export class InfraStack extends BaseStack {
       cognitoHostedUiDomain: `https://${userPoolDomainName}`,
     });
 
-    // User pool client
     const userPoolClient = userPool.addClient('UserPoolClient', {
       oAuth: {
         callbackUrls,
@@ -83,5 +77,81 @@ export class InfraStack extends BaseStack {
       ],
     });
     userPoolClient.node.addDependency(userPoolIdentityProviderGithub);
+    */
+
+    /**
+     * Deploying web application
+     */
+
+    const cloudfrontHttpRedirectLambda = new EdgeFunction(this, 'CloudfrontHttpRedirectLambda', {
+      functionName: PhysicalName.GENERATE_IF_NEEDED,
+      runtime: Runtime.NODEJS_12_X,
+      handler: 'index.handler',
+      description: `${rootDomain} cloudfront edge lambda`,
+      code: Code.fromAsset('lambda/cookie-authorizer'),
+      timeout: Duration.seconds(5),
+      currentVersionOptions: {
+        removalPolicy: RemovalPolicy.RETAIN,
+      },
+    });
+
+    const lambdaPolicy = new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ['secretsmanager:GetSecretValue', 'cloudfront:ListKeyGroups'],
+      resources: ['*'],
+    });
+
+    cloudfrontHttpRedirectLambda.addToRolePolicy(lambdaPolicy);
+
+    const webApplicationCertificate = new Certificate(this, 'WebApplicationCertificate', {
+      domainName: rootDomain,
+      hostedZone: hostedZone.zone,
+      validate: true,
+    });
+
+    const webDeploymentBucket = new Bucket(this, 'AppDeploymentBucket', {
+      bucketName: rootDomain,
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+    });
+
+    const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity', {
+      comment: `OAI for ${rootDomain}`,
+    });
+
+    const s3Origin = new S3Origin(webDeploymentBucket, {
+      originAccessIdentity: originAccessIdentity,
+    });
+
+    const cloudfrontS3Access = new PolicyStatement({
+      actions: ['s3:GetBucket*', 's3:GetObject*', 's3:List*'],
+      resources: [webDeploymentBucket.bucketArn, `${webDeploymentBucket.bucketArn}/*`],
+    });
+
+    cloudfrontS3Access.addCanonicalUserPrincipal(originAccessIdentity.cloudFrontOriginAccessIdentityS3CanonicalUserId);
+
+    webDeploymentBucket.addToResourcePolicy(cloudfrontS3Access);
+
+    const distribution = new Distribution(this, 'CloudfrontWebDistribution', {
+      defaultBehavior: {
+        origin: s3Origin,
+        edgeLambdas: [
+          {
+            eventType: LambdaEdgeEventType.VIEWER_REQUEST,
+            functionVersion: cloudfrontHttpRedirectLambda.currentVersion,
+          },
+        ],
+      },
+      certificate: webApplicationCertificate.certificate,
+      domainNames: [rootDomain],
+      comment: `${rootDomain} web app`,
+      defaultRootObject: 'index.html',
+    });
+
+    new ARecord(this, 'CloudfrontWebDistributionAliasRecord', {
+      zone: hostedZone.zone,
+      recordName: rootDomain,
+      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+    });
   }
 }
