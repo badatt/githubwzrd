@@ -20,14 +20,6 @@ exports.handler = async (event, context, callback) => {
 async function mainProcess(event, callback) {
   const req = cf(event);
 
-  // Get request, request headers, and querystring dictionary
-  //const request = event.Records[0].cf.request;
-  //const headers = request.headers;
-  /* if (event.Records[0].cf.config.hasOwnProperty('test')) {
-    config.AUTH_REQUEST.redirect_uri = event.Records[0].cf.config.test + config.CALLBACK_PATH;
-    config.TOKEN_REQUEST.redirect_uri = event.Records[0].cf.config.test + config.CALLBACK_PATH;
-  } */
-
   if (req.uri.startsWith(config.CALLBACK_PATH)) {
     await handleLoginCallback(req, callback);
   } else if (req.isTokenExist) {
@@ -59,9 +51,6 @@ async function mainProcess(event, callback) {
 }
 
 async function handleLoginCallback({ qp, host }, callback) {
-  //const request = event.Records[0].cf.request;
-  //const headers = request.headers;
-  //const queryDict = qs.parse(request.querystring);
   console.log('Callback from GitHub received');
   /** Verify code is in querystring */
   if (!qp.code || !qp.state) {
