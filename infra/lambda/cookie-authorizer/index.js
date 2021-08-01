@@ -7,14 +7,12 @@ const axios = require('axios');
 const auth = require('./auth.js');
 const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
-const { getSecretValue } = require('./aws.js');
+const { getSecretValue, putItemInTable } = require('./aws.js');
 const { authConfig } = require('./config.js');
 
 var config;
 
 exports.handler = async (event, context, callback) => {
-  console.log(JSON.stringify(event));
-
   if (typeof config == 'undefined') {
     const oauthCreds = await getSecretValue('GithubwzrdOauthAppCreds');
     const cryptoKeys = await getSecretValue('GithubwzrdCookieAuthorizerCrypto');
@@ -52,30 +50,24 @@ async function mainProcess(event, callback) {
       if (err) {
         switch (err.name) {
           case 'TokenExpiredError':
-            console.log('Token expired, redirecting to OIDC provider.');
             redirectTo(req.uri, callback);
             break;
           case 'JsonWebTokenError':
-            console.log('JWT error, unauthorized.');
             unauthorized(err.message, callback);
             break;
           default:
-            console.log('Unknown JWT error, unauthorized.');
             unauthorized('Unauthorized. User ' + decoded.sub + ' is not permitted.', callback);
         }
       } else {
-        console.log('Authorizing user.');
         auth.isAuthorized(decoded, req.request, callback, unauthorized, internalServerError, config);
       }
     });
   } else {
-    console.log('Redirecting to GitHub.');
     redirectTo(req.uri, callback);
   }
 }
 
 async function handleLoginCallback({ qp, host }, callback) {
-  console.log('Callback from GitHub received');
   /** Verify code is in querystring */
   if (!qp.code || !qp.state) {
     unauthorized('No code or state found.', callback);
@@ -84,17 +76,15 @@ async function handleLoginCallback({ qp, host }, callback) {
   config.TOKEN_REQUEST.state = qp.state;
   /** Exchange code for authorization token */
   const postData = qs.stringify(config.TOKEN_REQUEST);
-  console.log('Requesting access token.');
   const tokenResponse = await axios.post(config.TOKEN_ENDPOINT, postData);
-  console.log(`Token resonse: ${tokenResponse.data}`);
   if (tokenResponse.error) {
     internalServerError(`Error getting token: ${tokenResponse}`, callback);
   }
-  var responseQueryString = qs.parse(tokenResponse.data);
-  if (responseQueryString.error) {
-    internalServerError(`Error while getting token: ${responseQueryString.error_description}`, callback);
+  var tokenResponseQs = qs.parse(tokenResponse.data);
+  if (tokenResponseQs.error) {
+    internalServerError(`Error while getting token: ${tokenResponseQs.error_description}`, callback);
   }
-  const authorization = responseQueryString.token_type + ' ' + responseQueryString.access_token;
+  const authorization = tokenResponseQs.token_type + ' ' + tokenResponseQs.access_token;
 
   const userResponse = await axios.get('https://api.github.com/user', { headers: { Authorization: authorization } });
 
@@ -102,7 +92,6 @@ async function handleLoginCallback({ qp, host }, callback) {
     internalServerError(`Error getting user: ${userResponse}`, callback);
   }
 
-  console.log(`User resonse: ${JSON.stringify(userResponse.data)}`);
   // Check if authenticated user's login is a member of given org
 
   if (!userResponse.data.hasOwnProperty('login')) {
@@ -110,7 +99,6 @@ async function handleLoginCallback({ qp, host }, callback) {
   }
   var username = userResponse.data.login;
   var orgsGet = 'https://api.github.com/orgs/' + config.ORGANIZATION + '/members/' + username;
-  console.log('Checking ORG membership.');
 
   const orgsResponse = await axios.get(orgsGet, { headers: { Authorization: authorization } });
 
@@ -118,10 +106,19 @@ async function handleLoginCallback({ qp, host }, callback) {
     internalServerError(`Error checking membership: ${orgsResponse}`, callback);
   }
 
-  console.log(`Org response: ${JSON.stringify(orgsResponse.data)}`);
   // Set cookie upon verified membership
   if (orgsResponse.status == 204) {
-    console.log('Setting cookie and redirecting.');
+    await putItemInTable('githubwzrd-user-session', {
+      Id: {
+        S: `${userResponse.data.id}`,
+      },
+      Org: {
+        S: config.ORGANIZATION,
+      },
+      GitToken: {
+        S: tokenResponseQs.access_token,
+      },
+    });
 
     const signedCookie = cookie.serialize(
       'TOKEN',
@@ -141,7 +138,6 @@ async function handleLoginCallback({ qp, host }, callback) {
     );
     redirect(qp.state, [signedCookie], callback);
   } else {
-    console.log('User not a member of required ORG. Unauthorized.');
     unauthorized(
       'Unauthorized. User ' + orgsResponse.data.login + ' is not a member of required organization.',
       callback,

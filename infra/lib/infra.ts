@@ -16,94 +16,36 @@ export class InfraStack extends BaseStack {
 
     const targetEnv = scope.node.tryGetContext('targetEnv');
     const rootDomain = scope.node.tryGetContext('rootDomain');
+    const project = scope.node.tryGetContext('project');
 
     const hostedZone = new HostedZone(this, 'HostedZone', {
       domainName: rootDomain,
     });
-
-    /*
-    const clientId = SecretValue.secretsManager('Githubwzrd', {
-      jsonField: 'ClientId',
-    });
-    const clientSecret = SecretValue.secretsManager('Githubwzrd', {
-      jsonField: 'ClientSecret',
-    });
-    const userPoolDomainName = `auth.${rootDomain}`;
-    const callbackUrls = [`https://${rootDomain}`];
-    const logoutUrls = [`https://${rootDomain}`];
-
-    if (targetEnv === 'sbx') {
-      callbackUrls.push('http://localhost:3000');
-      logoutUrls.push('http://localhost:3000');
-    }
-
-    const userPoolDomainCertificate = new Certificate(this, 'UserPoolDomainCertificate', {
-      domainName: userPoolDomainName,
-      hostedZone: hostedZone.zone,
-      validate: true,
-    });
-
-    // User pool
-    const userPool = new UserPool(this, 'UserPool');
-
-    // Hosted UI with custom domain
-    const userPoolDomain = userPool.addDomain('UserPoolCustomDomain', {
-      customDomain: {
-        certificate: userPoolDomainCertificate.certificate,
-        domainName: userPoolDomainName,
-      },
-    });
-
-    new ARecord(this, 'UserPoolCustomDomainAliasRecord', {
-      zone: hostedZone.zone,
-      recordName: userPoolDomainName,
-      target: RecordTarget.fromAlias(new UserPoolDomainTarget(userPoolDomain)),
-    });
-
-    const userPoolIdentityProviderGithub = new UserPoolIdentityProviderGithub(this, 'UserPoolIdentityProviderGithub', {
-      userPool,
-      clientId: clientId.toString(),
-      clientSecret: clientSecret.toString(),
-      cognitoHostedUiDomain: `https://${userPoolDomainName}`,
-    });
-
-    const userPoolClient = userPool.addClient('UserPoolClient', {
-      oAuth: {
-        callbackUrls,
-        logoutUrls,
-      },
-      supportedIdentityProviders: [
-        UserPoolClientIdentityProvider.COGNITO,
-        UserPoolClientIdentityProvider.custom('Github'),
-      ],
-    });
-    userPoolClient.node.addDependency(userPoolIdentityProviderGithub);
-    */
 
     /**
      * Dynamodb table storage
      */
 
     const userTable = new Table(this, 'UserTable', {
-      tableName: 'UserTable',
+      tableName: `${project}-user`,
       partitionKey: {
-        name: 'id',
+        name: 'Id',
         type: AttributeType.STRING,
       },
       sortKey: {
-        name: 'org',
+        name: 'Org',
         type: AttributeType.STRING,
       },
     });
 
     const userSessionTable = new Table(this, 'UserSessionTable', {
-      tableName: 'UserSessionTable',
+      tableName: `${project}-user-session`,
       partitionKey: {
-        name: 'id',
+        name: 'Id',
         type: AttributeType.STRING,
       },
       sortKey: {
-        name: 'org',
+        name: 'Org',
         type: AttributeType.STRING,
       },
     });
