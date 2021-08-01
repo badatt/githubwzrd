@@ -16,8 +16,8 @@ function cf(event) {
     method: request.method,
     qp: qs.parse(request.querystring),
     cookies: cookies,
-    isTokenExist: 'cookie' in headers && 'TOKEN' in cookies,
-    token: cookies.TOKEN,
+    isTokenExist: 'cookie' in headers && 'Token' in cookies,
+    token: cookies.Token,
   };
 }
 

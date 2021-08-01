@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie');
 const jwkToPem = require('jwk-to-pem');
 const axios = require('axios');
+const uuid = require('uuid');
 const auth = require('./auth.js');
 const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
@@ -44,6 +45,8 @@ async function mainProcess(event, callback) {
 
   if (req.uri.startsWith(config.CALLBACK_PATH)) {
     await handleLoginCallback(req, callback);
+  } else if (req.uri.startsWith('/logout')) {
+    redirectTo('/', callback);
   } else if (req.isTokenExist) {
     // Verify the JWT, the payload email, and that the email ends with configured hosted domain
     jwt.verify(req.token, config.PUBLIC_KEY.trim(), { algorithms: ['RS256'] }, function (err, decoded) {
@@ -121,7 +124,7 @@ async function handleLoginCallback({ qp, host }, callback) {
     });
 
     const signedCookie = cookie.serialize(
-      'TOKEN',
+      'Token',
       jwt.sign(
         {
           org: config.ORGANIZATION,
@@ -136,7 +139,7 @@ async function handleLoginCallback({ qp, host }, callback) {
         }, // Options
       ),
     );
-    redirect(qp.state, [signedCookie], callback);
+    redirect('/', [signedCookie], callback);
   } else {
     unauthorized(
       'Unauthorized. User ' + orgsResponse.data.login + ' is not a member of required organization.',
@@ -146,12 +149,12 @@ async function handleLoginCallback({ qp, host }, callback) {
 }
 
 function redirectTo(uri, callback) {
-  config.AUTH_REQUEST.state = uri;
+  config.AUTH_REQUEST.state = uuid.v4();
   // Redirect to Authorization Server
   var querystring = qs.stringify(config.AUTH_REQUEST);
   redirect(
     config.AUTHORIZATION_ENDPOINT + '?' + querystring,
-    [cookie.serialize('TOKEN', '', { path: '/', expires: new Date(1970, 1, 1, 0, 0, 0, 0) })],
+    [cookie.serialize('Token', '', { path: '/', expires: new Date(1970, 1, 1, 0, 0, 0, 0) })],
     callback,
   );
 }
