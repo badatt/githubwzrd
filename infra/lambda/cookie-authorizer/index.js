@@ -46,6 +46,7 @@ async function mainProcess(event, callback) {
   if (req.uri.startsWith(config.CALLBACK_PATH)) {
     await handleLoginCallback(req, callback);
   } else if (req.uri.startsWith('/logout')) {
+    // TODO revisit this later
     redirectTo('/', callback);
   } else if (req.isTokenExist) {
     // Verify the JWT, the payload email, and that the email ends with configured hosted domain
