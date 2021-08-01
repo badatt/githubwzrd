@@ -8,6 +8,7 @@ const auth = require('./auth.js');
 const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
 const { getSecretValue } = require('./aws.js');
+const { authConfig } = require('./config.js');
 
 var config;
 
@@ -20,19 +21,19 @@ exports.handler = async (event, context, callback) => {
     config = {
       AUTH_REQUEST: {
         client_id: oauthCreds.CLIENT_ID,
-        redirect_uri: 'https://sbx.githubwzrd.xyz/_callback',
-        scope: 'read:org user:email repo read:discussion',
+        redirect_uri: authConfig.callback_path,
+        scope: authConfig.scopes,
       },
       TOKEN_REQUEST: {
         client_id: oauthCreds.CLIENT_ID,
         client_secret: oauthCreds.CLIENT_SECRET,
-        redirect_uri: 'https://sbx.githubwzrd.xyz/_callback',
+        redirect_uri: authConfig.callback_path,
       },
       PRIVATE_KEY: Buffer.from(cryptoKeys.PRIVATE_KEY, 'base64').toString('utf-8'),
       PUBLIC_KEY: Buffer.from(cryptoKeys.PUBLIC_KEY, 'base64').toString('utf-8'),
-      SESSION_DURATION: 3600,
-      CALLBACK_PATH: '/_callback',
-      ORGANIZATION: 'messybun',
+      SESSION_DURATION: authConfig.session_duration,
+      CALLBACK_PATH: authConfig.callback_path,
+      ORGANIZATION: authConfig.organisation,
       AUTHORIZATION_ENDPOINT: 'https://github.com/login/oauth/authorize',
       TOKEN_ENDPOINT: 'https://github.com/login/oauth/access_token',
     };
