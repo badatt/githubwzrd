@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es6", "es7", "dom", "dom.iterable", "esnext"],
     "sourceMap": true,
     "target": "es5",
     "jsx": "react",
@@ -12,12 +13,19 @@
     "noUnusedLocals": true,
     "strict": true,
     "outDir": "build",
-    "lib": ["es6", "es7", "dom"],
     "baseUrl": "src",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "app/*": ["./app/*"]
-    },
-    "allowSyntheticDefaultImports": true
+    }
   },
-  "exclude": ["build", "node_modules"]
+  "exclude": ["build", "node_modules"],
+  "include": ["src"]
 }
