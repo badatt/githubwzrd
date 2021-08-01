@@ -21,13 +21,13 @@ exports.handler = async (event, context, callback) => {
     config = {
       AUTH_REQUEST: {
         client_id: oauthCreds.CLIENT_ID,
-        redirect_uri: authConfig.callback_path,
+        redirect_uri: authConfig.redirect_uri,
         scope: authConfig.scopes,
       },
       TOKEN_REQUEST: {
         client_id: oauthCreds.CLIENT_ID,
         client_secret: oauthCreds.CLIENT_SECRET,
-        redirect_uri: authConfig.callback_path,
+        redirect_uri: authConfig.redirect_uri,
       },
       PRIVATE_KEY: Buffer.from(cryptoKeys.PRIVATE_KEY, 'base64').toString('utf-8'),
       PUBLIC_KEY: Buffer.from(cryptoKeys.PUBLIC_KEY, 'base64').toString('utf-8'),
