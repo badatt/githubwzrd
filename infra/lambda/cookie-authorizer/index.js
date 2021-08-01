@@ -13,10 +13,29 @@ var config;
 
 exports.handler = async (event, context, callback) => {
   console.log(JSON.stringify(event));
-  const clientCreds = getSecretValue('GithubwzrdOauthAppCreds');
-  console.log(clientCreds);
+
   if (typeof config == 'undefined') {
-    config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+    const oauthCreds = await getSecretValue('GithubwzrdOauthAppCreds');
+    const cryptoKeys = await getSecretValue('GithubwzrdCookieAuthorizerCrypto');
+    config = {
+      AUTH_REQUEST: {
+        client_id: oauthCreds.CLIENT_ID,
+        redirect_uri: 'https://sbx.githubwzrd.xyz/_callback',
+        scope: 'read:org user:email repo read:discussion',
+      },
+      TOKEN_REQUEST: {
+        client_id: oauthCreds.CLIENT_ID,
+        client_secret: oauthCreds.CLIENT_SECRET,
+        redirect_uri: 'https://sbx.githubwzrd.xyz/_callback',
+      },
+      PRIVATE_KEY: Buffer.from(cryptoKeys.PRIVATE_KEY, 'base64').toString('utf-8'),
+      PUBLIC_KEY: Buffer.from(cryptoKeys.PUBLIC_KEY, 'base64').toString('utf-8'),
+      SESSION_DURATION: 3600,
+      CALLBACK_PATH: '/_callback',
+      ORGANIZATION: 'messybun',
+      AUTHORIZATION_ENDPOINT: 'https://github.com/login/oauth/authorize',
+      TOKEN_ENDPOINT: 'https://github.com/login/oauth/access_token',
+    };
   }
   await mainProcess(event, callback);
 };
