@@ -1,0 +1,33 @@
+{
+  "name": "@githubwzrd/api",
+  "version": "1.0.0",
+  "description": "ReST API for @githubwzrd/client, a personalized gihub productivity improver tool for organizations",
+  "main": "index.js",
+  "repository": "https://github.com/badatt/githubwzrd.git",
+  "author": "badatt <dev.badatt@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "aws-login": "sh ./scripts/generate-aws-creds.sh",
+    "dev": "nodemon ./src/index.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "3.24.0",
+    "@aws-sdk/client-secrets-manager": "3.24.0",
+    "@octokit/rest": "18.7.2",
+    "bluebird": "3.7.2",
+    "body-parser": "1.19.0",
+    "compression": "1.7.4",
+    "cors": "2.8.5",
+    "dotenv": "10.0.0",
+    "express": "4.17.1",
+    "helmet": "4.6.0",
+    "http-status": "1.5.0",
+    "passport": "0.4.1",
+    "passport-jwt": "4.0.0",
+    "serverless-http": "2.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.12"
+  }
+}
