@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "aws-login": "sh ./scripts/generate-aws-creds.sh",
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./server.js"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.24.0",

@@ -4,10 +4,10 @@ const compress = require('compression');
 const cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
-const routes = require('../api/routes/v1');
+const routes = require('../routes');
 const strategies = require('./passport');
 
-const error = require('../api/middlewares/error');
+const error = require('../middlewares/error');
 
 /**
  * Express instance
@@ -32,8 +32,7 @@ app.use(cors());
 app.use(passport.initialize());
 passport.use('jwt', strategies.jwt);
 
-// mount api v1 routes
-app.use('/v1', routes);
+app.use('/', routes);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);

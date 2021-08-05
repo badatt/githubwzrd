@@ -5,10 +5,12 @@ import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
 import { Bucket, BlockPublicAccess, BucketAccessControl } from '@aws-cdk/aws-s3';
 import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
-import { Code, Runtime } from '@aws-cdk/aws-lambda';
+import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { Effect, PolicyStatement } from '@aws-cdk/aws-iam';
+import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations';
+import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2';
 
 export class InfraStack extends BaseStack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -38,18 +40,6 @@ export class InfraStack extends BaseStack {
       },
     });
 
-    const userSessionTable = new Table(this, 'UserSessionTable', {
-      tableName: `${project}-user-session`,
-      partitionKey: {
-        name: 'Id',
-        type: AttributeType.STRING,
-      },
-      sortKey: {
-        name: 'Org',
-        type: AttributeType.STRING,
-      },
-    });
-
     /**
      * Deploying web application
      */
@@ -67,7 +57,6 @@ export class InfraStack extends BaseStack {
     });
 
     userTable.grantReadWriteData(cloudfrontHttpRedirectLambda);
-    userSessionTable.grantReadWriteData(cloudfrontHttpRedirectLambda);
 
     const lambdaPolicy = new PolicyStatement({
       effect: Effect.ALLOW,
@@ -127,5 +116,38 @@ export class InfraStack extends BaseStack {
       recordName: rootDomain,
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     });
+    this.api();
   }
+
+  api = () => {
+    const helloLambda = new Function(this, 'HelloLambda', {
+      functionName: `hello`,
+      code: Code.fromAsset('../api'),
+      runtime: Runtime.NODEJS_14_X,
+      handler: 'index.handler',
+      environment: {
+        USER_TABLE: 'githubwzrd-user',
+        JWT_SECRET: '{{resolve:secretsmanager:GithubwzrdCookieAuthorizerCrypto:SecretString:PUBLIC_KEY}}',
+        NODE_ENV: 'sbx',
+      },
+    });
+    const lambdaPolicy = new PolicyStatement({
+      effect: Effect.ALLOW,
+      actions: ['secretsmanager:GetSecretValue', 'cloudfront:ListKeyGroups', 'dynamodb:*'],
+      resources: ['*'],
+    });
+
+    helloLambda.addToRolePolicy(lambdaPolicy);
+    const helloLambdaIntegration = new LambdaProxyIntegration({
+      handler: helloLambda,
+    });
+
+    const httpApi = new HttpApi(this, 'HelloApi');
+
+    httpApi.addRoutes({
+      path: '/hello',
+      methods: [HttpMethod.ANY],
+      integration: helloLambdaIntegration,
+    });
+  };
 }

@@ -2,7 +2,6 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const { publicDecrypt } = require('crypto');
 const { jwtSecret, userSessionTable } = require('./vars');
-const logger = require('../config/logger');
 
 const jwtOptions = {
   secretOrKey: Buffer.from(jwtSecret, 'base64').toString('utf-8'),
