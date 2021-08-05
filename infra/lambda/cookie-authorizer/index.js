@@ -5,10 +5,11 @@ const cookie = require('cookie');
 const jwkToPem = require('jwk-to-pem');
 const axios = require('axios');
 const uuid = require('uuid');
+const { privateEncrypt } = require('crypto');
 const auth = require('./auth.js');
 const { cf } = require('./request');
 const { unauthorized, internalServerError, redirect } = require('./response.js');
-const { getSecretValue, putItemInTable } = require('./aws.js');
+const { getSecretValue } = require('./aws.js');
 const { authConfig } = require('./config.js');
 
 var config;
@@ -112,24 +113,19 @@ async function handleLoginCallback({ qp, host }, callback) {
 
   // Set cookie upon verified membership
   if (orgsResponse.status == 204) {
-    await putItemInTable('githubwzrd-user-session', {
-      Id: {
-        S: `${userResponse.data.id}`,
-      },
-      Org: {
-        S: config.ORGANIZATION,
-      },
-      GitToken: {
-        S: tokenResponseQs.access_token,
-      },
-    });
+    const payload = {
+      org: config.ORGANIZATION,
+      userId: userResponse.data.id,
+      gitToken: tokenResponseQs.access_token,
+    };
+
+    const encryptedPayload = privateEncrypt(config.PRIVATE_KEY.trim(), Buffer.from(JSON.stringify(payload)));
 
     const signedCookie = cookie.serialize(
       'Token',
       jwt.sign(
         {
-          org: config.ORGANIZATION,
-          userId: userResponse.data.id,
+          payload: encryptedPayload.toString('base64'),
         },
         config.PRIVATE_KEY.trim(),
         {

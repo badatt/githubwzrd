@@ -15,7 +15,7 @@ exports.getSecretValue = async function (secretName) {
   }
 };
 
-exports.getUserSession = async function (tableName, userId, org) {
+exports.getUserItem = async function (tableName, userId, org) {
   const client = new DynamoDBClient({ region: 'us-east-1' });
   const params = {
     Key: {
