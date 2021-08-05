@@ -1,5 +1,5 @@
 const express = require('express');
-const helloRoutes = require('./hello.route');
+const repoRoutes = require('./repo.route');
 
 const router = express.Router();
 
@@ -13,6 +13,6 @@ router.get('/status', (req, res) => res.send('OK'));
  */
 router.use('/docs', express.static('docs'));
 
-router.use('/hello', helloRoutes);
+router.use('/repos', repoRoutes);
 
 module.exports = router;

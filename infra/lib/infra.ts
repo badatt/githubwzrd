@@ -44,19 +44,19 @@ export class InfraStack extends BaseStack {
      * Deploying web application
      */
 
-    const cloudfrontHttpRedirectLambda = new EdgeFunction(this, 'CloudfrontHttpRedirectLambda', {
-      functionName: PhysicalName.GENERATE_IF_NEEDED,
+    const webAuthLambda = new EdgeFunction(this, 'WebAuthLambda', {
+      functionName: `${project}-web-auth`,
       runtime: Runtime.NODEJS_12_X,
       handler: 'index.handler',
       description: `${rootDomain} cloudfront edge lambda`,
       code: Code.fromAsset('lambda/cookie-authorizer'),
       timeout: Duration.seconds(5),
       currentVersionOptions: {
-        removalPolicy: RemovalPolicy.RETAIN,
+        removalPolicy: RemovalPolicy.DESTROY,
       },
     });
 
-    userTable.grantReadWriteData(cloudfrontHttpRedirectLambda);
+    userTable.grantReadWriteData(webAuthLambda);
 
     const lambdaPolicy = new PolicyStatement({
       effect: Effect.ALLOW,
@@ -64,7 +64,7 @@ export class InfraStack extends BaseStack {
       resources: ['*'],
     });
 
-    cloudfrontHttpRedirectLambda.addToRolePolicy(lambdaPolicy);
+    webAuthLambda.addToRolePolicy(lambdaPolicy);
 
     const webApplicationCertificate = new Certificate(this, 'WebApplicationCertificate', {
       domainName: rootDomain,
@@ -101,7 +101,7 @@ export class InfraStack extends BaseStack {
         edgeLambdas: [
           {
             eventType: LambdaEdgeEventType.VIEWER_REQUEST,
-            functionVersion: cloudfrontHttpRedirectLambda.currentVersion,
+            functionVersion: webAuthLambda.currentVersion,
           },
         ],
       },
@@ -120,8 +120,8 @@ export class InfraStack extends BaseStack {
   }
 
   api = () => {
-    const helloLambda = new Function(this, 'HelloLambda', {
-      functionName: `hello`,
+    const repoLambda = new Function(this, 'RepoLambda', {
+      functionName: `repo`,
       code: Code.fromAsset('../api'),
       runtime: Runtime.NODEJS_14_X,
       handler: 'index.handler',
@@ -137,17 +137,17 @@ export class InfraStack extends BaseStack {
       resources: ['*'],
     });
 
-    helloLambda.addToRolePolicy(lambdaPolicy);
-    const helloLambdaIntegration = new LambdaProxyIntegration({
-      handler: helloLambda,
+    repoLambda.addToRolePolicy(lambdaPolicy);
+    const repoLambdaIntegration = new LambdaProxyIntegration({
+      handler: repoLambda,
     });
 
-    const httpApi = new HttpApi(this, 'HelloApi');
+    const httpApi = new HttpApi(this, 'ReposApi');
 
     httpApi.addRoutes({
-      path: '/hello',
+      path: '/repos',
       methods: [HttpMethod.ANY],
-      integration: helloLambdaIntegration,
+      integration: repoLambdaIntegration,
     });
   };
 }
