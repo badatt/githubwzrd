@@ -1,7 +1,8 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
-const { jwtSecret } = require('./vars');
+const { jwtSecret, userSessionTable } = require('./vars');
 const logger = require('../config/logger');
+const { getUserSession } = require('./aws');
 
 const jwtOptions = {
   secretOrKey: Buffer.from(jwtSecret, 'base64').toString('utf-8'),
@@ -10,6 +11,8 @@ const jwtOptions = {
 
 const jwt = async (payload, done) => {
   try {
+    const userSessionItem = await getUserSession(userSessionTable, `${payload.userId}`, payload.org);
+    console.log(userSessionItem);
     const user = { userId: payload.userId, username: payload.sub, org: payload.org }; // TODO Get user from User table
     if (user) return done(null, user);
     return done(null, false);

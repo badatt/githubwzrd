@@ -1,12 +1,8 @@
-const {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} = require("@aws-sdk/client-secrets-manager");
-
-const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client-secrets-manager');
+const { DynamoDBClient, GetItemCommand } = require('@aws-sdk/client-dynamodb');
 
 exports.getSecretValue = async function (secretName) {
-  const client = new SecretsManagerClient({ region: "us-east-1" });
+  const client = new SecretsManagerClient({ region: 'us-east-1' });
   const params = {
     SecretId: secretName,
   };
@@ -19,18 +15,18 @@ exports.getSecretValue = async function (secretName) {
   }
 };
 
-exports.getUserSession = async function (pk, sk) {
-  const client = new DynamoDBClient({ region: "us-east-1" });
+exports.getUserSession = async function (tableName, userId, org) {
+  const client = new DynamoDBClient({ region: 'us-east-1' });
   const params = {
     Key: {
       Id: {
-        S: pk,
+        S: userId,
       },
       Org: {
-        S: sk,
+        S: org,
       },
     },
-    TableName: "githubwzrd-user-session",
+    TableName: tableName,
   };
   const command = new GetItemCommand(params);
   try {
