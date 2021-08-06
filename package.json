@@ -1,0 +1,25 @@
+{
+  "name": "githubwzrd",
+  "version": "1.0.0",
+  "description": "Personalized gihub productivity improver tool for organizations and its users",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/badatt/githubwzrd.git"
+  },
+  "author": "badatt <dev.badatt@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/badatt/githubwzrd/issues"
+  },
+  "homepage": "https://github.com/badatt/githubwzrd#readme",
+  "devDependencies": {
+    "fs-extra": "10.0.0",
+    "jake": "10.8.2",
+    "shelljs": "0.8.4",
+    "dotenv": "10.0.0"
+  }
+}

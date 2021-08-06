@@ -122,7 +122,7 @@ export class InfraStack extends BaseStack {
   api = () => {
     const repoLambda = new Function(this, 'RepoLambda', {
       functionName: `repo`,
-      code: Code.fromAsset('../api'),
+      code: Code.fromAsset('.func-api'),
       runtime: Runtime.NODEJS_14_X,
       handler: 'index.handler',
       environment: {
