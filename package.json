@@ -16,10 +16,10 @@
     "url": "https://github.com/badatt/githubwzrd/issues"
   },
   "homepage": "https://github.com/badatt/githubwzrd#readme",
-  "dependencies": {},
   "devDependencies": {
-    "fs-extra": "^10.0.0",
-    "jake": "^10.8.2",
-    "shelljs": "^0.8.4"
+    "fs-extra": "10.0.0",
+    "jake": "10.8.2",
+    "shelljs": "0.8.4",
+    "dotenv": "10.0.0"
   }
 }

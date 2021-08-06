@@ -14,7 +14,7 @@ export AWS_SECRET_ACCESS_KEY=${assumeRoleResponse[1]}
 export AWS_SESSION_TOKEN=${assumeRoleResponse[2]}
 
 cat << EOF >  .aws.env
-export AWS_ACCESS_KEY_ID=${assumeRoleResponse[0]}
-export AWS_SECRET_ACCESS_KEY=${assumeRoleResponse[1]}
-export AWS_SESSION_TOKEN=${assumeRoleResponse[2]}
+AWS_ACCESS_KEY_ID=${assumeRoleResponse[0]}
+AWS_SECRET_ACCESS_KEY=${assumeRoleResponse[1]}
+AWS_SESSION_TOKEN=${assumeRoleResponse[2]}
 EOF
