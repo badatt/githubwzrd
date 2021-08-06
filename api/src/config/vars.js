@@ -5,11 +5,11 @@ const { getSecretValue } = require('./aws');
 // import .env variables
 
 dotenv.config({
-  path: path.join(__dirname, '../.env'),
+  path: path.join(__dirname, '../../.env'),
 });
 
 dotenv.config({
-  path: path.join(__dirname, '../.aws.env'),
+  path: path.join(__dirname, '../../../.aws.env'),
 });
 
 const variables = {

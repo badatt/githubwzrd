@@ -50,7 +50,6 @@ async function mainProcess(event, callback) {
     // TODO revisit this later
     redirectTo('/', callback);
   } else if (req.isTokenExist) {
-    // Verify the JWT, the payload email, and that the email ends with configured hosted domain
     jwt.verify(req.token, config.PUBLIC_KEY.trim(), { algorithms: ['RS256'] }, function (err, decoded) {
       if (err) {
         switch (err.name) {

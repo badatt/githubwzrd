@@ -8,7 +8,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "aws-login": "sh ./scripts/generate-aws-creds.sh",
     "dev": "nodemon ./src/server.js"
   },
   "dependencies": {

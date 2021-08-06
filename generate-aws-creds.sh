@@ -6,7 +6,7 @@ assumeRoleResponse=($(
 aws sts assume-role --role-arn "arn:aws:iam::965776723730:role/DefaultAccountAccessRole" \
     --role-session-name "session-$(Guidgen)" --query '[Credentials.AccessKeyId,Credentials.SecretAccessKey,Credentials.SessionToken]' \
     --output text \
-    --profile codetaut-sbx
+    --profile ct-sbx
 ))
 
 export AWS_ACCESS_KEY_ID=${assumeRoleResponse[0]}

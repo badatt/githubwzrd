@@ -28,24 +28,17 @@ task("build-api-serverless", ["init"], function () {
       },
     });
     fs.copySync("./api/package.json", "./infra/.func-api/package.json");
-    const packageJsonFile = fs.readJsonSync("./infra/.func-api/package.json");
-    delete packageJsonFile.devDependencies;
-    const dependencies = packageJsonFile.dependencies;
-    Object.keys(dependencies).forEach((d) => {
-      if (d.startsWith("@aws-sdk")) delete dependencies[d];
-    });
-    fs.writeJsonSync("./infra/.func-api/package.json", packageJsonFile, {
-      spaces: 4,
-    });
     shell.cd("./infra/.func-api");
     shell.exec("yarn");
+    shell.cd("../../");
   } catch (err) {
     console.error(err);
   }
 });
 
 desc("Deploy infrastructure in sbx");
-task("cdk-sbx", function () {
+task("cdk-sbx", ["build-api-serverless"], async function () {
   shell.cd("./infra");
-  shell.exec("yarn cdk-sbx");
+  shell.cp("cdk.sbx.json", "cdk.json");
+  shell.exec("npx cdk deploy sbx-githubwzrd -c targetEnv=sbx ");
 });
