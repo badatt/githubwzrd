@@ -1,31 +1,18 @@
 {
+  "extends": "@gilbarbara/tsconfig",
   "compilerOptions": {
-    "lib": ["es6", "es7", "dom", "dom.iterable", "esnext"],
-    "sourceMap": true,
-    "target": "es5",
-    "jsx": "react",
-    "module": "es6",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "declaration": false,
-    "removeComments": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "outDir": "build",
-    "baseUrl": "src",
-    "allowJs": true,
-    "skipLibCheck": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "dom.iterable", "esnext", "webworker"],
+    "outDir": "build",
     "paths": {
-      "app/*": ["./app/*"]
-    }
+      "*": ["src/*"],
+      "assets/*": ["assets/*"],
+      "test/*": ["test/*"],
+      "test-utils": ["test/__setup__/test-utils"]
+    },
+    "skipLibCheck": true,
+    "target": "es5"
   },
-  "exclude": ["build", "node_modules"],
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

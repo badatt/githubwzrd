@@ -1,6 +1,47 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { configStore } from 'store';
 
-const App = () => <h1>My React and TypeScript App</h1>;
+import { showAlert } from 'actions';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Loader from 'components/Loader';
+import Reload from 'components/Reload';
+import ErrorHandler from 'containers/ErrorHandler';
+import GlobalStyles from 'containers/GlobalStyles';
+
+import reportWebVitals from './reportWebVitals';
+import App from './App';
+import { register } from './serviceWorkerRegistration';
+
+const { persistor, store } = configStore();
+
+window.store = store;
+
+ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={<Loader block size={100} />} persistor={persistor}>
+      <ErrorHandler>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </ErrorHandler>
+      <GlobalStyles />
+    </PersistGate>
+  </Provider>,
+  document.getElementById('root'),
+);
+
+/* istanbul ignore next */
+register({
+  onUpdate: () => {
+    store.dispatch(showAlert(<Reload />, { id: 'sw-update', icon: 'bolt', timeout: 0 }));
+  },
+});
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals(console.log); // eslint-disable-line no-console
