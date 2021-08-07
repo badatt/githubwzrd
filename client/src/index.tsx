@@ -13,7 +13,7 @@ import ErrorHandler from 'containers/ErrorHandler';
 import GlobalStyles from 'containers/GlobalStyles';
 
 import reportWebVitals from './reportWebVitals';
-import Root from './Root';
+import App from './App';
 import { register } from './serviceWorkerRegistration';
 
 const { persistor, store } = configStore();
@@ -25,7 +25,7 @@ ReactDOM.render(
     <PersistGate loading={<Loader block size={100} />} persistor={persistor}>
       <ErrorHandler>
         <HelmetProvider>
-          <Root />
+          <App />
         </HelmetProvider>
       </ErrorHandler>
       <GlobalStyles />
