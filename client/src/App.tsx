@@ -29,7 +29,7 @@ function App() {
           />
         </Helmet>
         <Switch>
-          <Route component={Dashboard} path="/dashboard" />
+          <Route component={Dashboard} path="/" />
           <Route component={NotFound} />
         </Switch>
         <SystemAlerts />
