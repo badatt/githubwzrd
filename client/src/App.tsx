@@ -3,6 +3,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Helmet } from 'react-helmet-async';
 
+import './styles/global.css';
 import theme from 'modules/theme';
 import history from 'modules/history';
 import SystemAlerts from 'containers/SystemAlerts';
