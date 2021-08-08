@@ -1,2 +1,2 @@
-export * from './common';
-export * from './state';
+export * from './common.type';
+export * from './state.type';

@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { Variants } from 'styled-minimal/lib/types';
 import { ValueOf } from 'type-fest';
 
-import { AlertPosition, Icons, Status } from './common';
+import { AlertPosition, Icons, Status } from './common.type';
 
 export interface AlertData {
   icon: Icons;
