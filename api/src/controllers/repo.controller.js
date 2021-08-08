@@ -20,7 +20,6 @@ exports.all = async (req, res, next) => {
             url
             description
             isArchived
-            isTemplate
           }
         }
       }
@@ -30,5 +29,5 @@ exports.all = async (req, res, next) => {
       login: org,
     },
   );
-  res.send(nodes);
+  res.send(nodes.filter((n) => !n.isArchived));
 };

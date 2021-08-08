@@ -20,7 +20,7 @@ const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+//const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 const postcssNormalize = require('postcss-normalize');
 const safePostCssParser = require('postcss-safe-parser');
@@ -487,7 +487,7 @@ module.exports = webpackEnv => {
           };
         },
       }),
-      isEnvProduction &&
+      /* isEnvProduction &&
         fs.existsSync(swSrc) &&
         new WorkboxWebpackPlugin.InjectManifest({
           swSrc,
@@ -497,7 +497,7 @@ module.exports = webpackEnv => {
           // to make lazy-loading failure scenarios less likely.
           // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        }),
+        }), */
       new ForkTsCheckerWebpackPlugin({
         typescript: resolve.sync('typescript', {
           basedir: paths.nodeModules,
