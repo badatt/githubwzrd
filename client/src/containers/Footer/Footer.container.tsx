@@ -1,11 +1,14 @@
-import React from 'react';
-import { Box, Container, Flex } from 'styled-minimal';
+import React, { FC, Fragment } from 'react';
+import { IElementProps } from 'types';
+import * as Styles from './styles';
 
-function Footer() {
+type Props = IElementProps;
+
+const Footer: FC<Props> = (props: Props) => {
   return (
-    <Box as="footer" borderTop="0.1rem solid #ddd">
-      <Container py={3}>
-        <Flex justifyContent="space-between">
+    <Fragment>
+      <Styles.FooterMain>
+        <Styles.Footer>
           <iframe
             frameBorder="0"
             height="20px"
@@ -22,10 +25,10 @@ function Footer() {
             title="GitHub Follow"
             width="130px"
           />
-        </Flex>
-      </Container>
-    </Box>
+        </Styles.Footer>
+      </Styles.FooterMain>
+    </Fragment>
   );
-}
+};
 
 export default Footer;
