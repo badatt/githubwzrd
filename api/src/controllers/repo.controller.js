@@ -1,4 +1,4 @@
-const { Octokit } = require('@octokit/rest');
+const { gh } = require('../config/github-graphql-client');
 
 /**
  * Get logged in user info
@@ -6,9 +6,28 @@ const { Octokit } = require('@octokit/rest');
  */
 exports.all = async (req, res, next) => {
   const { org, gitToken } = req.user;
-  const octokit = new Octokit({
-    auth: gitToken,
-  });
-  const repos = await octokit.repos.listForOrg({ org });
-  res.send(repos.data.map((r) => ({ name: r.full_name, url: r.html_url })));
+  const {
+    organization: {
+      repositories: { nodes },
+    },
+  } = await gh(gitToken)(
+    `
+    query allRepos($login: String!){
+      organization(login:$login) {
+        repositories(first:100) {
+          nodes {
+            name
+            url
+            description
+            isArchived
+          }
+        }
+      }
+    }
+  `,
+    {
+      login: org,
+    },
+  );
+  res.send(nodes.filter((n) => !n.isArchived));
 };
