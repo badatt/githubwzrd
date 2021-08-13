@@ -1,14 +1,14 @@
 import { BaseStack, HostedZone, Certificate } from '@badatt/infra-lib/build/dist';
-import { StackProps, Construct, SecretValue, Duration, PhysicalName, RemovalPolicy } from '@aws-cdk/core';
+import { StackProps, Construct, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
 import { Bucket, BlockPublicAccess, BucketAccessControl } from '@aws-cdk/aws-s3';
 import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
-import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
+import { Code, Runtime, Function, Version } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
-import { Effect, PolicyStatement } from '@aws-cdk/aws-iam';
+import { Effect, PolicyStatement, ArnPrincipal } from '@aws-cdk/aws-iam';
 import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations';
 import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2';
 
@@ -77,6 +77,15 @@ export class InfraStack extends BaseStack {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
     });
+
+    const githubDroidAccessPolicy = new PolicyStatement({
+      actions: ['s3:DeleteObject*', 's3:PutObject', 's3:Abort*', 's3:ListBucket', 's3:PutObjectAcl'],
+      effect: Effect.ALLOW,
+      principals: [new ArnPrincipal('arn:aws:iam::261778676253:user/github-droid')],
+      resources: [webDeploymentBucket.bucketArn, `${webDeploymentBucket.bucketArn}/*`],
+    });
+
+    webDeploymentBucket.addToResourcePolicy(githubDroidAccessPolicy);
 
     const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity', {
       comment: `OAI for ${rootDomain}`,

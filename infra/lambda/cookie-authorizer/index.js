@@ -138,7 +138,7 @@ async function handleLoginCallback({ qp, host }, callback) {
     redirect('/', [signedCookie], callback);
   } else {
     unauthorized(
-      'Unauthorized. User ' + orgsResponse.data.login + ' is not a member of required organization.',
+      'Unauthorized! User ' + orgsResponse.data.login + ' is not a member of required organization',
       callback,
     );
   }
