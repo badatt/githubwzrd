@@ -2,10 +2,10 @@ import { BaseStack, HostedZone, Certificate } from '@badatt/infra-lib/build/dist
 import { StackProps, Construct, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
-import { Bucket, BlockPublicAccess, BucketAccessControl } from '@aws-cdk/aws-s3';
+import { Bucket, BlockPublicAccess, ObjectOwnership } from '@aws-cdk/aws-s3';
 import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
-import { Code, Runtime, Function, Version } from '@aws-cdk/aws-lambda';
+import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { Effect, PolicyStatement, ArnPrincipal } from '@aws-cdk/aws-iam';
@@ -75,7 +75,7 @@ export class InfraStack extends BaseStack {
     const webDeploymentBucket = new Bucket(this, 'AppDeploymentBucket', {
       bucketName: rootDomain,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      accessControl: BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+      objectOwnership: ObjectOwnership.BUCKET_OWNER_PREFERRED,
     });
 
     const githubDroidAccessPolicy = new PolicyStatement({
