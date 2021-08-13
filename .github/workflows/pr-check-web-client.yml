@@ -1,4 +1,4 @@
-name: Web client deployment to sbx
+name: PR checks for web cleint
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-web-client:
-    name: Build and deploy web cleint
+    name: Vet the pull request
     runs-on: ubuntu-latest
     environment: SBX
 
