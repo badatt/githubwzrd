@@ -1,0 +1,27 @@
+name: Web client deployment to sbx
+
+on:
+  pull_request:
+    paths:
+      - cleint
+
+jobs:
+  deploy-web-client:
+    name: Build and deploy web cleint
+    runs-on: ubuntu-latest
+    environment: SBX
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: client
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2.1.4
+
+      - name: Installation of dependencies
+        run: yarn
