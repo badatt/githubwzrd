@@ -2,10 +2,11 @@ import { all, fork } from 'redux-saga/effects';
 
 import github from './github';
 import user from './user';
+import settings from './settings.saga';
 
 /**
  * rootSaga
  */
 export default function* root() {
-  yield all([fork(github), fork(user)]);
+  yield all([fork(github), fork(user), fork(settings)]);
 }

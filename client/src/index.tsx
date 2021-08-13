@@ -10,7 +10,6 @@ import { showAlert } from 'actions';
 import Loader from 'components/Loader';
 import Reload from 'components/Reload';
 import ErrorHandler from 'containers/ErrorHandler';
-import GlobalStyles from 'containers/GlobalStyles';
 
 import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -28,7 +27,6 @@ ReactDOM.render(
           <App />
         </HelmetProvider>
       </ErrorHandler>
-      <GlobalStyles />
     </PersistGate>
   </Provider>,
   document.getElementById('root'),
