@@ -1,10 +1,7 @@
-import React, { FC, Fragment } from 'react';
-import { IElementProps } from 'types';
+import React, { Fragment } from 'react';
 import * as Styles from './styles';
 
-type Props = IElementProps;
-
-const Header: FC<Props> = (props: Props) => {
+const Header = () => {
   return (
     <Fragment>
       <Styles.HeaderMain>
