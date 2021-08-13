@@ -40,7 +40,7 @@ const Random = () => (
     <div className="col-start-1 row-start-3 space-y-3 px-4">
       <p className="flex items-center text-black text-sm font-medium">
         <img
-          src="https://source.unsplash.com/random"
+          src="https://source.unsplash.com/1600x900/?villa,cottage,house,hotel"
           alt=""
           className="w-6 h-6 rounded-full mr-2 bg-gray-100"
         />
@@ -57,21 +57,21 @@ const Random = () => (
       <div className="w-full grid grid-cols-3 grid-rows-2 gap-2">
         <div className="relative col-span-3 row-span-2 md:col-span-2">
           <img
-            src="https://source.unsplash.com/random"
+            src="https://source.unsplash.com/1600x900/?villa,cottage,house,hotel"
             alt=""
             className="absolute inset-0 w-full h-full object-cover bg-gray-100 sm:rounded-lg"
           />
         </div>
         <div className="relative hidden md:block">
           <img
-            src="https://source.unsplash.com/random"
+            src="https://source.unsplash.com/1600x900/?villa,cottage,house,hotel"
             alt=""
             className="absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100"
           />
         </div>
         <div className="relative hidden md:block">
           <img
-            src="https://source.unsplash.com/random"
+            src="https://source.unsplash.com/1600x900/?villa,cottage,house,hotel"
             alt=""
             className="absolute inset-0 w-full h-full object-cover rounded-lg bg-gray-100"
           />
