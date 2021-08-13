@@ -1,10 +1,7 @@
-import React, { FC, Fragment } from 'react';
-import { IElementProps } from 'types';
+import React, { Fragment } from 'react';
 import * as Styles from './styles';
 
-type Props = IElementProps;
-
-const Footer: FC<Props> = (props: Props) => {
+const Footer = () => {
   return (
     <Fragment>
       <Styles.FooterMain>
