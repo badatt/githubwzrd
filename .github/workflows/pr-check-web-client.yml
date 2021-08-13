@@ -2,10 +2,8 @@ name: PR checks for web cleint
 
 on:
   pull_request:
-    branches:
-      - main
     paths:
-      - 'cleint/**'
+      - 'client/**'
 
 jobs:
   deploy-web-client:
