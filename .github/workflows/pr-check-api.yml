@@ -1,0 +1,27 @@
+name: PR checks for API
+
+on:
+  pull_request:
+    paths:
+      - api
+
+jobs:
+  deploy-web-client:
+    name: Vet the pull request
+    runs-on: ubuntu-latest
+    environment: SBX
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2.1.4
+
+      - name: Installation of dependencies
+        run: yarn
