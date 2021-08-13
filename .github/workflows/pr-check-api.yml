@@ -3,7 +3,7 @@ name: PR checks for API
 on:
   pull_request:
     paths:
-      - api
+      - 'api/**'
 
 jobs:
   deploy-web-client:

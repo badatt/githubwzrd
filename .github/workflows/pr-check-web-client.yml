@@ -3,7 +3,7 @@ name: PR checks for web cleint
 on:
   pull_request:
     paths:
-      - cleint
+      - 'cleint/**'
 
 jobs:
   deploy-web-client:
