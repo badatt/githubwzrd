@@ -6,7 +6,7 @@ on:
       - 'client/**'
 
 jobs:
-  deploy-web-client:
+  pr-check-web-client:
     name: Vet the pull request
     runs-on: ubuntu-latest
     environment: SBX
