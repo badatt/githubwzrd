@@ -27,7 +27,7 @@ jobs:
 
       - name: Prepare function
         run: |
-          mkdirs .func-api
+          mkdir .func-api
           cp src .func-api
           cp package.json .func-api/package.json
           cd .func-api

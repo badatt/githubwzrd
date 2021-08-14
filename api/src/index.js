@@ -10,5 +10,5 @@ const handler = serverless(app);
 
 module.exports.handler = async (event, context) => {
   logger.info(JSON.stringify(event));
-  return await handler(event, context);
+  return handler(event, context);
 };
