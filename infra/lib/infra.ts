@@ -176,6 +176,11 @@ export class InfraStack extends BaseStack {
         },
       });
 
+      repoLambda.addPermission('droid-access', {
+        principal: new ArnPrincipal('arn:aws:iam::261778676253:user/github-droid'),
+        action: 'lambda:UpdateFunctionCode',
+      });
+
       const lambdaPolicy = new PolicyStatement({
         effect: Effect.ALLOW,
         actions: ['secretsmanager:GetSecretValue', 'cloudfront:ListKeyGroups', 'dynamodb:*'],
