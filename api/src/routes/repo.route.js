@@ -7,7 +7,7 @@ const router = express.Router();
 /**
  * GET /_meta
  */
-router.route('/_meta', (req, res) => res.send('OK'));
+router.route('/_meta').get((req, res) => res.send('OK'));
 
 router.route('/').get(authorize(), controller.all);
 
