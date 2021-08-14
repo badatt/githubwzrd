@@ -46,3 +46,7 @@ jspm_packages
 .node_repl_history
 
 .aws.env
+
+express-typescript-boilerplate
+express-rest-boilerplate-master
+TypeScript-Node-Starter

@@ -1,11 +1,12 @@
-const { gh } = require('../config/github-graphql-client');
+import { Request, Response, NextFunction } from 'express';
+import { gh } from '../config/github-graphql-client';
 
 /**
  * Get logged in user info
  * @public
  */
-exports.all = async (req, res, next) => {
-  const { org, gitToken } = req.user;
+export const all = async (req: Request, res: Response, next: NextFunction) => {
+  const { org, gitToken } = req.currentUser;
   const {
     organization: {
       repositories: { nodes },
@@ -29,5 +30,5 @@ exports.all = async (req, res, next) => {
       login: org,
     },
   );
-  res.send(nodes.filter((n) => !n.isArchived));
+  res.send(nodes.filter((n: any) => !n.isArchived));
 };

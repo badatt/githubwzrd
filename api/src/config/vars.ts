@@ -1,6 +1,5 @@
-const path = require('path');
-const dotenv = require('dotenv');
-const { getSecretValue } = require('./aws');
+import path from 'path';
+import dotenv from 'dotenv';
 
 // import .env variables
 
@@ -19,4 +18,4 @@ const variables = {
   userTable: process.env.USER_TABLE,
 };
 
-module.exports = variables;
+export default variables;

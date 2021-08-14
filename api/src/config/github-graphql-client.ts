@@ -1,6 +1,6 @@
-const { graphql } = require('@octokit/graphql');
+import { graphql } from '@octokit/graphql';
 
-exports.gh = function (token) {
+export const gh = (token: string) => {
   return graphql.defaults({
     headers: {
       authorization: `token ${token.trim()}`,
