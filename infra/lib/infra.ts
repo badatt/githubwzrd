@@ -145,13 +145,14 @@ export class InfraStack extends BaseStack {
     });
 
     const httpApi = new HttpApi(this, `${this.projectName}Api`, {
+      apiName: this.projectName,
       defaultDomainMapping: {
         domainName: domainName,
       },
     });
     this.routes({
       httpApi: httpApi,
-      routes: ['/repos', '/me', '/status', '/docs'],
+      routes: ['repos', 'me', 'status', 'docs'],
     });
 
     new ARecord(this, 'ApiAliasRecord', {
@@ -163,7 +164,8 @@ export class InfraStack extends BaseStack {
 
   routes = (props: { httpApi: HttpApi; routes: string[] }) => {
     props.routes.forEach((route) => {
-      const repoLambda = new Function(this, `${this.projectName}Lambda${route}`, {
+      const repoLambda = new Function(this, `Lambda${route}`, {
+        functionName: `${this.projectName}-${route}`,
         code: Code.fromAsset('.func-api'),
         runtime: Runtime.NODEJS_14_X,
         handler: 'index.handler',
@@ -186,7 +188,7 @@ export class InfraStack extends BaseStack {
       });
 
       props.httpApi.addRoutes({
-        path: route,
+        path: `/${route}`,
         methods: [HttpMethod.ANY],
         integration: repoLambdaIntegration,
       });
