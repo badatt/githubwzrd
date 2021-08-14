@@ -13,7 +13,7 @@ import middleware, { sagaMiddleware } from './middleware';
 
 const rootReducer = persistCombineReducers<StoreState>(
   {
-    key: 'rrsb',
+    key: 'gw',
     stateReconciler: autoMergeLevel2,
     storage,
     whitelist: ['app', 'user'],

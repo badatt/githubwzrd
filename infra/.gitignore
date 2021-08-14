@@ -13,3 +13,4 @@ yalc.lock
 !lambda/**/*.js
 
 .func-*
+.versions.json

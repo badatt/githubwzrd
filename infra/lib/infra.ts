@@ -1,7 +1,7 @@
 import { BaseStack, HostedZone, Certificate } from '@badatt/infra-lib/build/dist';
 import { StackProps, Construct, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
-import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
+import { CloudFrontTarget, ApiGatewayv2Domain } from '@aws-cdk/aws-route53-targets';
 import { Bucket, BlockPublicAccess, ObjectOwnership } from '@aws-cdk/aws-s3';
 import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
@@ -10,18 +10,22 @@ import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { Effect, PolicyStatement, ArnPrincipal } from '@aws-cdk/aws-iam';
 import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations';
-import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2';
+import { DomainName, HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2';
 
 export class InfraStack extends BaseStack {
+  projectName: string;
+  rootDomain: string;
+  targetEnv: string;
+  hostedZone: HostedZone;
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const targetEnv = scope.node.tryGetContext('targetEnv');
-    const rootDomain = scope.node.tryGetContext('rootDomain');
-    const project = scope.node.tryGetContext('project');
+    this.targetEnv = scope.node.tryGetContext('targetEnv');
+    this.rootDomain = scope.node.tryGetContext('rootDomain');
+    this.projectName = scope.node.tryGetContext('project');
 
-    const hostedZone = new HostedZone(this, 'HostedZone', {
-      domainName: rootDomain,
+    this.hostedZone = new HostedZone(this, 'HostedZone', {
+      domainName: this.rootDomain,
     });
 
     /**
@@ -29,7 +33,7 @@ export class InfraStack extends BaseStack {
      */
 
     const userTable = new Table(this, 'UserTable', {
-      tableName: `${project}-user`,
+      tableName: `${this.projectName}-user`,
       partitionKey: {
         name: 'Id',
         type: AttributeType.STRING,
@@ -45,10 +49,10 @@ export class InfraStack extends BaseStack {
      */
 
     const webAuthLambda = new EdgeFunction(this, 'WebAuthLambda', {
-      functionName: `${project}-web-auth`,
+      functionName: `${this.projectName}-web-auth`,
       runtime: Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      description: `${rootDomain} cloudfront edge lambda`,
+      description: `${this.rootDomain} cloudfront edge lambda`,
       code: Code.fromAsset('lambda/cookie-authorizer'),
       timeout: Duration.seconds(5),
       currentVersionOptions: {
@@ -67,13 +71,13 @@ export class InfraStack extends BaseStack {
     webAuthLambda.addToRolePolicy(lambdaPolicy);
 
     const webApplicationCertificate = new Certificate(this, 'WebApplicationCertificate', {
-      domainName: rootDomain,
-      hostedZone: hostedZone.zone,
+      domainName: this.rootDomain,
+      hostedZone: this.hostedZone.zone,
       validate: true,
     });
 
     const webDeploymentBucket = new Bucket(this, 'AppDeploymentBucket', {
-      bucketName: rootDomain,
+      bucketName: this.rootDomain,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       objectOwnership: ObjectOwnership.BUCKET_OWNER_PREFERRED,
     });
@@ -88,7 +92,7 @@ export class InfraStack extends BaseStack {
     webDeploymentBucket.addToResourcePolicy(githubDroidAccessPolicy);
 
     const originAccessIdentity = new OriginAccessIdentity(this, 'OriginAccessIdentity', {
-      comment: `OAI for ${rootDomain}`,
+      comment: `OAI for ${this.rootDomain}`,
     });
 
     const s3Origin = new S3Origin(webDeploymentBucket, {
@@ -115,48 +119,77 @@ export class InfraStack extends BaseStack {
         ],
       },
       certificate: webApplicationCertificate.certificate,
-      domainNames: [rootDomain],
-      comment: `${rootDomain} web app`,
+      domainNames: [this.rootDomain],
+      comment: `${this.rootDomain} web app`,
       defaultRootObject: 'index.html',
     });
 
     new ARecord(this, 'CloudfrontWebDistributionAliasRecord', {
-      zone: hostedZone.zone,
-      recordName: rootDomain,
+      zone: this.hostedZone.zone,
+      recordName: this.rootDomain,
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     });
     this.api();
   }
 
   api = () => {
-    const repoLambda = new Function(this, 'RepoLambda', {
-      functionName: `repo`,
-      code: Code.fromAsset('.func-api'),
-      runtime: Runtime.NODEJS_14_X,
-      handler: 'index.handler',
-      environment: {
-        USER_TABLE: 'githubwzrd-user',
-        JWT_SECRET: '{{resolve:secretsmanager:GithubwzrdCookieAuthorizerCrypto:SecretString:PUBLIC_KEY}}',
-        NODE_ENV: 'sbx',
+    const certificate = new Certificate(this, 'ApiCertificate', {
+      domainName: `api.${this.rootDomain}`,
+      hostedZone: this.hostedZone.zone,
+      validate: true,
+    });
+
+    const domainName = new DomainName(this, 'ApiDomain', {
+      domainName: `api.${this.rootDomain}`,
+      certificate: certificate.certificate,
+    });
+
+    const httpApi = new HttpApi(this, `${this.projectName}Api`, {
+      defaultDomainMapping: {
+        domainName: domainName,
       },
     });
-    const lambdaPolicy = new PolicyStatement({
-      effect: Effect.ALLOW,
-      actions: ['secretsmanager:GetSecretValue', 'cloudfront:ListKeyGroups', 'dynamodb:*'],
-      resources: ['*'],
+    this.routes({
+      httpApi: httpApi,
+      routes: ['/repos', '/me', '/status', '/docs'],
     });
 
-    repoLambda.addToRolePolicy(lambdaPolicy);
-    const repoLambdaIntegration = new LambdaProxyIntegration({
-      handler: repoLambda,
+    new ARecord(this, 'ApiAliasRecord', {
+      zone: this.hostedZone.zone,
+      recordName: `api.${this.rootDomain}`,
+      target: RecordTarget.fromAlias(new ApiGatewayv2Domain(domainName)),
     });
+  };
 
-    const httpApi = new HttpApi(this, 'ReposApi');
+  routes = (props: { httpApi: HttpApi; routes: string[] }) => {
+    props.routes.forEach((route) => {
+      const repoLambda = new Function(this, `${this.projectName}Lambda${route}`, {
+        code: Code.fromAsset('.func-api'),
+        runtime: Runtime.NODEJS_14_X,
+        handler: 'index.handler',
+        environment: {
+          USER_TABLE: 'githubwzrd-user',
+          JWT_SECRET: '{{resolve:secretsmanager:GithubwzrdCookieAuthorizerCrypto:SecretString:PUBLIC_KEY}}',
+          NODE_ENV: this.targetEnv,
+        },
+      });
 
-    httpApi.addRoutes({
-      path: '/repos',
-      methods: [HttpMethod.ANY],
-      integration: repoLambdaIntegration,
+      const lambdaPolicy = new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ['secretsmanager:GetSecretValue', 'cloudfront:ListKeyGroups', 'dynamodb:*'],
+        resources: ['*'],
+      });
+
+      repoLambda.addToRolePolicy(lambdaPolicy);
+      const repoLambdaIntegration = new LambdaProxyIntegration({
+        handler: repoLambda,
+      });
+
+      props.httpApi.addRoutes({
+        path: route,
+        methods: [HttpMethod.ANY],
+        integration: repoLambdaIntegration,
+      });
     });
   };
 }
