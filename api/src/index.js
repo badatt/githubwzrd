@@ -1,4 +1,3 @@
-// make bluebird default Promise
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
 const serverless = require('serverless-http');
 const { port, env } = require('./config/vars');
