@@ -193,7 +193,7 @@ export class InfraStack extends BaseStack {
       });
 
       props.httpApi.addRoutes({
-        path: `/${route}`,
+        path: `/${route}/{proxy+}`,
         methods: [HttpMethod.ANY],
         integration: repoLambdaIntegration,
       });
