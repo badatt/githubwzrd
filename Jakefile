@@ -69,7 +69,7 @@ task('build-api-serverless', ['init'], function () {
 });
 
 desc('Deploy infrastructure in sbx');
-task('cdk-sbx', ['build-api-serverless'], async function () {
+task('cdk-sbx', ['init'], async function () {
   shell.cd('./infra');
   fs.writeFileSync('lambda/cookie-authorizer/.versions.json', JSON.stringify({ date: new Date() }));
   shell.cp('cdk.sbx.json', 'cdk.json');
