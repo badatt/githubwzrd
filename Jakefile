@@ -49,25 +49,6 @@ task('run-client-dev', ['build-client-dev'], function () {
   shell.exec('yarn dev-server');
 });
 
-desc('Buid API project for serverless deployment');
-task('build-api-serverless', ['init'], function () {
-  try {
-    fs.removeSync('./infra/.func-api');
-    fs.mkdirsSync('./infra/.func-api');
-    fs.copySync('./api/src', './infra/.func-api', {
-      filter: function (p) {
-        return !p.startsWith('node_modules');
-      },
-    });
-    fs.copySync('./api/package.json', './infra/.func-api/package.json');
-    shell.cd('./infra/.func-api');
-    shell.exec('yarn');
-    shell.cd('../../');
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 desc('Deploy infrastructure in sbx');
 task('cdk-sbx', ['init'], async function () {
   shell.cd('./infra');
