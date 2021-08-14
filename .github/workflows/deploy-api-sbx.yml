@@ -1,0 +1,54 @@
+name: API deployment to sbx
+
+on:
+  push:
+    branches:
+      - main
+      - Setup-CI-CD
+    paths:
+      - 'api/**'
+
+jobs:
+  deploy-repos-function:
+    name: Build and deploy Repos API
+    runs-on: ubuntu-latest
+    environment: SBX
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node
+        uses: actions/setup-node@v2.1.4
+
+      - name: Prepare function
+        run: |
+          mkdirs .func-api
+          cp src .func-api
+          cp package.json .func-api/package.json
+          cd .func-api
+          yarn
+
+      - name: Build
+        working-directory: api/.func-api
+        run: yarn
+
+      - name: Package function
+        working-directory: api/.func-api
+        run: zip -r code.zip ./*
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy
+        working-directory: api/.func-api
+        run: aws lambda update-function-code --function-name "githubwzrd-repos" --zip-file "fileb:./code.zip"
