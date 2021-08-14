@@ -27,17 +27,16 @@ jobs:
 
       - name: Prepare function
         run: |
-          mkdir .func-api
-          cp -r src/* .func-api
-          cp package.json .func-api/package.json
-          cd .func-api
+          mkdir .func
+          cp -r src/* .func
+          cp package.json .func/package.json
 
       - name: Build
-        working-directory: api/.func-api
+        working-directory: api/.func
         run: yarn
 
       - name: Package function
-        working-directory: api/.func-api
+        working-directory: api/.func
         run: zip -rq code.zip ./*
 
       - name: Configure AWS credentials
@@ -48,7 +47,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy
-        working-directory: api/.func-api
+        working-directory: api/.func
         run: |
           aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-repos --zip-file fileb://./code.zip
           aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-me --zip-file fileb://./code.zip
