@@ -9,10 +9,6 @@ const strategies = require('./passport');
 
 const error = require('../middlewares/error');
 
-/**
- * Express instance
- * @public
- */
 const app = express();
 
 // parse body params and attache them to req.body
