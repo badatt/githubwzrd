@@ -1,13 +1,30 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import * as Styles from './styles';
+import { setDarkMode, setLightMode, currentMode } from 'styles/theme';
 
-const Header = () => {
+const Header: React.FC<{ currentThemeMode?: string }> = () => {
+  const currentThemeMode: string = currentMode();
+  const [themeMode, setThemeMode] = useState<string>(currentThemeMode);
+
+  useEffect(() => {
+    if (themeMode === 'light') {
+      setLightMode();
+    } else {
+      setDarkMode();
+    }
+  }, [themeMode]);
+
   return (
     <Fragment>
       <Styles.HeaderMain>
         <Styles.Header>
           <Styles.Logo />
           <Styles.Navigation>
+            {themeMode === 'light' ? (
+              <Styles.ThemeSwitcher mode="light" switch={setThemeMode} />
+            ) : (
+              <Styles.ThemeSwitcher mode="dark" switch={setThemeMode} />
+            )}
             <Styles.Settings />
             <Styles.Avatar />
           </Styles.Navigation>
