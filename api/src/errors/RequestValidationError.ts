@@ -33,18 +33,6 @@ class RequestValidationError extends APIError {
     });
     this.errors = errors;
   }
-
-  /* public formatResponse = () => {
-    const response: any = {
-      code: BAD_REQUEST,
-      message: this.message,
-      stack: this.stack,
-    };
-    response['errors'] = this.errors.map((e: IValidationError) => {
-      return { ...e };
-    });
-    return response;
-  }; */
 }
 
 export default RequestValidationError;

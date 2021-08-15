@@ -36,6 +36,5 @@ export const all = async (req: Request, res: Response, next: NextFunction) => {
 
 export const saveUserRepos = async (req: Request, res: Response, next: NextFunction) => {
   const userRepos = res.locals.input as UserRepos;
-  console.log('UserRepos ======= ', userRepos);
   res.send(userRepos);
 };
