@@ -9,7 +9,6 @@ jobs:
   pr-check-web-client:
     name: Vet the pull request
     runs-on: ubuntu-latest
-    environment: SBX
 
     defaults:
       run:
