@@ -1,6 +1,7 @@
 export interface IExtendableError {
   message: string;
   status: number;
+  errors?: any[];
   stack?: string;
 }
 
@@ -10,13 +11,14 @@ export interface IExtendableError {
 
 class ExtendableError extends Error {
   status: number;
-  message: string;
-  constructor({ message, stack, status }: IExtendableError) {
+  errors: any[];
+  constructor({ message, stack, status, errors }: IExtendableError) {
     super(message);
     this.name = this.constructor.name;
     this.message = message;
-    this.status = status;
     this.stack = stack;
+    this.status = status;
+    this.errors = errors;
   }
 }
 
