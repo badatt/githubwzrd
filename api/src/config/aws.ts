@@ -1,38 +1,27 @@
-import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
-import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
+import DynamoDB from 'aws-sdk/clients/dynamodb';
+import { DataMapper } from '@aws/dynamodb-data-mapper';
 
-export const getSecretValue = async (secretName: string) => {
-  const client = new SecretsManagerClient({ region: 'us-east-1' });
-  const params = {
-    SecretId: secretName,
-  };
-  const command = new GetSecretValueCommand(params);
-  try {
-    const data = await client.send(command);
-    return JSON.parse(data.SecretString);
-  } catch (error) {
-    return error;
-  }
-};
+const mapper = new DataMapper({
+  client: new DynamoDB({ region: 'us-east-1' }),
+  tableNamePrefix: 'githubwzrd-',
+});
 
-export const getUserItem = async (tableName: string, userId: string, org: string) => {
-  const client = new DynamoDBClient({ region: 'us-east-1' });
-  const params = {
-    Key: {
-      Id: {
-        S: userId,
-      },
-      Org: {
-        S: org,
-      },
-    },
-    TableName: tableName,
-  };
-  const command = new GetItemCommand(params);
-  try {
-    const data = await client.send(command);
-    return data.Item;
-  } catch (error) {
-    return error;
-  }
+export const db = {
+  mapper: mapper,
+  tryGetAsync: async <T>(obj: T, keys: {}): Promise<T> => {
+    return new Promise<T>(async (resolve, reject) => {
+      try {
+        const val = await mapper.get(Object.assign(obj, keys));
+        resolve(val);
+      } catch (error) {
+        if (error.name === 'ItemNotFoundException') {
+          resolve(null);
+        } else if (error.name === 'ExpiredTokenException') {
+          reject('ExpiredTokenException');
+        } else {
+          reject(error);
+        }
+      }
+    });
+  },
 };
