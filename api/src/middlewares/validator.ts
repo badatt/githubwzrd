@@ -6,8 +6,8 @@ import RequestValidationError, { IRequestValidationError } from '../errors/Reque
 
 export const validate = (dtoClass: any) => {
   return function (req: Request, res: Response, next: NextFunction) {
-    const output: any = plainToClass(dtoClass, req.body);
-    classValidate(output, { skipMissingProperties: true }).then((errors) => {
+    const model: any = plainToClass(dtoClass, req.body);
+    classValidate(model, { skipMissingProperties: true }).then((errors) => {
       const rve: IRequestValidationError = {
         message: 'InvalidRequestObject',
         status: BAD_REQUEST,
@@ -25,7 +25,7 @@ export const validate = (dtoClass: any) => {
         });
         next(new RequestValidationError(rve));
       } else {
-        res.locals.input = output;
+        req.body = model;
         next();
       }
     });
