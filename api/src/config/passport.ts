@@ -18,7 +18,6 @@ const verifyJwt = async (payload: any, done: any) => {
     if (currentUser) return done(null, currentUser);
     return done(null, false);
   } catch (error) {
-    console.log('verifyJWT ', error);
     return done(error, false);
   }
 };

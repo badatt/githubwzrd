@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import passport from 'passport';
 import { jwtStrategy } from './config/passport';
 import routes from './routes';
-import { converter, notFound, handler } from './middlewares/error';
+import { converter, notFound, defaultHandler } from './middlewares/error';
 
 const app = express();
 
@@ -36,6 +36,6 @@ app.use(converter);
 app.use(notFound);
 
 // error handler, send stacktrace only during development
-app.use(handler);
+app.use(defaultHandler);
 
 export default app;

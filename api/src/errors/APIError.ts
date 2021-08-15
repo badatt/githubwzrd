@@ -13,12 +13,10 @@ class APIError extends ExtendableError {
    * @param {number} status - HTTP status code of error.
    * @param {boolean} isPublic - Whether the message should be visible to user or not.
    */
-  constructor({ message, errors, stack, status = INTERNAL_SERVER_ERROR, isPublic = false }: IExtendableError) {
+  constructor({ message, stack, status = INTERNAL_SERVER_ERROR }: IExtendableError) {
     super({
       message,
-      errors,
       status,
-      isPublic,
       stack,
     });
   }
