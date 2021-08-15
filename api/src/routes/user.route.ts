@@ -7,7 +7,7 @@ const router = Router();
 /**
  * GET /_meta
  */
-router.route('/_meta').get((req: Request, res: Response) => res.send({ status: 'SUCCESS' }));
+router.route('/_meta').get((req: Request, res: Response) => res.send({ status: 'ok' }));
 
 router.route('/').get(authorize(), me);
 
