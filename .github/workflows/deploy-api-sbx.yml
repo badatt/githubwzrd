@@ -25,12 +25,15 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.1.4
 
+      - name: Install
+        run: yarn
+
       - name: Build
         run: yarn build
 
       - name: Prepare function
         run: |
-          cp package.json build/package.json
+          cp -a node_modules/. build/node_modules/
 
       - name: Package function
         working-directory: api/build
