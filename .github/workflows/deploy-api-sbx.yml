@@ -32,8 +32,11 @@ jobs:
         run: yarn build
 
       - name: Prepare function
+        working-directory: api/build
         run: |
-          cp -a node_modules/. build/node_modules/
+          cp ../package.json package.json
+          echo $(jq 'del(.devDependencies)' package.json) > package.json
+          yarn
 
       - name: Package function
         working-directory: api/build
