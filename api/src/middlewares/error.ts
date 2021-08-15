@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import httpStatus from 'http-status';
-import { ValidationError } from 'express-validation';
 import APIError from '../errors/APIError';
+import RequestValidationError from '../errors/RequestValidationError';
 
 /**
  * Error handler. Send stacktrace only during development
@@ -12,6 +12,7 @@ export const defaultHandler = (err: APIError, req: Request, res: Response, next:
     code: err.status,
     message: err.message || httpStatus[err.status],
     stack: err.stack,
+    errors: err.errors,
   };
 
   res.status(err.status);
@@ -22,17 +23,17 @@ export const defaultHandler = (err: APIError, req: Request, res: Response, next:
  * If error is not an instanceOf APIError, convert it.
  * @public
  */
-export const converter = (err: APIError, req: Request, res: Response, next: NextFunction) => {
+export const validator = (err: RequestValidationError, req: Request, res: Response, next: NextFunction) => {
   let convertedError = err;
 
-  if (err instanceof ValidationError) {
+  if (err instanceof RequestValidationError) {
     convertedError = new APIError({
-      message: 'Validation Error',
-      stack: err.error,
-      status: err.statusCode,
+      message: err.message,
+      stack: err.stack,
+      status: err.status,
+      errors: err.errors,
     });
   }
-
   return defaultHandler(convertedError, req, res);
 };
 
