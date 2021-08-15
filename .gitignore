@@ -279,6 +279,4 @@ cdk.out
 cdk.context.json
 cdk.json
 .metals/
-
-express-rest-boilerplate-master
 .aws.env

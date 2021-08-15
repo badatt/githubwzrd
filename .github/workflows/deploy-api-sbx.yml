@@ -25,18 +25,15 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v2.1.4
 
+      - name: Build
+        run: yarn build
+
       - name: Prepare function
         run: |
-          mkdir .func
-          cp -r src/* .func
-          cp package.json .func/package.json
-
-      - name: Build
-        working-directory: api/.func
-        run: yarn
+          cp package.json build/package.json
 
       - name: Package function
-        working-directory: api/.func
+        working-directory: api/build
         run: zip -rq code.zip ./*
 
       - name: Configure AWS credentials
@@ -47,7 +44,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy
-        working-directory: api/.func
+        working-directory: api/build
         run: |
           aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-repos --zip-file fileb://./code.zip
           aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-me --zip-file fileb://./code.zip

@@ -1,7 +1,7 @@
-const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client-secrets-manager');
-const { DynamoDBClient, GetItemCommand } = require('@aws-sdk/client-dynamodb');
+import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
+import { DynamoDBClient, GetItemCommand } from '@aws-sdk/client-dynamodb';
 
-exports.getSecretValue = async function (secretName) {
+export const getSecretValue = async (secretName: string) => {
   const client = new SecretsManagerClient({ region: 'us-east-1' });
   const params = {
     SecretId: secretName,
@@ -15,7 +15,7 @@ exports.getSecretValue = async function (secretName) {
   }
 };
 
-exports.getUserItem = async function (tableName, userId, org) {
+export const getUserItem = async (tableName: string, userId: string, org: string) => {
   const client = new DynamoDBClient({ region: 'us-east-1' });
   const params = {
     Key: {
