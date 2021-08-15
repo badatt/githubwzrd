@@ -7,6 +7,7 @@ import passport from 'passport';
 import { jwtStrategy } from './config/passport';
 import routes from './routes';
 import { validator, notFound, defaultHandler } from './middlewares/error';
+import { sort } from './middlewares/response';
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use(cors());
 // enable authentication
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+
+app.use(sort());
 
 app.use('/', routes);
 
