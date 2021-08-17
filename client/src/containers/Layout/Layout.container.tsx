@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { IChildrenProp, IElementProps } from 'types';
 import Header from 'containers/Header/Header.container';
 import Footer from 'containers/Footer/Footer.container';
-import * as Styles from './styles';
+import * as LayoutView from './Layout.view';
 
 interface ILayOutProps {
   title?: string;
@@ -29,7 +29,7 @@ const Layout: FC<Props> = (props: Props) => {
         />
       </Helmet>
       <Header />
-      <Styles.Main>{props.children}</Styles.Main>
+      <LayoutView.Main>{props.children}</LayoutView.Main>
       <Footer />
     </Fragment>
   );

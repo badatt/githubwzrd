@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import * as Styles from './styles';
+import * as HeaderView from './Header.view';
 import { setDarkMode, setLightMode, currentMode } from 'styles/theme';
 
 const Header: React.FC<{ currentThemeMode?: string }> = () => {
@@ -16,20 +16,20 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
 
   return (
     <Fragment>
-      <Styles.HeaderMain>
-        <Styles.Header>
-          <Styles.Logo />
-          <Styles.Navigation>
+      <HeaderView.HeaderMain>
+        <HeaderView.Header>
+          <HeaderView.Logo />
+          <HeaderView.Navigation>
             {themeMode === 'light' ? (
-              <Styles.ThemeSwitcher mode="light" switch={setThemeMode} />
+              <HeaderView.ThemeSwitcher mode="light" switch={setThemeMode} />
             ) : (
-              <Styles.ThemeSwitcher mode="dark" switch={setThemeMode} />
+              <HeaderView.ThemeSwitcher mode="dark" switch={setThemeMode} />
             )}
-            <Styles.Settings />
-            <Styles.Avatar />
-          </Styles.Navigation>
-        </Styles.Header>
-      </Styles.HeaderMain>
+            <HeaderView.Settings />
+            <HeaderView.Avatar />
+          </HeaderView.Navigation>
+        </HeaderView.Header>
+      </HeaderView.HeaderMain>
     </Fragment>
   );
 };

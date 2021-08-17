@@ -33,7 +33,7 @@ export const ThemeSwitcher = (props: IThemeSwitcherProps) => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
+          className="h-10 w-10"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -47,7 +47,7 @@ export const ThemeSwitcher = (props: IThemeSwitcherProps) => (
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
+          className="h-10 w-10"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
