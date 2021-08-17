@@ -1,8 +1,9 @@
 import DynamoDB from 'aws-sdk/clients/dynamodb';
 import { DataMapper } from '@aws/dynamodb-data-mapper';
+import vars from './vars';
 
 const mapper = new DataMapper({
-  client: new DynamoDB({ region: 'us-east-1' }),
+  client: new DynamoDB({ region: vars.region, endpoint: vars.dbEndpointUrl }),
   tableNamePrefix: 'githubwzrd-',
 });
 

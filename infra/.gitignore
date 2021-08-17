@@ -14,3 +14,4 @@ yalc.lock
 
 .func
 .versions.json
+.db/
