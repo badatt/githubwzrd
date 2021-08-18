@@ -5,12 +5,14 @@ type Props = IChildrenProp & IElementProps;
 
 export const HeaderMain = (props: Props) => {
   return (
-    <header className="bg-green-600 p-0 mt-0 fixed w-full z-10 top-0 h-16">{props.children}</header>
+    <header className="bg-gray-100 dark:bg-gray-800 p-0 mt-0 fixed w-full z-10 top-0 h-16">
+      {props.children}
+    </header>
   );
 };
 
 export const Header = (props: Props) => (
-  <main className="container mx-auto flex flex-wrap items-center text-white align-middle text-center h-full justify-between">
+  <main className="container mx-auto flex flex-wrap items-center text-gray-800 dark:text-white align-middle text-center h-full justify-between">
     {props.children}
   </main>
 );
