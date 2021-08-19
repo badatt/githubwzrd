@@ -1,0 +1,13 @@
+.header {
+  @apply container 
+  mx-auto 
+  flex 
+  flex-wrap 
+  items-center 
+  text-gray-800 
+  dark:text-white 
+  align-middle 
+  text-center 
+  h-full 
+  justify-between;
+}

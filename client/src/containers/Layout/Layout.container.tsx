@@ -19,8 +19,8 @@ const Layout: FC<Props> = (props: Props) => {
         title="Githubwzrd"
         defer={false}
         encodeSpecialCharacters
-        htmlAttributes={{ lang: 'pt-br' }}
-        titleAttributes={{ itemprop: 'name', lang: 'pt-br' }}
+        htmlAttributes={{ lang: 'en-us' }}
+        titleAttributes={{ itemprop: 'name', lang: 'en-us' }}
         titleTemplate={`${props.title} | %s`}
       >
         <link

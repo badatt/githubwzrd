@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { IChildrenProp, IElementProps } from 'types';
+import classes from './Header.module.css';
 
 type Props = IChildrenProp & IElementProps;
 
@@ -11,11 +12,7 @@ export const HeaderMain = (props: Props) => {
   );
 };
 
-export const Header = (props: Props) => (
-  <main className="container mx-auto flex flex-wrap items-center text-gray-800 dark:text-white align-middle text-center h-full justify-between">
-    {props.children}
-  </main>
-);
+export const Header = (props: Props) => <main className={classes['header']}>{props.children}</main>;
 
 export const Logo = () => <div className="text-3xl font-thin">Githubwzrd</div>;
 

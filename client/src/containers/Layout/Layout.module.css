@@ -1,0 +1,3 @@
+.main {
+  @apply mt-16 bg-gray-100 dark:bg-gray-800;
+}

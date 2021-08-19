@@ -1,8 +1,9 @@
 import React from 'react';
 import { IChildrenProp, IElementProps } from 'types';
+import classes from './Layout.module.css';
 
 type Props = IChildrenProp & IElementProps;
 
 export const Main = (props: Props) => {
-  return <main className="mt-16 bg-gray-100 dark:bg-gray-800">{props.children}</main>;
+  return <main className={classes['main']}>{props.children}</main>;
 };
