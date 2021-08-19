@@ -1,3 +1,7 @@
 .main {
-  @apply mt-16 bg-gray-100 dark:bg-gray-800;
+  @apply top-16 bg-gray-200 relative;
+}
+
+:global(.dark) .main {
+  @apply bg-gray-800;
 }

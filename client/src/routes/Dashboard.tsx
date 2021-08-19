@@ -17,7 +17,7 @@ function Dashboard() {
 
 const Random = () => (
   <div className="grid grid-cols-1 sm:grid-cols-2 sm:px-8 sm:py-12 sm:gap-x-8 md:py-16 bg-white dark:bg-gray-900 rounded-lg">
-    <div className="relative z-10 col-start-1 row-start-1 px-4 pt-40 pb-3 bg-gradient-to-t from-gray-900 dark:from-gray-100 sm:bg-none">
+    <div className="relative col-start-1 row-start-1 px-4 pt-40 pb-3 bg-gradient-to-t from-gray-900 dark:from-gray-100 sm:bg-none">
       <p className="text-sm font-medium text-black dark:text-white sm:mb-1 sm:text-gray-500">
         Entire house
       </p>

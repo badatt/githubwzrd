@@ -29,6 +29,7 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
             <HeaderView.Avatar />
           </HeaderView.Navigation>
         </HeaderView.Header>
+        <HeaderView.Separator />
       </HeaderView.HeaderMain>
     </Fragment>
   );

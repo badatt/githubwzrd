@@ -1,13 +1,48 @@
+.main {
+  @apply bg-gray-200 p-0 mt-0 
+  fixed w-full z-10 top-0 h-16;
+}
+
+:global(.dark) .main {
+  @apply bg-gray-800;
+}
+
 .header {
-  @apply container 
-  mx-auto 
-  flex 
-  flex-wrap 
-  items-center 
-  text-gray-800 
-  dark:text-white 
-  align-middle 
-  text-center 
-  h-full 
-  justify-between;
+  @apply container mx-auto flex flex-wrap 
+  items-center text-gray-800 align-middle 
+  text-center h-full justify-between;
+}
+
+:global(.dark) .header {
+  @apply text-white;
+}
+
+.separator {
+  @apply w-full 
+  self-center border-gray-400 h-1;
+}
+
+:global(.dark) .separator {
+  @apply border-gray-600;
+}
+
+.logo {
+  @apply text-3xl font-thin;
+}
+
+.navigation {
+  @apply flex space-x-10;
+}
+
+.action-btn {
+  @apply h-10 w-10 flex justify-center 
+  items-center focus:outline-none;
+}
+
+.action-icon {
+  @apply h-10 w-10;
+}
+
+.avatar {
+  @apply h-10 w-10 rounded-full;
 }
