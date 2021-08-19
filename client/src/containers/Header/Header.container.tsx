@@ -1,18 +1,36 @@
-import React, { Fragment } from 'react';
-import * as Styles from './styles';
+import React, { Fragment, useState, useEffect } from 'react';
+import * as HeaderView from './Header.view';
+import { setDarkMode, setLightMode, currentMode } from 'styles/theme';
 
-const Header = () => {
+const Header: React.FC<{ currentThemeMode?: string }> = () => {
+  const currentThemeMode: string = currentMode();
+  const [themeMode, setThemeMode] = useState<string>(currentThemeMode);
+
+  useEffect(() => {
+    if (themeMode === 'light') {
+      setLightMode();
+    } else {
+      setDarkMode();
+    }
+  }, [themeMode]);
+
   return (
     <Fragment>
-      <Styles.HeaderMain>
-        <Styles.Header>
-          <Styles.Logo />
-          <Styles.Navigation>
-            <Styles.Settings />
-            <Styles.Avatar />
-          </Styles.Navigation>
-        </Styles.Header>
-      </Styles.HeaderMain>
+      <HeaderView.HeaderMain>
+        <HeaderView.Header>
+          <HeaderView.Logo />
+          <HeaderView.Navigation>
+            {themeMode === 'light' ? (
+              <HeaderView.ThemeSwitcher mode="light" switch={setThemeMode} />
+            ) : (
+              <HeaderView.ThemeSwitcher mode="dark" switch={setThemeMode} />
+            )}
+            <HeaderView.Settings />
+            <HeaderView.Avatar />
+          </HeaderView.Navigation>
+        </HeaderView.Header>
+        <HeaderView.Separator />
+      </HeaderView.HeaderMain>
     </Fragment>
   );
 };

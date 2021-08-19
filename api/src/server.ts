@@ -3,6 +3,6 @@ import app from './app';
 import vars from './config/vars';
 import logger from './config/logger';
 
-app.listen(vars.port, () => logger.info(`server started on port ${vars.port} in ${vars.env}`));
+app.listen(vars.port, () => logger.info(`server started on port ${vars.port} in ${vars.nodeEnv}`));
 
 export default app;

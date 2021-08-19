@@ -14,8 +14,10 @@ dotenv.config({
 const variables = {
   jwtSecret: process.env.JWT_SECRET,
   port: process.env.PORT,
-  env: process.env.NODE_ENV,
+  nodeEnv: process.env.NODE_ENV,
   userTable: process.env.USER_TABLE,
+  region: process.env.AWS_DEFAULT_REGION,
+  dbEndpointUrl: process.env.DB_ENDPOINT_URL,
 };
 
 export default variables;

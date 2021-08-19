@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import * as Styles from './styles';
+import * as FooterView from './Footer.view';
 
 const Footer = () => {
   return (
     <Fragment>
-      <Styles.FooterMain>
-        <Styles.Footer>
+      <FooterView.FooterMain>
+        <FooterView.Footer>
           <iframe
             frameBorder="0"
             height="20px"
@@ -22,8 +22,8 @@ const Footer = () => {
             title="GitHub Follow"
             width="130px"
           />
-        </Styles.Footer>
-      </Styles.FooterMain>
+        </FooterView.Footer>
+      </FooterView.FooterMain>
     </Fragment>
   );
 };
