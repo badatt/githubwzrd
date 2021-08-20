@@ -3,7 +3,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchJwt } from 'modules/auth';
 import { UserActionTypes } from 'literals';
 
-export function* getUser() {
+export function* getUser(): Generator {
   try {
     const user = yield call(request, `http://localhost:3000/me`, {
       headers: {
