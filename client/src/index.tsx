@@ -11,7 +11,7 @@ import Loader from 'components/Loader';
 import Reload from 'components/Reload';
 import ErrorHandler from 'containers/ErrorHandler';
 
-import reportWebVitals from './reportWebVitals';
+//import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { register } from './serviceWorkerRegistration';
 
