@@ -6,7 +6,7 @@ import { UserState } from 'types/user.type';
 
 export const userState: UserState = {
   status: STATUS.IDLE,
-  data: undefined,
+  data: {},
 };
 
 export default {

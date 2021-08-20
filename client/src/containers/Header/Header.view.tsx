@@ -44,6 +44,6 @@ export const Settings = () => (
   </button>
 );
 
-export const Avatar = (props: { avatarUrl: string }) => (
+export const Avatar = (props: { avatarUrl?: string }) => (
   <img src={props.avatarUrl} className={classes['avatar']} />
 );

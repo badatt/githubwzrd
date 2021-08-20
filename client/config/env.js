@@ -91,6 +91,7 @@ function getClientEnvironment(publicUrl) {
         // It is defined here so it is available in the webpackHotDevClient.
         FAST_REFRESH: process.env.FAST_REFRESH !== 'false',
         TOKEN: process.env.TOKEN,
+        API_URL: process.env.API_URL,
       },
     );
   // Stringify all values so we can feed into webpack DefinePlugin

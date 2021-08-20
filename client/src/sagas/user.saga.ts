@@ -5,7 +5,7 @@ import { UserActionTypes } from 'literals';
 
 export function* getUser(): Generator {
   try {
-    const user = yield call(request, `http://localhost:3000/me`, {
+    const user = yield call(request, `${process.env.API_URL}/me`, {
       headers: {
         Authorization: `Bearer ${fetchJwt()}`,
       },
