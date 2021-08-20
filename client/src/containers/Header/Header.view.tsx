@@ -44,11 +44,6 @@ export const Settings = () => (
   </button>
 );
 
-export const Avatar = () => (
-  <button className={classes['action-btn']}>
-    <img
-      src="https://avatars.githubusercontent.com/u/43672979?s=60&v=4"
-      className={classes['avatar']}
-    />
-  </button>
+export const Avatar = (props: { avatarUrl?: string }) => (
+  <img src={props.avatarUrl} className={classes['avatar']} />
 );

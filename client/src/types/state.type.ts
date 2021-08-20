@@ -1,8 +1,9 @@
 import { Dispatch } from 'redux';
 import { Variants } from 'styled-minimal/lib/types';
 import { ValueOf } from 'type-fest';
-
 import { AlertPosition, Icons, Status } from './common.type';
+
+import { UserState } from './user.type';
 
 export interface AlertData {
   icon: Icons;
@@ -30,10 +31,10 @@ export interface GitHubState {
   topics: Record<string, Topic>;
 }
 
-export interface UserState {
+/* export interface UserState {
   isAuthenticated: boolean;
   status: ValueOf<Status>;
-}
+} */
 
 export interface StoreState {
   app: AppState;

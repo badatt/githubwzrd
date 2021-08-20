@@ -9,7 +9,7 @@ function unauthorized(body, callback) {
       'set-cookie': [
         {
           key: 'Set-Cookie',
-          value: cookie.serialize('TOKEN', '', { path: '/', expires: new Date(1970, 1, 1, 0, 0, 0, 0) }),
+          value: cookie.serialize('Token', '', { path: '/', expires: new Date(1970, 1, 1, 0, 0, 0, 0) }),
         },
       ],
     },
