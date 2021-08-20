@@ -41,11 +41,7 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
               <HeaderView.ThemeSwitcher mode="dark" switch={setThemeMode} />
             )}
             <HeaderView.Settings />
-            {isAvatarLoaded && (
-              <HeaderView.UserDetail>
-                <HeaderView.Avatar avatarUrl={data.avatarUrl} />
-              </HeaderView.UserDetail>
-            )}
+            {isAvatarLoaded && <HeaderView.Avatar avatarUrl={data.avatarUrl} />}
           </HeaderView.Navigation>
         </HeaderView.Header>
         <HeaderView.Separator />
