@@ -10,14 +10,12 @@ export function* getUser(): Generator {
         Authorization: `Bearer ${fetchJwt()}`,
       },
     });
-    console.log('User ', user);
 
     yield put({
       type: UserActionTypes.USER_GET_SUCCESS,
       payload: user,
     });
   } catch (err) {
-    console.log('Error ', err);
     yield put({
       type: UserActionTypes.USER_GET_FAILURE,
       payload: err,

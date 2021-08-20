@@ -1,5 +1,5 @@
 import { createAction } from 'modules/helpers';
 
-import { ActionTypes } from 'literals';
+import { SettingsActionTypes } from 'literals';
 
-export const getOrgRepos = createAction(ActionTypes.SETTINGS_GET_REPOS_REQUEST, () => ({}));
+export const getOrgRepos = createAction(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, () => ({}));

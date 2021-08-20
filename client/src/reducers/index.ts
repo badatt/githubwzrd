@@ -1,15 +1,12 @@
-import app, { appState } from './app';
-import github, { githubState } from './github';
+import app, { appState } from './app.reducer';
 import user, { userState } from './user.reducer';
 
 export const initialState = {
   app: appState,
-  github: githubState,
   user: userState,
 };
 
 export default {
   ...app,
-  ...github,
   ...user,
 };

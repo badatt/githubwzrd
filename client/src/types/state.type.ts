@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 import { Variants } from 'styled-minimal/lib/types';
-import { ValueOf } from 'type-fest';
-import { AlertPosition, Icons, Status } from './common.type';
+import { AlertPosition, Icons } from './common.type';
 
 import { UserState } from './user.type';
 
@@ -14,31 +13,12 @@ export interface AlertData {
   variant: Variants;
 }
 
-export interface Topic {
-  cached: boolean;
-  data: Array<Record<string, any>>;
-  message: string;
-  status: ValueOf<Status>;
-  updatedAt: number;
-}
-
 export interface AppState {
   alerts: AlertData[];
 }
 
-export interface GitHubState {
-  query: string;
-  topics: Record<string, Topic>;
-}
-
-/* export interface UserState {
-  isAuthenticated: boolean;
-  status: ValueOf<Status>;
-} */
-
 export interface StoreState {
   app: AppState;
-  github: GitHubState;
   user: UserState;
 }
 
