@@ -6,7 +6,7 @@ function Dashboard() {
     <Layout title="Dashboard">
       <div className="container mx-auto">
         <div className="grid grid-cols-2 gap-4">
-          {Array.from(Array(50).keys()).map(k => (
+          {Array.from(Array(4).keys()).map(k => (
             <Random key={k} />
           ))}
         </div>
