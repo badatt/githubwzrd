@@ -1,7 +1,3 @@
 .main {
-  @apply top-16 bg-gray-200 relative;
-}
-
-:global(.dark) .main {
-  @apply bg-gray-800;
+  @apply mx-4 top-12 relative;
 }

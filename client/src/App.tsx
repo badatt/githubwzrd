@@ -4,14 +4,14 @@ import { Route, Router, Switch } from 'react-router-dom';
 import './styles/global.css';
 import history from 'modules/history';
 import SystemAlerts from 'containers/SystemAlerts';
-import HomeRoute from 'routes/Home.route';
-import NotFoundRoute from 'routes/NotFound.route';
+import { HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
 
 function App() {
   return (
     <Router history={history}>
       <Switch>
-        <Route component={HomeRoute} path="/" />
+        <Route exact path="/settings" component={SettingsRoute} />
+        <Route exact path="/" component={HomeRoute} />
         <Route component={NotFoundRoute} />
       </Switch>
       <SystemAlerts />

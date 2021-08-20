@@ -12679,6 +12679,11 @@ react-from-dom@^0.6.0:
   resolved "https://registry.yarnpkg.com/react-from-dom/-/react-from-dom-0.6.1.tgz#6740f5a3d79e0c354703e5c096b8fdfe0db71b0f"
   integrity sha512-7aAZx7LhRnmR51W5XtmTBYHGFl2n1AdEk1uoXLuzHa1OoGXrxOW/iwLcudvgp6BGX/l4Yh1rtMrIzvhlvbVddg==
 
+react-headless-tabs@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-headless-tabs/-/react-headless-tabs-3.0.1.tgz#8813756f2168c4a42694c6823888db7f02e2f249"
+  integrity sha512-+AYAbpkI3S7++qS7dx3JZ2yJzgP5M6iYiFPWy4yVx3Qq16bQnZrEbI/XIpGGSkj0G4j11VhtEjd/MOAiIq2sLQ==
+
 react-helmet-async@1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/react-helmet-async/-/react-helmet-async-1.0.9.tgz#5b9ed2059de6b4aab47f769532f9fbcbce16c5ca"

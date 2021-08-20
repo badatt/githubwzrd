@@ -1,0 +1,8 @@
+.main {
+  @apply p-4 bg-gray-50 text-gray-800
+    shadow-lg rounded-md w-max;
+}
+
+:global(.dark) .main {
+  @apply bg-gray-900 text-gray-200;
+}
