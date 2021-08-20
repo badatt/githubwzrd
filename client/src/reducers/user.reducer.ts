@@ -12,14 +12,14 @@ export const userState: UserState = {
 export default {
   user: createReducer<UserState>(
     {
-      [UserActionTypes.USER_GET_REQUEST]: (draft: UserState, { payload }) => {
+      [UserActionTypes.USER_GET_REQUEST]: (draft: UserState, {}) => {
         draft.status = STATUS.RUNNING;
       },
       [UserActionTypes.USER_GET_SUCCESS]: (draft, { payload }) => {
         draft.data = payload;
         draft.status = STATUS.SUCCESS;
       },
-      [UserActionTypes.USER_GET_FAILURE]: (draft, { payload }) => {
+      [UserActionTypes.USER_GET_FAILURE]: (draft, {}) => {
         draft.status = STATUS.ERROR;
       },
     },
