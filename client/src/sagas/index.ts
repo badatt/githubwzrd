@@ -1,7 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 
 import github from './github';
-import user from './user';
+import user from './user.saga';
 
 /**
  * rootSaga

@@ -20,5 +20,5 @@
 .footer {
   @apply container mx-auto flex 
   flex-wrap items-center align-middle 
-  text-center h-full justify-between;
+  h-full justify-between;
 }

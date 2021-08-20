@@ -2,11 +2,11 @@ import { createReducer } from 'modules/helpers';
 
 import { ActionTypes, STATUS } from 'literals';
 
-import { UserState } from 'types';
+import { UserState } from 'types/user.type';
 
-export const userState = {
-  isAuthenticated: false,
+export const userState: UserState = {
   status: STATUS.IDLE,
+  data: {},
 };
 
 export default {
@@ -16,14 +16,12 @@ export default {
         draft.status = STATUS.RUNNING;
       },
       [ActionTypes.USER_LOGIN_SUCCESS]: draft => {
-        draft.isAuthenticated = true;
         draft.status = STATUS.READY;
       },
       [ActionTypes.USER_LOGOUT_REQUEST]: draft => {
         draft.status = STATUS.RUNNING;
       },
       [ActionTypes.USER_LOGOUT_SUCCESS]: draft => {
-        draft.isAuthenticated = false;
         draft.status = STATUS.IDLE;
       },
     },

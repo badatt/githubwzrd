@@ -1,6 +1,6 @@
 import app, { appState } from './app';
 import github, { githubState } from './github';
-import user, { userState } from './user';
+import user, { userState } from './user.reducer';
 
 export const initialState = {
   app: appState,

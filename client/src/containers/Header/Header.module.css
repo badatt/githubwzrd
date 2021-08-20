@@ -10,7 +10,7 @@
 .header {
   @apply container mx-auto flex flex-wrap 
   items-center text-gray-800 align-middle 
-  text-center h-full justify-between;
+  h-full justify-between;
 }
 
 :global(.dark) .header {
@@ -27,7 +27,7 @@
 }
 
 .logo {
-  @apply text-3xl font-thin;
+  @apply text-3xl font-semibold;
 }
 
 .navigation {

@@ -26,3 +26,5 @@ export const STATUS: Status = {
   SUCCESS: 'success',
   ERROR: 'error',
 };
+
+export { default as UserActionTypes } from './user.literal';
