@@ -12,6 +12,10 @@
   divide-gray-200;
 }
 
+:global(.dark) .table-wrapper {
+  @apply divide-gray-800;
+}
+
 .table-head-wrapper {
   @apply bg-gray-100 divide-gray-200;
 }

@@ -29,9 +29,6 @@ const Layout: FC<Props> = (props: Props) => {
         />
       </Helmet>
       <LayoutView.LayoutMain>
-        {/* <Header />
-        <LayoutView.Layout>{props.children}</LayoutView.Layout>
-        <Footer /> */}
         <Header />
         <LayoutView.Layout>{props.children}</LayoutView.Layout>
         <Footer />
