@@ -1,12 +1,12 @@
 import React from 'react';
-import Layout from 'containers/Layout/Layout.container';
+import { Page } from 'components';
 import { SettingsContainer } from 'containers';
 
 function Settings() {
   return (
-    <Layout title="Settings">
+    <Page title="Settings">
       <SettingsContainer />
-    </Layout>
+    </Page>
   );
 }
 

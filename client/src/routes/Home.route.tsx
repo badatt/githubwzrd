@@ -1,9 +1,9 @@
 import React from 'react';
-import Layout from 'containers/Layout/Layout.container';
+import { Page } from 'components';
 
 function Dashboard() {
   return (
-    <Layout title="Dashboard">
+    <Page title="Dashboard">
       <div className="mx-auto">
         <div className="grid grid-cols-2 gap-4">
           {Array.from(Array(4).keys()).map(k => (
@@ -11,7 +11,7 @@ function Dashboard() {
           ))}
         </div>
       </div>
-    </Layout>
+    </Page>
   );
 }
 

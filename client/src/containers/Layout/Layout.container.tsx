@@ -1,44 +1,32 @@
-import React, { FC, Fragment } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { IChildrenProp, IElementProps } from 'types';
+import React, { Fragment } from 'react';
+import { Route, Router, Switch } from 'react-router-dom';
+import { Routes } from 'literals';
+import history from 'modules/history';
+import SystemAlerts from 'containers/SystemAlerts';
+import { HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
 import Header from 'containers/Header/Header.container';
 import Footer from 'containers/Footer/Footer.container';
 import * as LayoutView from './Layout.view';
 
-interface ILayOutProps {
-  title?: string;
-}
-
-type Props = IChildrenProp & IElementProps & ILayOutProps;
-
-const Layout: FC<Props> = (props: Props) => {
+const Layout = () => {
   return (
     <Fragment>
-      <Helmet
-        defaultTitle="Githubwzrd"
-        title="Githubwzrd"
-        defer={false}
-        encodeSpecialCharacters
-        htmlAttributes={{ lang: 'en-us' }}
-        titleAttributes={{ itemprop: 'name', lang: 'en-us' }}
-        titleTemplate={`${props.title} | %s`}
-      >
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-          rel="stylesheet"
-        />
-      </Helmet>
       <LayoutView.LayoutMain>
         <Header />
-        <LayoutView.Layout>{props.children}</LayoutView.Layout>
+        <LayoutView.Layout>
+          <Router history={history}>
+            <Switch>
+              <Route exact path={Routes.SETTINGS} component={SettingsRoute} />
+              <Route exact path={Routes.HOME} component={HomeRoute} />
+              <Route component={NotFoundRoute} />
+            </Switch>
+            <SystemAlerts />
+          </Router>
+        </LayoutView.Layout>
         <Footer />
       </LayoutView.LayoutMain>
     </Fragment>
   );
-};
-
-Layout.defaultProps = {
-  title: 'Githubwzrd',
 };
 
 export default Layout;

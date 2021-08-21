@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/lib/integration/react';
-import { configStore } from 'store';
 
 import { showAlert } from 'actions';
 
-import Loader from 'components/Loader';
 import Reload from 'components/Reload';
-import ErrorHandler from 'containers/ErrorHandler';
+import { configStore } from 'store';
 
 //import reportWebVitals from './reportWebVitals';
 import App from './App';
@@ -19,18 +14,7 @@ const { persistor, store } = configStore();
 
 window.store = store;
 
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={<Loader block size={100} />} persistor={persistor}>
-      <ErrorHandler>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </ErrorHandler>
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root'),
-);
+ReactDOM.render(<App store={store} persistor={persistor} />, document.getElementById('root'));
 
 /* istanbul ignore next */
 register({
