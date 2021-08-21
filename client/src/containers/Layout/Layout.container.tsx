@@ -28,11 +28,14 @@ const Layout: FC<Props> = (props: Props) => {
           rel="stylesheet"
         />
       </Helmet>
-      <Header />
       <LayoutView.LayoutMain>
+        {/* <Header />
         <LayoutView.Layout>{props.children}</LayoutView.Layout>
+        <Footer /> */}
+        <Header />
+        <LayoutView.Layout>{props.children}</LayoutView.Layout>
+        <Footer />
       </LayoutView.LayoutMain>
-      <Footer />
     </Fragment>
   );
 };

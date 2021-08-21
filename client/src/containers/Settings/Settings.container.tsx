@@ -26,27 +26,29 @@ const Settings: React.FC = () => {
 
   return (
     <Fragment>
-      <SettingsView.TabsNavigation>
-        {tabs.map(t => (
-          <SettingsView.TabSelector
-            key={locationIdGenerator(t.name)}
-            isActive={selectedTab === locationIdGenerator(t.name)}
-            onClick={() => setSelectedTab(locationIdGenerator(t.name))}
-            id={locationIdGenerator(t.name)}
-          >
-            {t.name}
-          </SettingsView.TabSelector>
-        ))}
-      </SettingsView.TabsNavigation>
       <SettingsView.TabsContainer>
-        {tabs.map(t => (
-          <SettingsView.Tab
-            key={locationIdGenerator(t.name)}
-            isHidden={selectedTab !== locationIdGenerator(t.name)}
-          >
-            {t.panel}
-          </SettingsView.Tab>
-        ))}
+        <SettingsView.TabsNavigation>
+          {tabs.map(t => (
+            <SettingsView.TabSelector
+              key={locationIdGenerator(t.name)}
+              isActive={selectedTab === locationIdGenerator(t.name)}
+              onClick={() => setSelectedTab(locationIdGenerator(t.name))}
+              id={locationIdGenerator(t.name)}
+            >
+              {t.name}
+            </SettingsView.TabSelector>
+          ))}
+        </SettingsView.TabsNavigation>
+        <SettingsView.Tabs>
+          {tabs.map(t => (
+            <SettingsView.Tab
+              key={locationIdGenerator(t.name)}
+              isHidden={selectedTab !== locationIdGenerator(t.name)}
+            >
+              {t.panel}
+            </SettingsView.Tab>
+          ))}
+        </SettingsView.Tabs>
       </SettingsView.TabsContainer>
     </Fragment>
   );

@@ -1,7 +1,35 @@
 .main {
-  @apply fixed w-full h-full top-12 -bottom-4 overflow-y-auto;
+  @apply flex flex-col w-full h-full;
+}
+
+.main > * {
+  @apply flex;
 }
 
 .layout {
-  @apply mx-4 relative;
+  @apply flex flex-1 mx-4 overflow-y-auto;
+}
+
+.layout::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.layout::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.layout::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-lg;
+}
+
+.layout::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+:global(.dark) .layout::-webkit-scrollbar-thumb {
+  @apply bg-gray-700;
+}
+
+:global(.dark) .layout::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
 }

@@ -5,6 +5,10 @@ import classes from './Settings.module.css';
 
 type Props = IChildrenProp & IElementProps;
 
+export const TabsContainer = (props: Props) => (
+  <div className={classes['tabs-container']}>{props.children}</div>
+);
+
 export const TabsNavigation = (props: Props) => (
   <nav className={classes['tabs-navigations']}>{props.children}</nav>
 );
@@ -26,9 +30,7 @@ export const TabSelector = (props: {
   </a>
 );
 
-export const TabsContainer = (props: Props) => (
-  <div className={classes['tabs-container']}>{props.children}</div>
-);
+export const Tabs = (props: Props) => <div className={classes['tabs']}>{props.children}</div>;
 
 export const Tab = (props: { isHidden: boolean; children: ReactNode }) => (
   <TabPanel hidden={props.isHidden}>{props.children}</TabPanel>
