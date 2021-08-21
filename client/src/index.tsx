@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { showAlert } from 'actions';
+import { showAlert } from 'actions/app.action';
 
 import Reload from 'components/Reload';
 import { configStore } from 'store';
