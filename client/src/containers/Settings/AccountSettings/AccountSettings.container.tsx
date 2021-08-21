@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useShallowEqualSelector } from 'modules/hooks';
-import { Paper } from 'components';
+import { Paper, Separator } from 'components';
 
 import * as AccountSettingsView from './AccountSettings.view';
 
@@ -12,6 +12,7 @@ const AccountSettings: React.FC = () => {
     <Fragment>
       <Paper>
         <AccountSettingsView.Details {...data} />
+        <Separator />
         <AccountSettingsView.Note>
           The details are just for public view, for more details visit the{' '}
           <a href={data.url} target="_blank">

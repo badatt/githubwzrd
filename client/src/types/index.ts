@@ -6,6 +6,7 @@ type Children = ReactChild | Array<Children> | ReactPortal | Boolean;
 
 export interface IElementProps {
   className?: string;
+  onClick?: () => void;
 }
 
 export interface IChildrenProp {

@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
+import history from 'modules/history';
+import { Routes } from 'literals';
 import { getUser } from 'actions/user.action';
 import * as HeaderView from './Header.view';
 import { setDarkMode, setLightMode, currentMode } from 'styles/theme';
@@ -33,14 +35,14 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
     <Fragment>
       <HeaderView.HeaderMain>
         <HeaderView.Header>
-          <HeaderView.Logo />
+          <HeaderView.Logo onClick={() => history.push(Routes.HOME)} />
           <HeaderView.Navigation>
             {themeMode === 'light' ? (
               <HeaderView.ThemeSwitcher mode="light" switch={setThemeMode} />
             ) : (
               <HeaderView.ThemeSwitcher mode="dark" switch={setThemeMode} />
             )}
-            <HeaderView.Settings />
+            <HeaderView.Settings onClick={() => history.push(Routes.SETTINGS)} />
             {isAvatarLoaded && <HeaderView.Avatar avatarUrl={data.avatarUrl} />}
           </HeaderView.Navigation>
         </HeaderView.Header>

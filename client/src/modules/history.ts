@@ -18,5 +18,7 @@ history.listen(() => {
 
 const { go, goBack, push, replace } = history;
 
-export { go, goBack, push, replace };
+const locationIdGenerator = (loc: string): string => loc.toLowerCase().replace(/\W/gi, '-');
+
+export { go, goBack, push, replace, locationIdGenerator };
 export default history;

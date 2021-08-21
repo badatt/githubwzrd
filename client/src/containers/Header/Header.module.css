@@ -27,7 +27,7 @@
 }
 
 .logo {
-  @apply text-lg font-semibold;
+  @apply text-lg font-semibold cursor-pointer;
 }
 
 .navigation {

@@ -13,7 +13,11 @@ export const Header = (props: Props) => <main className={classes['header']}>{pro
 
 export const Separator = () => <hr className={classes['separator']} />;
 
-export const Logo = () => <div className={classes['logo']}>Githubwzrd</div>;
+export const Logo = (props: IElementProps) => (
+  <div className={classes['logo']} onClick={props.onClick}>
+    Githubwzrd
+  </div>
+);
 
 export const Navigation = (props: Props) => (
   <nav className={classes['navigation']}>{props.children}</nav>
@@ -38,8 +42,8 @@ export const ThemeSwitcher = (props: IThemeSwitcherProps) => (
   </Fragment>
 );
 
-export const Settings = () => (
-  <button className={classes['action-btn']}>
+export const Settings = (props: IElementProps) => (
+  <button className={classes['action-btn']} onClick={props.onClick}>
     <GearIcon className={classes['action-icon']} />
   </button>
 );
