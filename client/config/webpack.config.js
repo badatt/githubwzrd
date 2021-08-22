@@ -429,7 +429,7 @@ module.exports = webpackEnv => {
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'css/bundle.[git-hash].css',
-          chunkFilename: 'css/bundle.[git-hash].chunk.css',
+          chunkFilename: 'css/bundle.[name].[git-hash].chunk.css',
         }),
       isEnvDevelopment &&
         new CircularDependencyPlugin({
