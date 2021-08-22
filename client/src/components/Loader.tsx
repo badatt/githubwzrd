@@ -171,7 +171,7 @@ Loader.defaultProps = {
   block: false,
   color: appColor,
   size: 32,
-  type: 'grow',
+  type: 'rotate',
 };
 
 export default Loader;
