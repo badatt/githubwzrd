@@ -39,8 +39,8 @@
 <body>
   <div id="root">
     <div class="pre-loader">
-      <div class="loading-icon-wrapper">
-        <div class="loading-icon"></div>
+      <div class="loader-grow-main">
+        <div class="loader-grow"></div>
       </div>
       <div class="loading-text">Please wait while app loads...</div>
       <style>
@@ -53,6 +53,25 @@
           color: white;
         }
 
+        @keyframes loadingIcon {
+          0% {
+            height: 0;
+            width: 0;
+          }
+
+          30% {
+            border-width: 32px;
+            opacity: 1;
+          }
+
+          100% {
+            border-width: 0;
+            height: 80px;
+            opacity: 0;
+            width: 80px;
+          }
+        }
+
         .pre-loader {
           display: flex;
           flex-direction: column;
@@ -62,40 +81,21 @@
           align-items: center;
         }
 
-        .loading-icon-wrapper {
+        .loader-grow-main {
           display: -webkit-inline-box;
           display: -webkit-inline-flex;
           display: -ms-inline-flexbox;
           display: inline-flex;
-          height: 60px;
+          height: 80px;
           margin: 0 auto;
           position: relative;
-          width: 60px;
+          width: 80px;
         }
 
-        @keyframes loadingIcon {
-          0% {
-            height: 0;
-            width: 0;
-          }
-
-          30% {
-            border-width: 20px;
-            opacity: 1;
-          }
-
-          100% {
-            border-width: 0;
-            height: 40px;
-            opacity: 0;
-            width: 40px;
-          }
-        }
-
-        .loading-icon {
+        .loader-grow {
           -webkit-animation: loadingIcon 1.15s infinite cubic-bezier(0.2, 0.6, 0.36, 1);
           animation: loadingIcon 1.15s infinite cubic-bezier(0.2, 0.6, 0.36, 1);
-          border: 0 solid #00b4d5;
+          border: 0 solid rgba(79, 70, 229, 1);
           border-radius: 50%;
           box-sizing: border-box;
           height: 0;
@@ -106,6 +106,10 @@
           -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
           width: 0;
+        }
+
+        .dark .loader-grow {
+          border: 0 solid rgba(129, 140, 248, 1);
         }
 
         .loading-text {

@@ -10370,7 +10370,7 @@ mini-create-react-context@^0.4.0:
     "@babel/runtime" "^7.12.1"
     tiny-warning "^1.0.3"
 
-mini-css-class-name@^0.12.2:
+mini-css-class-name@0.12.2:
   version "0.12.2"
   resolved "https://registry.yarnpkg.com/mini-css-class-name/-/mini-css-class-name-0.12.2.tgz#6542778729e67591bad185d5e35d095eafee7e77"
   integrity sha512-yrnXuMk+nh++vUnnTN5dRsGSfe3wu+xd5P08xKJDESSacGXAIVLpsIg0sPmOTj013Iy3bAn7Bmw5gFVyLNynYA==

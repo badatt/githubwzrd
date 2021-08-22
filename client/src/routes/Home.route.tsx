@@ -1,16 +1,10 @@
 import React from 'react';
-import { Page } from 'components';
+import { Page, Paper } from 'components';
 
 function Dashboard() {
   return (
     <Page title="Dashboard">
-      <div className="mx-auto">
-        <div className="grid grid-cols-2 gap-4">
-          {Array.from(Array(40).keys()).map(k => (
-            <Random key={k} />
-          ))}
-        </div>
-      </div>
+      <Paper>Welcome !</Paper>
     </Page>
   );
 }
