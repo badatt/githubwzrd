@@ -1,16 +1,9 @@
 .main {
-  @apply flex justify-center 
-  flex-col p-0 w-full h-40 
-  pt-4 text-gray-800 bg-gray-200;
-}
-
-:global(.dark) .main {
-  @apply bg-gray-800 text-gray-50;
+  @apply flex flex-col mt-1 h-6;
 }
 
 .separator {
-  @apply container w-full 
-  self-center border-gray-400 h-1;
+  @apply border-gray-400 h-1;
 }
 
 :global(.dark) .separator {
@@ -18,7 +11,10 @@
 }
 
 .footer {
-  @apply container mx-auto flex 
-  flex-wrap items-center align-middle 
-  h-full justify-between;
+  @apply mx-4 flex items-center
+  h-full justify-between text-gray-800;
+}
+
+:global(.dark) .footer {
+  @apply bg-gray-800 text-gray-200;
 }

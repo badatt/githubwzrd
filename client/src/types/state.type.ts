@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux';
 import { Variants } from 'styled-minimal/lib/types';
 import { AlertPosition, Icons } from './common.type';
-
 import { UserState } from './user.type';
+import { SettingsState } from './settings.type';
 
 export interface AlertData {
   icon: Icons;
@@ -18,8 +18,10 @@ export interface AppState {
 }
 
 export interface StoreState {
+  form: {};
   app: AppState;
   user: UserState;
+  settings: SettingsState;
 }
 
 export interface WithDispatch {

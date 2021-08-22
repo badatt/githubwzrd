@@ -1,21 +1,31 @@
 import React from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
 
 import './styles/global.css';
-import history from 'modules/history';
-import SystemAlerts from 'containers/SystemAlerts';
-import HomeRoute from 'routes/Home.route';
-import NotFoundRoute from 'routes/NotFound.route';
 
-function App() {
+import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+
+import LayoutContainer from 'containers/Layout/Layout.container';
+import { Loader } from 'components';
+import ErrorHandler from 'containers/ErrorHandler';
+
+interface IAppProps {
+  store: any;
+  persistor: any;
+}
+
+function App(props: IAppProps) {
   return (
-    <Router history={history}>
-      <Switch>
-        <Route component={HomeRoute} path="/" />
-        <Route component={NotFoundRoute} />
-      </Switch>
-      <SystemAlerts />
-    </Router>
+    <Provider store={props.store}>
+      <PersistGate loading={<Loader block />} persistor={props.persistor}>
+        <ErrorHandler>
+          <HelmetProvider>
+            <LayoutContainer />
+          </HelmetProvider>
+        </ErrorHandler>
+      </PersistGate>
+    </Provider>
   );
 }
 

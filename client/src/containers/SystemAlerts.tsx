@@ -7,7 +7,7 @@ import { responsive } from 'styled-minimal';
 import { useShallowEqualSelector } from 'modules/hooks';
 import { spacer } from 'modules/theme';
 
-import { hideAlert } from 'actions';
+import { hideAlert } from 'actions/app.action';
 
 import Alert from 'components/Alert';
 import Transition from 'components/Transition';

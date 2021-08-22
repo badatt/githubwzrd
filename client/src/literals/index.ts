@@ -8,6 +8,11 @@ export const STATUS: Status = {
   ERROR: 'error',
 };
 
+export const Routes = {
+  HOME: '/',
+  SETTINGS: '/settings',
+};
+
 export { default as AppActionTypes } from './app.literal';
 export { default as UserActionTypes } from './user.literal';
 export { default as SettingsActionTypes } from './settings.literal';

@@ -10,7 +10,7 @@ export const setLightMode = () => {
   setTheme();
 };
 
-export const currentMode = (): string => {
+export const currentTheme = (): string => {
   return localStorage.theme || 'light';
 };
 

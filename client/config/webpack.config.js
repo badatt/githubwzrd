@@ -25,6 +25,7 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 const postcssNormalize = require('postcss-normalize');
 const safePostCssParser = require('postcss-safe-parser');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const createLocalIdent = require('mini-css-class-name/css-loader');
 
 const getClientEnvironment = require('./env');
 const modules = require('./modules');
@@ -95,6 +96,9 @@ module.exports = webpackEnv => {
       loader: require.resolve('css-loader'),
       options: {
         sourceMap: isEnvProduction,
+        modules: {
+          getLocalIdent: createLocalIdent(),
+        },
       },
     },
     {
@@ -429,7 +433,7 @@ module.exports = webpackEnv => {
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'css/bundle.[git-hash].css',
-          chunkFilename: 'css/bundle.[git-hash].chunk.css',
+          chunkFilename: 'css/bundle.[name].[git-hash].chunk.css',
         }),
       isEnvDevelopment &&
         new CircularDependencyPlugin({

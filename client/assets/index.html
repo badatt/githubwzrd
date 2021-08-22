@@ -22,11 +22,115 @@
   <link rel="icon" type="image/png" href="%PUBLIC_URL%/media/meta-icons/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/media/meta-icons/apple-touch-icon.png" />
   <link rel="mask-icon" href="%PUBLIC_URL%/media/meta-icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      padding: 0;
+    }
+
+    #root {
+      display: flex;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
   <div id="root">
-    <div>Loading...</div>
+    <div class="pre-loader">
+      <div class="loader-grow-main">
+        <div class="loader-grow"></div>
+      </div>
+      <div class="loading-text">Please wait while app loads...</div>
+      <style>
+        body {
+          background-color: rgba(229, 231, 235, 1);
+        }
+
+        .dark>body {
+          background-color: rgba(31, 41, 55, 1);
+          color: white;
+        }
+
+        @keyframes loadingIcon {
+          0% {
+            height: 0;
+            width: 0;
+          }
+
+          30% {
+            border-width: 32px;
+            opacity: 1;
+          }
+
+          100% {
+            border-width: 0;
+            height: 80px;
+            opacity: 0;
+            width: 80px;
+          }
+        }
+
+        .pre-loader {
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .loader-grow-main {
+          display: -webkit-inline-box;
+          display: -webkit-inline-flex;
+          display: -ms-inline-flexbox;
+          display: inline-flex;
+          height: 80px;
+          margin: 0 auto;
+          position: relative;
+          width: 80px;
+        }
+
+        .loader-grow {
+          -webkit-animation: loadingIcon 1.15s infinite cubic-bezier(0.2, 0.6, 0.36, 1);
+          animation: loadingIcon 1.15s infinite cubic-bezier(0.2, 0.6, 0.36, 1);
+          border: 0 solid rgba(79, 70, 229, 1);
+          border-radius: 50%;
+          box-sizing: border-box;
+          height: 0;
+          left: 50%;
+          position: absolute;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          width: 0;
+        }
+
+        .dark .loader-grow {
+          border: 0 solid rgba(129, 140, 248, 1);
+        }
+
+        .loading-text {
+          font-family: system-ui, -apple-system,
+            /* Firefox supports this but not yet `system-ui` */
+            'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+          ;
+          font-size: large;
+          -webkit-font-smoothing: antialiased;
+          font-weight: 200;
+        }
+      </style>
+      <script>
+        console.log("============", localStorage.theme);
+        if (localStorage.theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      </script>
+    </div>
   </div>
   <noscript>
     <div style="align-items: center; display: flex; font-size: 30px; justify-content: center; min-height: 100vh;">

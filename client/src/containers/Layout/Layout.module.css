@@ -1,7 +1,15 @@
 .main {
-  @apply top-16 bg-gray-200 relative;
+  @apply flex flex-col w-full h-full bg-gray-200;
 }
 
 :global(.dark) .main {
   @apply bg-gray-800;
+}
+
+.main > * {
+  @apply flex;
+}
+
+.layout {
+  @apply flex flex-1 mx-4 overflow-y-auto;
 }

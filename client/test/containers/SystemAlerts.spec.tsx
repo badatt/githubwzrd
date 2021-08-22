@@ -1,9 +1,9 @@
 import React from 'react';
 import { config } from 'react-transition-group';
 
-import { ActionTypes } from 'literals';
+import { AppActionTypes } from 'literals';
 
-import { showAlert } from 'actions';
+import { showAlert } from 'actions/app.action';
 
 import SystemAlerts from 'containers/SystemAlerts';
 
@@ -42,7 +42,7 @@ describe('SystemAlerts', () => {
     jest.runOnlyPendingTimers();
 
     expect(mockDispatch).toHaveBeenCalledWith({
-      type: ActionTypes.HIDE_ALERT,
+      type: AppActionTypes.HIDE_ALERT,
       payload: { id: 'ABCDEF' },
     });
 
