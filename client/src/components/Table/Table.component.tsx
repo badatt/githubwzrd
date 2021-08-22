@@ -1,4 +1,6 @@
 import React from 'react';
+import clsx from 'clsx';
+import { IElementProps } from 'types';
 import classes from './Table.module.css';
 
 export interface IColumn {
@@ -19,9 +21,11 @@ export interface ITableData {
   rows?: IRow[];
 }
 
-const Table = (props: ITableData): JSX.Element => {
+type Props = IElementProps & ITableData;
+
+const Table = (props: Props): JSX.Element => {
   return (
-    <section className={classes['main']}>
+    <section className={clsx(classes['main'], props.className)}>
       <table className={classes['table-wrapper']}>
         <thead className={classes['table-head-wrapper']}>
           <tr>

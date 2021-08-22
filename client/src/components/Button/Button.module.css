@@ -1,0 +1,103 @@
+.main {
+  @apply uppercase text-gray-100 flex;
+}
+
+.btn-icon {
+  @apply mr-1;
+}
+
+.primary {
+  @apply text-indigo-600;
+}
+
+.primary.contained {
+  @apply bg-indigo-600 text-gray-100;
+}
+
+.primary.bordered {
+  @apply text-indigo-600 border-indigo-600 border-2 border-solid;
+}
+
+.secondary {
+  @apply text-green-600;
+}
+
+.secondary.contained {
+  @apply bg-green-600 text-gray-100;
+}
+
+.secondary.bordered {
+  @apply text-green-600 border-green-600 border-2 border-solid;
+}
+
+.danger {
+  @apply text-red-600;
+}
+
+.danger.contained {
+  @apply bg-red-600 text-gray-100;
+}
+
+.danger.bordered {
+  @apply text-red-600 border-red-600 border-2 border-solid;
+}
+
+.neutral {
+  @apply text-gray-500;
+}
+
+.neutral.contained {
+  @apply bg-gray-500 text-gray-100;
+}
+
+.neutral.bordered {
+  @apply text-gray-500 border-gray-100 border-2 border-solid;
+}
+
+.xs {
+  @apply py-1 px-2 rounded-sm text-2xs;
+}
+
+.xs .btn-icon {
+  @apply w-3;
+}
+
+.sm {
+  @apply py-1 px-2 rounded-sm text-xs;
+}
+
+.sm .btn-icon {
+  @apply w-4;
+}
+
+.md {
+  @apply py-2 px-4 rounded-md text-sm;
+}
+
+.md .btn-icon {
+  @apply w-5;
+}
+
+.lg {
+  @apply py-3 px-5 rounded-md text-lg;
+}
+
+.lg .btn-icon {
+  @apply w-7;
+}
+
+.xl {
+  @apply py-3 px-7 rounded-md text-2xl;
+}
+
+.xl .btn-icon {
+  @apply w-9;
+}
+
+.disabled {
+  @apply cursor-not-allowed bg-gray-400;
+}
+
+.full-width {
+  @apply w-full;
+}
