@@ -3,6 +3,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchJwt } from 'modules/auth';
 import { SettingsActionTypes } from 'literals';
 import { StoreAction } from 'types';
+import { getUser } from 'actions/user.action';
 
 export function* getRepos(): Generator {
   try {
@@ -27,7 +28,6 @@ export function* getRepos(): Generator {
 export function* saveUserRepos({ payload }: StoreAction): Generator {
   try {
     const { repos } = payload;
-    console.log('--- Saga', repos);
     const body = {
       repos,
     };
@@ -42,6 +42,8 @@ export function* saveUserRepos({ payload }: StoreAction): Generator {
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_SUCCESS,
     });
+
+    yield put(getUser());
   } catch (err) {
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_FAILURE,
