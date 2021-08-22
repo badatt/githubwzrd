@@ -30,6 +30,7 @@ const Button = (props: Props): JSX.Element => {
         props.bordered && classes['bordered'],
         props.contained && !props.bordered && classes['contained'],
       )}
+      onClick={props.onClick}
     >
       <span className={classes['btn-icon']}>{props.icon && <i>{props.icon}</i>}</span>
       <span>{props.text}</span>

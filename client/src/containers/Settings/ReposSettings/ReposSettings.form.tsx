@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { connect } from 'react-redux';
+import { Field, reduxForm, InjectedFormProps, getFormValues } from 'redux-form';
 import { ITableData } from 'components/Table/Table.component';
-
 import * as ReposSettingsView from './ReposSettings.view';
-import { Checkbox } from 'components';
 import { ReposData } from 'types/settings.type';
+
+export const formName = 'reposSettingsForm';
 
 export interface IProps {
   repos?: ReposData[];
@@ -12,13 +13,13 @@ export interface IProps {
 }
 
 export interface IReposSettingsFormData {
-  repos?: string[];
+  selectedRepos?: string[];
 }
 
-const ReposSettingsForm: React.FC<InjectedFormProps<IReposSettingsFormData> & IProps> = ({
-  handleSubmit,
+let ReposSettingsForm: React.FC<InjectedFormProps<IReposSettingsFormData> & IProps> = ({
   repos,
   tableData,
+  handleSubmit,
 }) => {
   const [reposTableData, setReposTableData] = useState(tableData);
   useEffect(() => {
@@ -45,6 +46,13 @@ const ReposSettingsForm: React.FC<InjectedFormProps<IReposSettingsFormData> & IP
   );
 };
 
+const reposSettingsFormSelector = getFormValues(formName);
+
+ReposSettingsForm = connect(state => {
+  const selectedRepos = reposSettingsFormSelector(state);
+  return { selectedRepos };
+})(ReposSettingsForm);
+
 export default reduxForm<IReposSettingsFormData, IProps>({
-  form: 'reposSettingsForm',
+  form: formName,
 })(ReposSettingsForm);
