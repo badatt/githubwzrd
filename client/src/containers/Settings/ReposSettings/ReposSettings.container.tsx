@@ -2,12 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
-
 import { getRepos } from 'actions/settings.action';
-
-import { Table } from 'components';
 import { ITableData } from 'components/Table/Table.component';
-
+import { Checkbox } from 'components';
 import * as ReposSettingsView from './ReposSettings.view';
 
 const ReposSettings: React.FC<{ tableData?: ITableData }> = ({ tableData }) => {
@@ -30,14 +27,13 @@ const ReposSettings: React.FC<{ tableData?: ITableData }> = ({ tableData }) => {
     const rtRows = repos.map(r => ({
       cells: [
         {
-          element: <div>{r.name}</div>,
+          element: r.name,
         },
         {
-          element: <div> </div>,
+          element: <Checkbox />,
         },
       ],
     }));
-    console.log(rtCols, rtRows);
     setReposTableData({
       columns: rtCols,
       rows: rtRows,
@@ -48,7 +44,7 @@ const ReposSettings: React.FC<{ tableData?: ITableData }> = ({ tableData }) => {
     <Fragment>
       <ReposSettingsView.ReposSettingsMain>
         <ReposSettingsView.ReposSaveBtn />
-        {!isReposEmpty && <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />}
+        {!isReposEmpty && <ReposSettingsView.ReposTable {...reposTableData} />}
       </ReposSettingsView.ReposSettingsMain>
     </Fragment>
   );

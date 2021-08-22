@@ -9,7 +9,7 @@ export interface IColumn {
 }
 
 export interface ICell {
-  element?: JSX.Element;
+  element?: JSX.Element | string | number | boolean;
 }
 
 export interface IRow {
