@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { submit } from 'redux-form';
 import { useMount } from 'react-use';

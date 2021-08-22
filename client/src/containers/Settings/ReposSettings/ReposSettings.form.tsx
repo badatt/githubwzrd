@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm, InjectedFormProps, getFormValues } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { ITableData } from 'components/Table/Table.component';
 import * as ReposSettingsView from './ReposSettings.view';
 import { ReposData } from 'types/settings.type';
+import { StoreState } from 'types';
 
 export const formName = 'reposSettingsForm';
 
 export interface IProps {
   repos?: ReposData[];
   tableData?: ITableData;
+  userSavedRepos?: {};
 }
 
-export interface IReposSettingsFormData {
-  selectedRepos?: string[];
-}
-
-let ReposSettingsForm: React.FC<InjectedFormProps<IReposSettingsFormData> & IProps> = ({
+const ReposSettingsForm: React.FC<IProps & InjectedFormProps<{}, IProps>> = ({
   repos,
   tableData,
   handleSubmit,
@@ -46,13 +44,14 @@ let ReposSettingsForm: React.FC<InjectedFormProps<IReposSettingsFormData> & IPro
   );
 };
 
-const reposSettingsFormSelector = getFormValues(formName);
-
-ReposSettingsForm = connect(state => {
-  const selectedRepos = reposSettingsFormSelector(state);
-  return { selectedRepos };
-})(ReposSettingsForm);
-
-export default reduxForm<IReposSettingsFormData, IProps>({
+const ReduxReposSettingsForm = reduxForm<{}, IProps>({
   form: formName,
 })(ReposSettingsForm);
+
+export default connect((state: StoreState) => ({
+  initialValues: (() => {
+    const selectedRepos: { [key: string]: boolean } = {};
+    state.user.data.repos?.forEach(r => (selectedRepos[r] = true));
+    return selectedRepos;
+  })(),
+}))(ReduxReposSettingsForm);
