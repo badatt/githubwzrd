@@ -1,5 +1,9 @@
 .main {
-  @apply flex flex-col w-full h-full;
+  @apply flex flex-col w-full h-full bg-gray-200;
+}
+
+:global(.dark) .main {
+  @apply bg-gray-800;
 }
 
 .main > * {

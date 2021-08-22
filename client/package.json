@@ -139,6 +139,7 @@
     "jest-watch-typeahead": "0.6.3",
     "lint-staged": "11.0.0",
     "markdown-loader": "6.0.0",
+    "mini-css-class-name": "0.12.2",
     "mini-css-extract-plugin": "1.6.0",
     "optimize-css-assets-webpack-plugin": "5.0.5",
     "pnp-webpack-plugin": "1.6.4",

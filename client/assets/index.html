@@ -22,23 +22,44 @@
   <link rel="icon" type="image/png" href="%PUBLIC_URL%/media/meta-icons/favicon-32x32.png" sizes="32x32" />
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/media/meta-icons/apple-touch-icon.png" />
   <link rel="mask-icon" href="%PUBLIC_URL%/media/meta-icons/safari-pinned-tab.svg" color="#5bbad5" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      padding: 0;
+    }
+
+    #root {
+      display: flex;
+      height: 100%;
+    }
+  </style>
 </head>
 
-<body class="bg-gray-200 dark:bg-gray-800 h-screen" style="margin: 0;">
-  <div id="root" class="flex h-full">
+<body>
+  <div id="root">
     <div class="pre-loader">
       <div class="loading-icon-wrapper">
         <div class="loading-icon"></div>
       </div>
       <div class="loading-text">Please wait while app loads...</div>
       <style>
+        body {
+          background-color: rgba(229, 231, 235, 1);
+        }
+
+        .dark>body {
+          background-color: rgba(31, 41, 55, 1);
+          color: white;
+        }
+
         .pre-loader {
           display: flex;
           flex-direction: column;
           height: 100vh;
+          width: 100%;
           justify-content: center;
           align-items: center;
-          background-color: rgba(229, 231, 235, 1);
         }
 
         .loading-icon-wrapper {
@@ -97,6 +118,14 @@
           font-weight: 200;
         }
       </style>
+      <script>
+        console.log("============", localStorage.theme);
+        if (localStorage.theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      </script>
     </div>
   </div>
   <noscript>
