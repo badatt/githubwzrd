@@ -11,8 +11,8 @@ export const ReposSettingsMain = (props: Props) => {
   return <Paper className={classes['main']}>{props.children}</Paper>;
 };
 
-export const ReposSaveBtn = () => {
-  return <Button text="save" icon={<CheckCircleIcon />} />;
+export const ReposSaveBtn = (props: IElementProps) => {
+  return <Button text="save" icon={<CheckCircleIcon />} onClick={props.onClick} />;
 };
 
 export const ReposTable = (props: ITableData) => {

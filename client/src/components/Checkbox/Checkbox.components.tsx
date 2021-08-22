@@ -3,12 +3,24 @@ import clsx from 'clsx';
 import { IElementProps } from 'types';
 import classes from './Checkbox.module.css';
 
-type Props = IElementProps;
+export interface ICheckboxProps {
+  name?: string;
+  checked?: boolean;
+  onChange?: (event: any) => void;
+}
 
-const Checkbox = (props: Props) => {
+type Props = IElementProps & ICheckboxProps;
+
+const Checkbox: React.FC<Props> = (props: Props) => {
   return (
     <label className={clsx(classes['main'], props.className)}>
-      <input type="checkbox" className={classes['chk-box']} />
+      <input
+        name={props.name}
+        type="checkbox"
+        className={classes['chk-box']}
+        checked={props.checked}
+        onChange={props.onChange}
+      />
     </label>
   );
 };

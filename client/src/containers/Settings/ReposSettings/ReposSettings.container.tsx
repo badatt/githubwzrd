@@ -3,14 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
 import { getRepos } from 'actions/settings.action';
-import { ITableData } from 'components/Table/Table.component';
-import { Checkbox } from 'components';
 import * as ReposSettingsView from './ReposSettings.view';
+import ReposSettingsForm from './ReposSettings.form';
 
-const ReposSettings: React.FC<{ tableData?: ITableData }> = ({ tableData }) => {
+const ReposSettings: React.FC = () => {
   const dispatch = useDispatch();
-
-  const [reposTableData, setReposTableData] = useState(tableData);
 
   const { repos, isReposEmpty } = useShallowEqualSelector(({ settings }) => ({
     repos: settings.repos,
@@ -21,30 +18,11 @@ const ReposSettings: React.FC<{ tableData?: ITableData }> = ({ tableData }) => {
     dispatch(getRepos());
   });
 
-  useEffect(() => {
-    if (isReposEmpty) return;
-    const rtCols = [{ name: 'Name' }, { name: '' }];
-    const rtRows = repos.map(r => ({
-      cells: [
-        {
-          element: r.name,
-        },
-        {
-          element: <Checkbox />,
-        },
-      ],
-    }));
-    setReposTableData({
-      columns: rtCols,
-      rows: rtRows,
-    });
-  }, [repos]);
-
   return (
     <Fragment>
       <ReposSettingsView.ReposSettingsMain>
-        <ReposSettingsView.ReposSaveBtn />
-        {!isReposEmpty && <ReposSettingsView.ReposTable {...reposTableData} />}
+        <ReposSettingsView.ReposSaveBtn onClick={() => console.log('Submitted buton')} />
+        {!isReposEmpty && <ReposSettingsForm repos={repos} />}
       </ReposSettingsView.ReposSettingsMain>
     </Fragment>
   );
