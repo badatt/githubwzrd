@@ -21,4 +21,6 @@ const { go, goBack, push, replace } = history;
 const locationIdGenerator = (loc: string): string => loc.toLowerCase().replace(/\W/gi, '-');
 
 export { go, goBack, push, replace, locationIdGenerator };
+
+export const refresh = () => window.location.reload();
 export default history;
