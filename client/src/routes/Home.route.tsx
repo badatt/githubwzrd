@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Paper } from 'components';
 
-function Dashboard() {
+function Home() {
   return (
     <Page title="Dashboard">
       <Paper>Welcome !</Paper>
@@ -9,4 +9,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Home;

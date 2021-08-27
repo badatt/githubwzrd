@@ -1,14 +1,11 @@
 import React from 'react';
-
-import './styles/global.css';
-
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-
-import LayoutContainer from 'containers/Layout/Layout.container';
+import { ErrorHandler } from 'containers';
 import { Loader } from 'components';
-import ErrorHandler from 'containers/ErrorHandler';
+import { WebLayout } from 'layout';
+import './styles/global.css';
 
 interface IAppProps {
   store: any;
@@ -21,7 +18,7 @@ function App(props: IAppProps) {
       <PersistGate loading={<Loader block />} persistor={props.persistor}>
         <ErrorHandler>
           <HelmetProvider>
-            <LayoutContainer />
+            <WebLayout />
           </HelmetProvider>
         </ErrorHandler>
       </PersistGate>

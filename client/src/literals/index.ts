@@ -1,4 +1,7 @@
 import { Status } from 'types';
+export { default as AppActionTypes } from './app.literal';
+export { default as UserActionTypes } from './user.literal';
+export { default as SettingsActionTypes } from './settings.literal';
 
 export const STATUS: Status = {
   IDLE: 'idle',
@@ -12,7 +15,3 @@ export const Routes = {
   HOME: '/',
   SETTINGS: '/settings',
 };
-
-export { default as AppActionTypes } from './app.literal';
-export { default as UserActionTypes } from './user.literal';
-export { default as SettingsActionTypes } from './settings.literal';

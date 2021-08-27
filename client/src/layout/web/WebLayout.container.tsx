@@ -2,17 +2,15 @@ import React, { Fragment } from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
 import { Routes } from 'literals';
 import history from 'modules/history';
-import SystemAlerts from 'containers/SystemAlerts';
 import { HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
-import Header from 'containers/Header/Header.container';
-import Footer from 'containers/Footer/Footer.container';
-import * as LayoutView from './Layout.view';
+import { HeaderContainer, FooterContainer, SystemAlerts } from 'containers';
+import * as LayoutView from './WebLayout.view';
 
 const Layout = () => {
   return (
     <Fragment>
       <LayoutView.LayoutMain>
-        <Header />
+        <HeaderContainer />
         <LayoutView.Layout>
           <Router history={history}>
             <Switch>
@@ -23,7 +21,7 @@ const Layout = () => {
             <SystemAlerts />
           </Router>
         </LayoutView.Layout>
-        <Footer />
+        <FooterContainer />
       </LayoutView.LayoutMain>
     </Fragment>
   );

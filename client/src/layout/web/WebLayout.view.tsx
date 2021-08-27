@@ -1,6 +1,6 @@
 import React from 'react';
 import { IChildrenProp, IElementProps } from 'types';
-import classes from './Layout.module.css';
+import classes from './WebLayout.module.css';
 
 type Props = IChildrenProp & IElementProps;
 

@@ -3,10 +3,9 @@ import { useDispatch, connect } from 'react-redux';
 import { submit } from 'redux-form';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
-import { getRepos } from 'actions/settings.action';
 import * as ReposSettingsView from './ReposSettings.view';
 import ReposSettingsForm, { formName } from './ReposSettings.form';
-import { saveUserRepos } from 'actions/settings.action';
+import { SettingsActions } from 'actions';
 
 const ReposSettings: React.FC = () => {
   const dispatch = useDispatch();
@@ -17,11 +16,11 @@ const ReposSettings: React.FC = () => {
   }));
 
   const handleReposSettingsSubmit = (data: any) => {
-    dispatch(saveUserRepos(Object.keys(data).filter(d => data[d])));
+    dispatch(SettingsActions.saveUserRepos(Object.keys(data).filter(d => data[d])));
   };
 
   useMount(() => {
-    dispatch(getRepos());
+    dispatch(SettingsActions.getRepos());
   });
 
   return (
