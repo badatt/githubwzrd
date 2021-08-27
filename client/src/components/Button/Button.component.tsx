@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
-import { IElementProps } from 'types';
+import { IElementProps, IChildrenProp } from 'types';
 import classes from './Button.module.css';
+import { RotatingCircleIcon } from 'icons';
 
 interface IButton {
   type: 'primary' | 'secondary' | 'danger' | 'neutral';
@@ -15,7 +16,7 @@ interface IButton {
   contained?: boolean;
 }
 
-type Props = IButton & IElementProps;
+type Props = IButton & IElementProps & IChildrenProp;
 
 const Button = (props: Props): JSX.Element => {
   return (
@@ -23,17 +24,22 @@ const Button = (props: Props): JSX.Element => {
       className={clsx(
         classes['main'],
         props.className,
-        classes[props.type],
+        !props.disabled && classes[props.type],
         classes[props.size],
-        props.disabled && classes['disabled'],
         props.fullWidth && classes['full-width'],
         props.bordered && classes['bordered'],
         props.contained && !props.bordered && classes['contained'],
+        props.loading && classes['loading'],
+        props.disabled && classes['disabled'],
       )}
       onClick={props.onClick}
     >
-      <span className={classes['btn-icon']}>{props.icon && <i>{props.icon}</i>}</span>
-      <span>{props.text}</span>
+      {props.icon && (
+        <span className={classes['btn-icon']}>{props.icon && <i>{props.icon}</i>}</span>
+      )}
+      {props.loading && <RotatingCircleIcon className={classes['btn-icon']} />}
+      {props.text && <span>{props.text}</span>}
+      {props.children}
     </button>
   );
 };

@@ -4,7 +4,7 @@ import { Loader } from 'components';
 const LazyComponent = lazy(() => import('./App'));
 
 export default (props: any) => (
-  <Suspense fallback={<Loader block size="xl" />}>
+  <Suspense fallback={<Loader full size="xl" type="grow" />}>
     <LazyComponent {...props} />
   </Suspense>
 );

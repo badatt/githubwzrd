@@ -15,7 +15,7 @@ interface IAppProps {
 function App(props: IAppProps) {
   return (
     <Provider store={props.store}>
-      <PersistGate loading={<Loader block />} persistor={props.persistor}>
+      <PersistGate loading={<Loader full type="grow" />} persistor={props.persistor}>
         <ErrorHandler>
           <HelmetProvider>
             <WebLayout />

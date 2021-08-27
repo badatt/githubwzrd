@@ -9,6 +9,7 @@ export interface ReposData {
 }
 
 export interface SettingsState {
-  status: ValueOf<Status>;
+  loadingReposStatus: ValueOf<Status>;
+  savingReposStatus: ValueOf<Status>;
   repos: ReposData[];
 }

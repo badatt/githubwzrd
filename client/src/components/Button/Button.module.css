@@ -95,9 +95,13 @@
 }
 
 .disabled {
-  @apply cursor-not-allowed bg-gray-400;
+  @apply cursor-not-allowed bg-gray-400 text-gray-100;
 }
 
 .full-width {
   @apply w-full;
+}
+
+.loading {
+  @apply cursor-not-allowed;
 }

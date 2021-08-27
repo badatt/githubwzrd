@@ -15,6 +15,10 @@ export const ReposSaveBtn = (props: IElementProps) => {
   return <Button text="save" icon={<CheckCircleIcon />} onClick={props.onClick} />;
 };
 
+export const LoadingButton = () => {
+  return <Button text="save" loading />;
+};
+
 export const ReposTable = (props: ITableData) => {
   return <Table columns={props?.columns} rows={props?.rows} />;
 };

@@ -4,7 +4,7 @@ import { Loader } from 'components';
 const HomeRouteNonLazy = lazy(() => import('./Home.route'));
 
 export const HomeRoute = (props: any) => (
-  <Suspense fallback={<Loader block size="xl" />}>
+  <Suspense fallback={<Loader full size="xl" type="grow" />}>
     <HomeRouteNonLazy {...props} />
   </Suspense>
 );
@@ -12,7 +12,7 @@ export const HomeRoute = (props: any) => (
 const SettingsRouteNonLazy = lazy(() => import('./Settings.route'));
 
 export const SettingsRoute = (props: any) => (
-  <Suspense fallback={<Loader block size="xl" />}>
+  <Suspense fallback={<Loader full size="xl" type="grow" />}>
     <SettingsRouteNonLazy {...props} />
   </Suspense>
 );
@@ -20,7 +20,7 @@ export const SettingsRoute = (props: any) => (
 const NotFoundRouteNonLazy = lazy(() => import('./NotFound.route'));
 
 export const NotFoundRoute = (props: any) => (
-  <Suspense fallback={<Loader block size="xl" />}>
+  <Suspense fallback={<Loader full size="xl" type="grow" />}>
     <NotFoundRouteNonLazy {...props} />
   </Suspense>
 );

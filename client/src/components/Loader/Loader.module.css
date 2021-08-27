@@ -18,13 +18,19 @@
   --gw-ld-s: 80px;
 }
 
-.block {
+.centered {
+  @apply flex justify-center items-center;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.full {
   @apply inline-flex mx-auto my-auto bg-gray-200;
   height: 100% !important;
   width: 100% !important;
 }
 
-:global(.dark) .block {
+:global(.dark) .full {
   @apply bg-gray-800;
 }
 

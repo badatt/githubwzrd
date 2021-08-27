@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import classes from './Loader.module.css';
 
 interface IProps {
-  block?: boolean;
+  centered?: boolean;
+  full?: boolean;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   type?: 'grow' | 'pulse' | 'rotate';
 }
@@ -14,7 +15,8 @@ const LoaderGrow = (props: IProps) => {
       className={clsx(
         classes['main'],
         classes['loader-grow-main'],
-        props.block && classes['block'],
+        props.full && classes['full'],
+        props.centered && classes['centered'],
         classes[props.size!!],
       )}
     >
@@ -29,7 +31,8 @@ const LoaderPulse = (props: IProps) => {
       className={clsx(
         classes['main'],
         classes['loader-pulse-main'],
-        props.block && classes['block'],
+        props.full && classes['full'],
+        props.centered && classes['centered'],
         classes[props.size!!],
       )}
     >
@@ -45,7 +48,8 @@ const LoaderRotate = (props: IProps) => {
       className={clsx(
         classes['main'],
         classes['loader-rotate-main'],
-        props.block && classes['block'],
+        props.full && classes['full'],
+        props.centered && classes['centered'],
         classes[props.size!!],
       )}
     >
@@ -74,9 +78,10 @@ const Loader = (props: IProps): JSX.Element => {
 };
 
 Loader.defaultProps = {
-  block: false,
+  centered: true,
+  full: false,
   size: 'md',
-  type: 'grow',
+  type: 'rotate',
 };
 
 export default Loader;

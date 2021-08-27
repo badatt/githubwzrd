@@ -10,7 +10,7 @@ export interface IElementProps {
 }
 
 export interface IChildrenProp {
-  children: Children;
+  children?: Children;
 }
 
 export interface ITextChildProp {
