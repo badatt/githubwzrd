@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { all, saveUserRepos } from '../controllers/repo.controller';
 import { authorize } from '../middlewares/auth';
 import { validate } from '../middlewares/validator';
+import { all, saveUserRepos } from '../controllers/repo.controller';
 import { UserRepos } from '../models/repo/UserRepos';
 
 const router = Router();

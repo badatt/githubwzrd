@@ -1,9 +1,9 @@
-name: API deployment to sbx
+name: API deployment to prd
 
 on:
   push:
     branches:
-      - develop
+      - main
     paths:
       - 'api/**'
 
@@ -11,7 +11,7 @@ jobs:
   update-api-function-code:
     name: Build and deploy API
     runs-on: ubuntu-latest
-    environment: SBX
+    environment: PRD
 
     defaults:
       run:
@@ -52,6 +52,6 @@ jobs:
       - name: Deploy
         working-directory: api/build
         run: |
-          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-repos --zip-file fileb://./code.zip
-          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-me --zip-file fileb://./code.zip
-          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:965776723730:function:githubwzrd-docs --zip-file fileb://./code.zip
+          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:904828318817:function:githubwzrd-repos --zip-file fileb://./code.zip
+          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:904828318817:function:githubwzrd-me --zip-file fileb://./code.zip
+          aws lambda update-function-code --function-name arn:aws:lambda:us-east-1:904828318817:function:githubwzrd-docs --zip-file fileb://./code.zip

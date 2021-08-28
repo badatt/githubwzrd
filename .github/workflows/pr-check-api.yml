@@ -2,8 +2,6 @@ name: PR checks for API
 
 on:
   pull_request:
-    branches:
-      - main
     paths:
       - 'api/**'
 
