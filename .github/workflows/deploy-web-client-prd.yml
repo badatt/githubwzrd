@@ -1,9 +1,9 @@
-name: Web client deployment to sbx
+name: Web client deployment to PRD
 
 on:
   push:
     branches:
-      - develop
+      - main
     paths:
       - 'client/**'
 
@@ -11,7 +11,7 @@ jobs:
   deploy-web-client:
     name: Build and deploy web cleint
     runs-on: ubuntu-latest
-    environment: SBX
+    environment: PRD
 
     defaults:
       run:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Build
         run: |
-          export API_URL=https://api.sbx.githubwzrd.xyz
+          export API_URL=https://api.githubwzrd.xyz
           yarn build
 
       - name: Configure AWS credentials
@@ -42,4 +42,4 @@ jobs:
 
       - name: Deploy
         working-directory: ./client/build
-        run: aws s3 sync . s3://sbx.githubwzrd.xyz --acl bucket-owner-full-control
+        run: aws s3 sync . s3://githubwzrd.xyz --acl bucket-owner-full-control
