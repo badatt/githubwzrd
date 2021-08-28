@@ -35,7 +35,7 @@ export const all = async (req: Request, res: Response, next: NextFunction) => {
       login: org,
     },
   );
-  res.send(nodes.filter((n: any) => !n.isArchived));
+  res.send({ data: nodes.filter((n: any) => !n.isArchived) });
 };
 
 export const saveUserRepos = async (req: Request, res: Response, next: NextFunction) => {
