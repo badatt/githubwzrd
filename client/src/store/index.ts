@@ -16,7 +16,7 @@ const rootReducer = persistCombineReducers<StoreState>(
     key: 'gw',
     stateReconciler: autoMergeLevel2,
     storage,
-    whitelist: ['app', 'user'],
+    whitelist: ['app'],
     timeout: 0,
   },
   reducers,

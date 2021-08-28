@@ -1,0 +1,10 @@
+.main {
+}
+
+.rounded {
+  @apply rounded-full;
+}
+
+.loader {
+  @apply h-full w-full;
+}

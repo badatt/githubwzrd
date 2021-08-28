@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { IChildrenProp, IElementProps } from 'types';
 import { GearIcon, MoonIcon, SunIcon } from 'icons';
 import classes from './Header.module.css';
+import { Image } from 'components';
 
 type Props = IChildrenProp & IElementProps;
 
@@ -49,5 +50,7 @@ export const Settings = (props: IElementProps) => (
 );
 
 export const Avatar = (props: { avatarUrl?: string }) => (
-  <img src={props.avatarUrl} className={classes['avatar']} />
+  <div className={classes['avatar']}>
+    <Image src={props.avatarUrl} rounded />
+  </div>
 );
