@@ -122,6 +122,13 @@ export class InfraStack extends BaseStack {
       domainNames: [this.rootDomain],
       comment: `${this.rootDomain} web app`,
       defaultRootObject: 'index.html',
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responsePagePath: '/index.html',
+          responseHttpStatus: 200,
+        },
+      ],
     });
 
     new ARecord(this, 'CloudfrontWebDistributionAliasRecord', {
