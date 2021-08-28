@@ -52,7 +52,7 @@ task('run-client-dev', ['build-client-dev'], function () {
 desc('Deploy infrastructure in sbx');
 task('cdk-sbx', ['init'], async function () {
   shell.cd('./infra');
-  shell.cp('./sbx.lambda-auth.config', './lambda/cookie-authorizer/config.js');
+  shell.cp('./sbx.lambda-auth.config.js', './lambda/cookie-authorizer/config.js');
   fs.writeFileSync('lambda/cookie-authorizer/.versions.json', JSON.stringify({ date: new Date() }));
   shell.cp('cdk.sbx.json', 'cdk.json');
   shell.exec('npx cdk deploy sbx-githubwzrd --require-approval never -c targetEnv=sbx');
@@ -62,7 +62,7 @@ task('cdk-sbx', ['init'], async function () {
 desc('Deploy infrastructure in prod');
 task('cdk-prd', ['init'], async function () {
   shell.cd('./infra');
-  shell.cp('./prd.lambda-auth.config', './lambda/cookie-authorizer/config.js');
+  shell.cp('./prd.lambda-auth.config.js', './lambda/cookie-authorizer/config.js');
   fs.writeFileSync('lambda/cookie-authorizer/.versions.json', JSON.stringify({ date: new Date() }));
   shell.cp('cdk.prd.json', 'cdk.json');
   shell.exec('npx cdk deploy prd-githubwzrd --require-approval never -c targetEnv=prd');
