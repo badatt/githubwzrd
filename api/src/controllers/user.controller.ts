@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { NOT_FOUND } from 'http-status';
+import { NOT_FOUND, CREATED } from 'http-status';
 import { db } from '../config/aws';
 import { gh } from '../config/github-graphql-client';
 import User from '../db/User';
@@ -30,4 +30,11 @@ export const me = async (req: Request, res: Response, next: NextFunction) => {
   );
   const response = { ...user, ...userItem };
   res.send(response);
+};
+
+export const signUp = async (req: Request, res: Response, next: NextFunction) => {
+  const currentUser = req.currentUser;
+  const toSave = Object.assign(new User(), { id: currentUser.userId, org: currentUser.org });
+  await db.mapper.put(toSave);
+  res.status(CREATED).send();
 };

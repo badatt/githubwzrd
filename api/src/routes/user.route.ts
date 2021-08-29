@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { me, session } from '../controllers/user.controller';
+import { me, signUp, session } from '../controllers/user.controller';
 import { authorize } from '../middlewares/auth';
 
 const router = Router();
@@ -10,6 +10,8 @@ const router = Router();
 router.route('/_meta').get((req: Request, res: Response) => res.send({ status: '👍' }));
 
 router.route('/').get(authorize(), me);
+
+router.route('/signup').post(authorize(), signUp);
 
 router.route('/session').get(authorize(), session);
 

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { NOT_FOUND } from 'http-status';
+import { NOT_FOUND, NO_CONTENT } from 'http-status';
 import { gh } from '../config/github-graphql-client';
 import { UserRepos } from '../models/repo/UserRepos';
 import { db } from '../config/aws';
@@ -45,5 +45,5 @@ export const saveUserRepos = async (req: Request, res: Response, next: NextFunct
   if (!userItem) return next(new APIError({ message: 'User not found', status: NOT_FOUND }));
   userItem.repos = userRepos.repos;
   await db.mapper.update(userItem);
-  res.status(204).send();
+  res.status(NO_CONTENT).send();
 };
