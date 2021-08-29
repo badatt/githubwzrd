@@ -7,7 +7,7 @@ import { getUser } from 'actions/user.action';
 
 export function* getRepos(): Generator {
   try {
-    const repos = yield call(request, `${process.env.API_URL}/repos`, {
+    const repos: any = yield call(request, `${process.env.API_URL}/repos`, {
       headers: {
         Authorization: `Bearer ${fetchJwt()}`,
       },
@@ -15,7 +15,7 @@ export function* getRepos(): Generator {
 
     yield put({
       type: SettingsActionTypes.SETTINGS_GET_REPOS_SUCCESS,
-      payload: repos,
+      payload: repos.data,
     });
   } catch (err) {
     yield put({

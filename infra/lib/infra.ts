@@ -159,7 +159,7 @@ export class InfraStack extends BaseStack {
     });
     this.routes({
       httpApi: httpApi,
-      routes: ['repos', 'me', 'docs'],
+      routes: ['repos', 'me', 'docs', 'pulls'],
     });
 
     new ARecord(this, 'ApiAliasRecord', {
