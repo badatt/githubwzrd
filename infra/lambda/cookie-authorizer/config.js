@@ -1,7 +1,7 @@
 exports.authConfig = {
   scopes: 'read:org user:email repo read:discussion',
-  redirect_uri: 'https://sbx.githubwzrd.xyz/_callback',
+  redirect_uri: 'https://githubwzrd.xyz/_callback',
   callback_path: '/_callback',
-  organisation: 'messybun',
+  organisation: 'emisgroup',
   session_duration: 3600,
 };

@@ -30,7 +30,7 @@ passport.use('jwt', jwtStrategy);
 
 app.use(sort());
 
-// all routes
+// home path
 app.use('/', routes);
 
 // if error is not an instanceOf APIError, convert it.
