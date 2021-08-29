@@ -19,6 +19,7 @@ const handleJWT =
     }
 
     req.currentUser = user;
+    req.body.cursor = req.query['_c'];
 
     return next();
   };

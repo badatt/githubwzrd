@@ -1,5 +1,5 @@
 import sortJson, { VisitOptions } from 'sort-json';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import mung from 'express-mung';
 
 export const sort = () =>
