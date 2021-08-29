@@ -5,22 +5,27 @@ import { UserRepos } from '../models/repo/UserRepos';
 import { db } from '../config/aws';
 import User from '../db/User';
 import APIError from '../errors/APIError';
+import AppRequest from 'models/AppRequest';
 
 /**
  * Get logged in user info
  * @public
  */
-export const all = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+  const appRequest = req.body as AppRequest;
   const { org, gitToken } = req.currentUser;
-  const {
-    organization: {
-      repositories: { nodes },
-    },
-  } = await gh(gitToken)(
-    `
+
+  let cursor = appRequest.cursor && `after: "${appRequest.cursor}",`;
+  const query = `
     query allRepos($login: String!){
       organization(login:$login) {
-        repositories(first:100) {
+        repositories(first:100, ${cursor || ''} orderBy: { field: NAME, direction: ASC}) {
+          pageInfo {
+            hasNextPage
+            startCursor
+            endCursor
+            hasPreviousPage 
+          }
           nodes {
             name
             url
@@ -30,15 +35,18 @@ export const all = async (req: Request, res: Response, next: NextFunction) => {
         }
       }
     }
-  `,
-    {
-      login: org,
+  `;
+  const {
+    organization: {
+      repositories: { nodes, pageInfo },
     },
-  );
-  res.send({ data: nodes.filter((n: any) => !n.isArchived) });
+  } = await gh(gitToken)(query, {
+    login: org,
+  });
+  res.send({ data: nodes.filter((n: any) => !n.isArchived), pageInfo });
 };
 
-export const saveUserRepos = async (req: Request, res: Response, next: NextFunction) => {
+export const postUserRepos = async (req: Request, res: Response, next: NextFunction) => {
   const currentUser = req.currentUser;
   const userRepos = req.body as UserRepos;
   const userItem = await db.tryGetAsync(new User(), { id: currentUser.userId, org: currentUser.org });

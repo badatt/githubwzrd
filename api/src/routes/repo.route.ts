@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authorize } from '../middlewares/auth';
 import { validate } from '../middlewares/validator';
-import { all, saveUserRepos } from '../controllers/repo.controller';
+import { getAll, postUserRepos } from '../controllers/repo.controller';
 import { UserRepos } from '../models/repo/UserRepos';
 
 const router = Router();
@@ -11,6 +11,6 @@ const router = Router();
  */
 router.route('/_meta').get((req, res) => res.send({ status: '👍' }));
 
-router.route('/').get(authorize(), all).post(authorize(), validate(UserRepos), saveUserRepos);
+router.route('/').get(authorize(), getAll).post(authorize(), validate(UserRepos), postUserRepos);
 
 export default router;
