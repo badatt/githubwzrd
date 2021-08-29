@@ -41,9 +41,5 @@ focus:border-indigo-800;
 }
 
 .tabs {
-  @apply my-2;
-}
-
-.tabs {
-  @apply w-full overflow-y-auto;
+  @apply my-2 w-full overflow-y-auto;
 }

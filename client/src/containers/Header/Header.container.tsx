@@ -12,8 +12,9 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
   const dispatch = useDispatch();
   const [theme, setTheme] = useState<string>(currentTheme());
 
-  const { data } = useShallowEqualSelector(({ user }) => ({
+  const { data, getUserStatus } = useShallowEqualSelector(({ user }) => ({
     data: user?.data,
+    getUserStatus: user.status,
   }));
 
   useMount(() => {
@@ -40,7 +41,7 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
               <HeaderView.ThemeSwitcher mode="dark" switch={setTheme} />
             )}
             <HeaderView.Settings onClick={() => history.push(Routes.SETTINGS)} />
-            <HeaderView.Avatar avatarUrl={data.avatarUrl} />
+            <HeaderView.Avatar avatarUrl={data.avatarUrl} getUSerStatus={getUserStatus} />
           </HeaderView.Navigation>
         </HeaderView.Header>
         <HeaderView.Separator />

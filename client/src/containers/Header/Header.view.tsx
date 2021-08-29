@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { IChildrenProp, IElementProps } from 'types';
-import { GearIcon, MoonIcon, SunIcon } from 'icons';
+import { GearIcon, MoonIcon, RotatingCircleIcon, SunIcon } from 'icons';
 import classes from './Header.module.css';
 import { Image } from 'components';
+import { STATUS } from 'literals';
 
 type Props = IChildrenProp & IElementProps;
 
@@ -49,8 +50,12 @@ export const Settings = (props: IElementProps) => (
   </button>
 );
 
-export const Avatar = (props: { avatarUrl?: string }) => (
+export const Avatar = (props: { avatarUrl?: string; getUSerStatus: string }) => (
   <div className={classes['avatar']}>
-    <Image src={props.avatarUrl} rounded />
+    {props.getUSerStatus === STATUS.RUNNING ? (
+      <RotatingCircleIcon />
+    ) : (
+      <Image src={props.avatarUrl} rounded />
+    )}
   </div>
 );
