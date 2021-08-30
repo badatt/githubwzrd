@@ -7,7 +7,7 @@ type Props = IChildrenProp & IElementProps;
 
 const Paper = (props: Props): JSX.Element => {
   return (
-    <article component-name="paper" className={clsx(classes['main'], props.className)}>
+    <article component-name="Paper" className={clsx(classes['main'], props.className)}>
       {props.children}
     </article>
   );

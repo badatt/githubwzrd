@@ -16,6 +16,7 @@ const Checkbox: React.FC<Props> = (props: Props) => {
     <label className={clsx(classes['main'], props.className)}>
       <input
         name={props.name}
+        component-name="Checkbox"
         type="checkbox"
         className={classes['chk-box']}
         checked={props.checked}

@@ -14,6 +14,7 @@ type Props = IElementProps & IProps;
 const Image: FC<IProps> = (props: Props) => {
   return (
     <img
+      component-name="Image"
       src={props.src}
       className={clsx(classes['main'], props.rounded && classes['rounded'], props.className)}
       alt={props.alt}

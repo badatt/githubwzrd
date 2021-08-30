@@ -64,7 +64,11 @@
   "compact": true,
   "env": {
     "production": {
-      "plugins": ["@babel/plugin-transform-object-assign", "array-includes"]
+      "plugins": [
+        "@babel/plugin-transform-object-assign",
+        "array-includes",
+        ["react-remove-properties", { "properties": ["component-name"] }]
+      ]
     },
     "test": {
       "plugins": ["@babel/transform-modules-commonjs", "dynamic-import-node"],

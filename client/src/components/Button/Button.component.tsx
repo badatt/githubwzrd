@@ -32,6 +32,7 @@ const Button = (props: Props): JSX.Element => {
         props.loading && classes['loading'],
         props.disabled && classes['disabled'],
       )}
+      component-name="Button"
       onClick={props.onClick}
     >
       {props.icon && (

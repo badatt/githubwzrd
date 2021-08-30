@@ -25,7 +25,7 @@ type Props = IElementProps & ITableData;
 
 const Table = (props: Props): JSX.Element => {
   return (
-    <section className={clsx(classes['main'], props.className)}>
+    <section component-name="Table" className={clsx(classes['main'], props.className)}>
       <table className={classes['table-wrapper']}>
         <thead className={classes['table-head-wrapper']}>
           <tr>

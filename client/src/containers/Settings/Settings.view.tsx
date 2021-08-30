@@ -33,7 +33,7 @@ export const TabSelector = (props: {
 export const Tabs = (props: Props) => <div className={classes['tabs']}>{props.children}</div>;
 
 export const Tab = (props: { isHidden: boolean; children: ReactNode }) => (
-  <TabPanel hidden={props.isHidden} className={classes['tab']}>
+  <TabPanel hidden={props.isHidden} component-name="TabPanel" className={classes['tab']}>
     {props.children}
   </TabPanel>
 );

@@ -12,7 +12,7 @@ type Props = IDataField & IElementProps;
 
 const DataField = (props: Props): JSX.Element => {
   return (
-    <dl className={clsx(classes['main'], props.className)}>
+    <dl className={clsx(classes['main'], props.className)} component-name="DataField">
       <dd className={classes['label']}>{props.label}</dd>
       <dt className={classes['value']}>{props.value}</dt>
     </dl>

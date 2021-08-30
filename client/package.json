@@ -102,6 +102,7 @@
     "babel-plugin-array-includes": "2.0.3",
     "babel-plugin-dynamic-import-node": "2.3.3",
     "babel-plugin-named-asset-import": "0.3.7",
+    "babel-plugin-react-remove-properties": "0.3.0",
     "babel-plugin-styled-components": "1.12.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "bfj": "7.0.2",

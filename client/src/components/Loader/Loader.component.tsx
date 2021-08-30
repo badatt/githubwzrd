@@ -12,6 +12,7 @@ interface IProps {
 const LoaderGrow = (props: IProps) => {
   return (
     <div
+      component-name="Loader"
       className={clsx(
         classes['main'],
         classes['loader-grow-main'],
@@ -28,6 +29,7 @@ const LoaderGrow = (props: IProps) => {
 const LoaderPulse = (props: IProps) => {
   return (
     <div
+      component-name="Loader"
       className={clsx(
         classes['main'],
         classes['loader-pulse-main'],
@@ -45,6 +47,7 @@ const LoaderPulse = (props: IProps) => {
 const LoaderRotate = (props: IProps) => {
   return (
     <div
+      component-name="Loader"
       className={clsx(
         classes['main'],
         classes['loader-rotate-main'],
