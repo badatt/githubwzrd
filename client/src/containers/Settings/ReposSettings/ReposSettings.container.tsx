@@ -5,7 +5,7 @@ import { useShallowEqualSelector } from 'modules/hooks';
 import * as ReposSettingsView from './ReposSettings.view';
 import { SettingsActions } from 'actions';
 import { STATUS } from 'literals';
-import { Loader } from 'components';
+import { Button, Loader } from 'components';
 import { ITableData } from 'components/Table/Table.component';
 import classes from './ReposSettings.module.css';
 
@@ -34,7 +34,7 @@ const ReposSettings: React.FC = () => {
 
   useEffect(() => {
     const rtCols = [
-      { name: 'Available repos', width: 30 },
+      { name: 'Repo name', width: 30 },
       { name: 'Description', width: 60 },
       { name: '', width: 10 },
     ];
@@ -58,7 +58,7 @@ const ReposSettings: React.FC = () => {
   }, [repos]);
 
   useEffect(() => {
-    const rtCols = [{ name: 'Selected repos', width: 100 }];
+    const rtCols = [{ name: 'Repo name', width: 100 }];
     const rtRows = userRepos?.map(r => ({
       cells: [
         {
@@ -74,22 +74,31 @@ const ReposSettings: React.FC = () => {
 
   return (
     <Fragment>
-      <ReposSettingsView.ReposSettingsMain>
-        {loadingReposStatus == STATUS.RUNNING && <Loader />}
-        {loadingReposStatus == STATUS.SUCCESS && (
-          <Fragment>
-            {!isReposEmpty && <ReposSettingsView.ReposTable {...reposTableData} />}
-          </Fragment>
-        )}
-        <div className={classes['user-repos']}>
-          {savingReposStatus === STATUS.RUNNING && <ReposSettingsView.LoadingButton />}
-          {loadingReposStatus == STATUS.SUCCESS && (
+      <div className={classes['main']}>
+        <div className={classes['repos']}>
+          {loadingReposStatus == STATUS.RUNNING && <Loader />}
+          {loadingReposStatus == STATUS.SUCCESS && !isReposEmpty && (
             <Fragment>
-              <ReposSettingsView.ReposTable {...userReposTableData} />
+              <div className={classes['repos-actions']}>
+                <Button size="sm" text="previous" />
+                <Button size="sm" text="next" />
+              </div>
+              <div className={classes['repos-table']}>
+                <ReposSettingsView.ReposTable {...reposTableData} />
+              </div>
             </Fragment>
           )}
         </div>
-      </ReposSettingsView.ReposSettingsMain>
+        <div className={classes['user-repos']}>
+          <div className={classes['user-repos-actions']}>
+            {savingReposStatus === STATUS.RUNNING && <ReposSettingsView.LoadingButton />}
+            {savingReposStatus !== STATUS.RUNNING && <ReposSettingsView.ReposSaveBtn />}
+          </div>
+          <div className={classes['user-repos-table']}>
+            <ReposSettingsView.ReposTable {...userReposTableData} />
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

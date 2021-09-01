@@ -7,12 +7,16 @@ import Table, { ITableData } from 'components/Table/Table.component';
 
 type Props = IChildrenProp & IElementProps;
 
-export const ReposSettingsMain = (props: Props) => {
-  return <div className={classes['main']}>{props.children}</div>;
-};
-
 export const ReposSaveBtn = (props: IElementProps) => {
-  return <Button text="save" icon={<CheckCircleIcon />} onClick={props.onClick} />;
+  return (
+    <Button
+      type="secondary"
+      text="save"
+      size="sm"
+      icon={<CheckCircleIcon />}
+      onClick={props.onClick}
+    />
+  );
 };
 
 export const LoadingButton = () => {
@@ -20,7 +24,7 @@ export const LoadingButton = () => {
 };
 
 export const ReposTable = (props: ITableData) => {
-  return <Table columns={props?.columns} rows={props?.rows} className={classes['table']} />;
+  return <Table columns={props?.columns} rows={props?.rows} />;
 };
 
 export const RepoAddBtn = () => {

@@ -39,7 +39,7 @@ const Button = (props: Props): JSX.Element => {
         <span className={classes['btn-icon']}>{props.icon && <i>{props.icon}</i>}</span>
       )}
       {props.loading && <RotatingCircleIcon className={classes['btn-icon']} />}
-      {props.text && <span>{props.text}</span>}
+      {props.text}
       {props.children}
     </button>
   );
