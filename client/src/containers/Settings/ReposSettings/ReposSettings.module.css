@@ -1,3 +1,39 @@
 .main {
-  @apply space-y-4 w-96;
+  @apply h-full flex space-x-4 overflow-hidden;
+}
+
+.user-repos {
+  @apply w-1/2 flex overflow-hidden;
+}
+
+.table {
+  @apply w-1/2;
+}
+
+.repo-add-btn {
+  @apply h-6 w-6 focus:outline-none float-right;
+}
+
+.repo-remove-btn {
+  @apply h-6 w-6 focus:outline-none;
+}
+
+.repo-add-icon {
+  @apply h-6 w-6 text-green-700;
+}
+
+.repo-remove-icon {
+  @apply h-6 w-6 text-red-700;
+}
+
+:global(.dark) .repo-add-icon {
+  @apply text-green-500;
+}
+
+:global(.dark) .repo-remove-icon {
+  @apply text-red-500;
+}
+
+.user-repo-name {
+  @apply flex space-x-2 items-center;
 }

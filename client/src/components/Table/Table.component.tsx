@@ -6,6 +6,7 @@ import classes from './Table.module.css';
 export interface IColumn {
   name?: string;
   element?: JSX.Element;
+  width?: number;
 }
 
 export interface ICell {
@@ -25,30 +26,32 @@ type Props = IElementProps & ITableData;
 
 const Table = (props: Props): JSX.Element => {
   return (
-    <section component-name="Table" className={clsx(classes['main'], props.className)}>
-      <table className={classes['table-wrapper']}>
-        <thead className={classes['table-head-wrapper']}>
-          <tr>
-            {props.columns?.map((c, i) => (
-              <th key={i} scope="col" className={classes['table-col']}>
-                {c.name ? c.name : c.element}
-              </th>
+    <table component-name="Table" className={clsx(classes['table'], props.className)}>
+      <thead className={classes['thead']}>
+        <tr className={classes['tr']}>
+          {props.columns?.map((c, i) => (
+            <th key={i} scope="col" className={classes['th']} style={{ width: `${c.width}%` }}>
+              {c.name ? c.name : c.element}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody className={classes['tbody']}>
+        {props.rows?.map((r, ri) => (
+          <tr key={ri} className={classes['tr']}>
+            {r.cells?.map((c, ci) => (
+              <td
+                key={ci}
+                className={classes['td']}
+                style={{ width: `${props.columns && props.columns[ci].width}%` }}
+              >
+                {c.element}
+              </td>
             ))}
           </tr>
-        </thead>
-        <tbody className={classes['table-body-wrapper']}>
-          {props.rows?.map((r, ri) => (
-            <tr key={ri}>
-              {r.cells?.map((c, ci) => (
-                <td key={ci} className={classes['table-cell']}>
-                  {c.element}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
