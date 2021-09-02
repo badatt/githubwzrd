@@ -1,0 +1,25 @@
+.main {
+  @apply w-3/4 flex flex-col space-y-2;
+
+  .actions {
+    @apply flex space-x-2 justify-end;
+  }
+
+  .table {
+    @apply h-full flex overflow-hidden;
+  }
+}
+
+.repoAddBtn {
+  @apply h-6 w-6 focus:outline-none float-right;
+
+  .repoAddBtnIcon {
+    @apply h-6 w-6 text-green-700;
+  }
+
+  @at-root .dark {
+    .repoAddBtnIcon {
+      @apply text-green-500;
+    }
+  }
+}

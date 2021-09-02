@@ -24,7 +24,7 @@ export interface ITableData {
 
 type Props = IElementProps & ITableData;
 
-const Table = (props: Props): JSX.Element => {
+export const Table = (props: Props): JSX.Element => {
   return (
     <table component-name="Table" className={clsx(classes['table'], props.className)}>
       <thead className={classes['thead']}>
@@ -54,5 +54,3 @@ const Table = (props: Props): JSX.Element => {
     </table>
   );
 };
-
-export default Table;

@@ -1,0 +1,27 @@
+.main {
+  @apply w-1/4 flex flex-col space-y-2;
+
+  .actions {
+    @apply flex space-x-2 justify-end;
+  }
+
+  .table {
+    @apply h-full flex overflow-hidden;
+  }
+}
+
+.userRepoName {
+  @apply flex space-x-2 items-center;
+
+  .repoRemoveBtn {
+    @apply h-6 w-6 focus:outline-none;
+
+    .repoRemoveIcon {
+      @apply h-6 w-6 text-red-700;
+    }
+
+    :global(.dark) .repoRemoveIcon {
+      @apply text-red-500;
+    }
+  }
+}
