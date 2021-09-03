@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { IElementProps } from 'types';
-import classes from './Checkbox.module.css';
+import cl from './Checkbox.module.scss';
 
 export interface ICheckboxProps {
   name?: string;
@@ -13,12 +13,12 @@ type Props = IElementProps & ICheckboxProps;
 
 const Checkbox: React.FC<Props> = (props: Props) => {
   return (
-    <label className={clsx(classes['main'], props.className)}>
+    <label className={clsx(cl.main, props.className)}>
       <input
         name={props.name}
         component-name="Checkbox"
         type="checkbox"
-        className={classes['chk-box']}
+        className={cl.chkBox}
         checked={props.checked}
         onChange={props.onChange}
       />

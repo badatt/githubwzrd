@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { IElementProps } from 'types';
-import classes from './Table.module.css';
+import cl from './Table.module.scss';
 
 export interface IColumn {
   name?: string;
@@ -26,23 +26,23 @@ type Props = IElementProps & ITableData;
 
 export const Table = (props: Props): JSX.Element => {
   return (
-    <table component-name="Table" className={clsx(classes['table'], props.className)}>
-      <thead className={classes['thead']}>
-        <tr className={classes['tr']}>
+    <table component-name="Table" className={clsx(cl.table, props.className)}>
+      <thead className={cl.thead}>
+        <tr className={cl.tr}>
           {props.columns?.map((c, i) => (
-            <th key={i} scope="col" className={classes['th']} style={{ width: `${c.width}%` }}>
+            <th key={i} scope="col" className={cl.th} style={{ width: `${c.width}%` }}>
               {c.name ? c.name : c.element}
             </th>
           ))}
         </tr>
       </thead>
-      <tbody className={classes['tbody']}>
+      <tbody className={cl.tbody}>
         {props.rows?.map((r, ri) => (
-          <tr key={ri} className={classes['tr']}>
+          <tr key={ri} className={cl.tr}>
             {r.cells?.map((c, ci) => (
               <td
                 key={ci}
-                className={classes['td']}
+                className={cl.td}
                 style={{ width: `${props.columns && props.columns[ci].width}%` }}
               >
                 {c.element}

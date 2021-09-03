@@ -7,6 +7,7 @@ import { Routes } from 'literals';
 import { getUser } from 'actions/user.action';
 import * as HeaderView from './Header.view';
 import { setDarkMode, setLightMode, currentTheme } from 'styles/theme';
+import cl from './Header.module.scss';
 
 const Header: React.FC<{ currentThemeMode?: string }> = () => {
   const dispatch = useDispatch();
@@ -30,23 +31,21 @@ const Header: React.FC<{ currentThemeMode?: string }> = () => {
   }, [theme]);
 
   return (
-    <Fragment>
-      <HeaderView.HeaderMain>
-        <HeaderView.Header>
-          <HeaderView.Logo onClick={() => history.push(Routes.HOME)} />
-          <HeaderView.Navigation>
-            {theme === 'light' ? (
-              <HeaderView.ThemeSwitcher mode="light" switch={setTheme} />
-            ) : (
-              <HeaderView.ThemeSwitcher mode="dark" switch={setTheme} />
-            )}
-            <HeaderView.Settings onClick={() => history.push(Routes.SETTINGS)} />
-            <HeaderView.Avatar avatarUrl={data.avatarUrl} getUSerStatus={getUserStatus} />
-          </HeaderView.Navigation>
-        </HeaderView.Header>
-        <HeaderView.Separator />
-      </HeaderView.HeaderMain>
-    </Fragment>
+    <header className={cl.main}>
+      <main className={cl.header}>
+        <HeaderView.Logo onClick={() => history.push(Routes.HOME)} />
+        <nav className={cl.navigation}>
+          {theme === 'light' ? (
+            <HeaderView.ThemeSwitcher mode="light" switch={setTheme} />
+          ) : (
+            <HeaderView.ThemeSwitcher mode="dark" switch={setTheme} />
+          )}
+          <HeaderView.Settings onClick={() => history.push(Routes.SETTINGS)} />
+          <HeaderView.Avatar avatarUrl={data.avatarUrl} getUSerStatus={getUserStatus} />
+        </nav>
+      </main>
+      <HeaderView.Separator />
+    </header>
   );
 };
 

@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
-import * as FooterView from './Footer.view';
+import cl from './Footer.module.scss';
 
 const Footer = () => {
   return (
     <Fragment>
-      <FooterView.FooterMain>
-        <FooterView.Footer>
+      <footer className={cl.main}>
+        <hr className={cl.separator} />
+        <main className={cl.footer}>
           <iframe
             frameBorder="0"
             height="20px"
@@ -22,8 +23,8 @@ const Footer = () => {
             title="GitHub Follow"
             width="130px"
           />
-        </FooterView.Footer>
-      </FooterView.FooterMain>
+        </main>
+      </footer>
     </Fragment>
   );
 };

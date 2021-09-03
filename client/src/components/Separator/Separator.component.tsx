@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './Separator.module.css';
+import cl from './Separator.module.scss';
 
 const Separator = (): JSX.Element => {
-  return <hr component-name="Separator" className={classes['main']} />;
+  return <hr component-name="Separator" className={cl.main} />;
 };
 
 export default Separator;

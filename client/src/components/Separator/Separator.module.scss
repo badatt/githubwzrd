@@ -1,8 +1,8 @@
 .main {
   @apply w-full 
     self-center border-gray-300 h-1;
-}
 
-:global(.dark) .main {
-  @apply border-gray-700;
+  :global(.dark) & {
+    @apply border-gray-700;
+  }
 }

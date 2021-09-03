@@ -15,10 +15,8 @@
 
   .repoAddBtnIcon {
     @apply h-6 w-6 text-green-700;
-  }
 
-  @at-root .dark {
-    .repoAddBtnIcon {
+    :global(.dark) & {
       @apply text-green-500;
     }
   }

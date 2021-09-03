@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { ErrorHandler } from 'containers';
 import { Loader } from 'components';
 import { WebLayout } from 'layout';
-import './styles/global.css';
+import './styles/global.scss';
 
 interface IAppProps {
   store: any;

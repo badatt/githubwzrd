@@ -18,10 +18,10 @@
 
     .repoRemoveIcon {
       @apply h-6 w-6 text-red-700;
-    }
 
-    :global(.dark) .repoRemoveIcon {
-      @apply text-red-500;
+      :global(.dark) & {
+        @apply text-red-500;
+      }
     }
   }
 }

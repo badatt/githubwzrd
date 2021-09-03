@@ -1,5 +1,5 @@
 import React from 'react';
-import cl from './ReposSettings.module.css';
+import cl from './ReposSettings.module.scss';
 import AllRepos from './AllRepos/AllRepos.container';
 import UserRepos from './UserRepos/UserRepos.container';
 
