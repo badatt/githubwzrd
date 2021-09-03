@@ -1,12 +1,12 @@
 import React from 'react';
 import { IChildrenProp, IElementProps } from 'types';
 import { DataField } from 'components';
-import { UserData } from 'types/user.type';
+import { IUserData } from 'types/user.type';
 import classes from './AccountSettings.module.css';
 
 type Props = IChildrenProp & IElementProps;
 
-export const Details = (props: UserData) => {
+export const Details = (props: IUserData) => {
   return (
     <section className={classes['main']}>
       <div className={classes['text-details']}>

@@ -1,11 +1,11 @@
 import { request } from '@gilbarbara/helpers';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchJwt } from 'modules/auth';
-import { UserActionTypes } from 'literals';
+import { UserActionTypes, SettingsActionTypes } from 'literals';
 
 export function* getUser(): Generator {
   try {
-    const user = yield call(request, `${process.env.API_URL}/me`, {
+    const user: any = yield call(request, `${process.env.API_URL}/me`, {
       headers: {
         Authorization: `Bearer ${fetchJwt()}`,
       },
@@ -14,6 +14,10 @@ export function* getUser(): Generator {
     yield put({
       type: UserActionTypes.USER_GET_SUCCESS,
       payload: user,
+    });
+    yield put({
+      type: SettingsActionTypes.SETTINGS_SET_USER_REPOS,
+      payload: user.repos,
     });
   } catch (err) {
     yield put({

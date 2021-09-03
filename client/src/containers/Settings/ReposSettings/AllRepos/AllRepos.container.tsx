@@ -13,7 +13,7 @@ const AllRepos: React.FC = () => {
   const [reposTableData, setReposTableData] = useState<ITableData>();
   const { repos, isReposEmpty, loadingReposStatus } = useShallowEqualSelector(({ settings }) => ({
     repos: settings.repos,
-    isReposEmpty: settings.repos.length == 0,
+    isReposEmpty: settings.repos.data?.length == 0,
     loadingReposStatus: settings.loadingReposStatus,
   }));
   useMount(() => {
@@ -26,7 +26,7 @@ const AllRepos: React.FC = () => {
       { name: 'Description', width: 60 },
       { name: '', width: 10 },
     ];
-    const rtRows = repos?.map(r => ({
+    const rtRows = repos?.data?.map(r => ({
       cells: [
         {
           element: r.name,
@@ -35,7 +35,7 @@ const AllRepos: React.FC = () => {
           element: r.description,
         },
         {
-          element: <View.RepoAddBtn />,
+          element: <View.RepoAddBtn key={r.id} id={r.id} />,
         },
       ],
     }));

@@ -2,6 +2,11 @@ import { createAction } from 'modules/helpers';
 
 import { SettingsActionTypes } from 'literals';
 
+export const setUserRepos = createAction(
+  SettingsActionTypes.SETTINGS_SET_USER_REPOS,
+  (repos: string[]) => ({ repos }),
+);
+
 export const getRepos = createAction(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, () => ({}));
 
 export const saveUserRepos = createAction(

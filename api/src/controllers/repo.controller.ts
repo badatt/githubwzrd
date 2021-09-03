@@ -27,6 +27,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
             hasPreviousPage 
           }
           nodes {
+            id
             name
             url
             description

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';

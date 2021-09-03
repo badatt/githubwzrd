@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { shallowEqual, useSelector } from 'react-redux';
 
-import { StoreState } from 'types';
+import { IStoreState } from 'types';
 
-export function useShallowEqualSelector<TReturn>(selector: (state: StoreState) => TReturn) {
+export function useShallowEqualSelector<TReturn>(selector: (state: IStoreState) => TReturn) {
   return useSelector(selector, shallowEqual);
 }

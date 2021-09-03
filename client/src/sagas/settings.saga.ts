@@ -2,7 +2,7 @@ import { request } from '@gilbarbara/helpers';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchJwt } from 'modules/auth';
 import { SettingsActionTypes } from 'literals';
-import { StoreAction } from 'types';
+import { IStoreAction } from 'types';
 import { getUser } from 'actions/user.action';
 
 export function* getRepos(): Generator {
@@ -15,7 +15,7 @@ export function* getRepos(): Generator {
 
     yield put({
       type: SettingsActionTypes.SETTINGS_GET_REPOS_SUCCESS,
-      payload: repos.data,
+      payload: repos,
     });
   } catch (err) {
     yield put({
@@ -25,7 +25,7 @@ export function* getRepos(): Generator {
   }
 }
 
-export function* saveUserRepos({ payload }: StoreAction): Generator {
+export function* saveUserRepos({ payload }: IStoreAction): Generator {
   try {
     const { repos } = payload;
     const body = {

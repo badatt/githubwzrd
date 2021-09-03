@@ -7,8 +7,8 @@ import cl from './UserRepos.module.scss';
 
 const UserRepos: React.FC = () => {
   const [userReposTableData, setUserReposTableDate] = useState<ITableData>();
-  const { userRepos, savingReposStatus } = useShallowEqualSelector(({ settings, user }) => ({
-    userRepos: user.data.repos,
+  const { userRepos, savingReposStatus } = useShallowEqualSelector(({ settings }) => ({
+    userRepos: settings.userRepos,
     savingReposStatus: settings.savingReposStatus,
   }));
 

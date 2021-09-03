@@ -2,17 +2,17 @@ import { createReducer } from 'modules/helpers';
 
 import { UserActionTypes, STATUS } from 'literals';
 
-import { UserState } from 'types/user.type';
+import { IUserState } from 'types/user.type';
 
-export const userState: UserState = {
+export const userState: IUserState = {
   status: STATUS.IDLE,
   data: {},
 };
 
 export default {
-  user: createReducer<UserState>(
+  user: createReducer<IUserState>(
     {
-      [UserActionTypes.USER_GET_REQUEST]: (draft: UserState, {}) => {
+      [UserActionTypes.USER_GET_REQUEST]: (draft: IUserState, {}) => {
         draft.status = STATUS.RUNNING;
       },
       [UserActionTypes.USER_GET_SUCCESS]: (draft, { payload }) => {

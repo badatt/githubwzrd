@@ -4,14 +4,14 @@ import { createReducer } from 'modules/helpers';
 
 import { AppActionTypes } from 'literals';
 
-import { AppState } from 'types';
+import { IAppState } from 'types';
 
-export const appState: AppState = {
+export const appState: IAppState = {
   alerts: [],
 };
 
 export default {
-  app: createReducer<AppState>(
+  app: createReducer<IAppState>(
     {
       [REHYDRATE]: draft => {
         draft.alerts = [];
