@@ -16,11 +16,14 @@ export default {
         draft.data.repos = payload;
       },
       [UserActionTypes.USER_ADD_REPO]: (draft: IUserState, { payload }) => {
-        if (draft.data.repos && draft.data.repos.length >= 0) {
+        if (draft.data.repos) {
           draft.data.repos.push(payload.name);
         } else {
           draft.data.repos = [payload.name];
         }
+      },
+      [UserActionTypes.USER_REMOVE_REPO]: (draft: IUserState, { payload }) => {
+        draft.data.repos?.splice(draft.data.repos.indexOf(payload.name), 1);
       },
       [UserActionTypes.USER_GET_REQUEST]: (draft: IUserState, {}) => {
         draft.status = STATUS.RUNNING;
