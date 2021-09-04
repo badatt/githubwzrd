@@ -20,8 +20,9 @@ const UserRepos: React.FC = () => {
   };
 
   useEffect(() => {
-    const rtCols = [{ name: `Selected Repos (${userRepos?.length})`, width: 100 }];
-    const rtRows = userRepos?.map(r => ({
+    const rtCols = [{ name: `Selected Repos (${userRepos?.length || 0})`, width: 100 }];
+    const repos = userRepos && [...userRepos];
+    const rtRows = repos?.sort()?.map(r => ({
       cells: [
         {
           element: <View.UserRepoName name={r} onRemoveRepo={() => handleRemoveRepo(r)} />,
