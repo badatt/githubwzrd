@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { UserActionTypes, SettingsActionTypes } from 'literals';
+import { UserActionTypes } from 'literals';
 import api, { IApi } from 'modules/requests';
 
 export function* getUser({ get }: IApi): Generator {
@@ -8,10 +8,6 @@ export function* getUser({ get }: IApi): Generator {
     yield put({
       type: UserActionTypes.USER_GET_SUCCESS,
       payload: user.data,
-    });
-    yield put({
-      type: SettingsActionTypes.SETTINGS_SET_USER_REPOS,
-      payload: user.data.repos,
     });
   } catch (err) {
     yield put({

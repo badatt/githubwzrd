@@ -3,28 +3,31 @@ import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
 import { Button, ITableData, Loader, Table } from 'components';
-import { SettingsActions } from 'actions';
+import { SettingsActions, UserActions } from 'actions';
 import { STATUS } from 'literals';
-import * as View from './AllRepos.view';
 import cl from './AllRepos.module.scss';
+import { CheckCircleIcon, PlusCircleIcon } from 'icons';
 
 const AllRepos: React.FC = () => {
   const dispatch = useDispatch();
   const [reposTableData, setReposTableData] = useState<ITableData>();
-  const { repos, isReposEmpty, loadingReposStatus } = useShallowEqualSelector(({ settings }) => ({
-    repos: settings.repos,
-    isReposEmpty: settings.repos.data?.length == 0,
-    loadingReposStatus: settings.loadingReposStatus,
-  }));
+  const { repos, isReposEmpty, loadingReposStatus, userRepos } = useShallowEqualSelector(
+    ({ settings, user }) => ({
+      repos: settings.repos,
+      isReposEmpty: settings.repos.data?.length == 0,
+      loadingReposStatus: settings.loadingReposStatus,
+      userRepos: user.data.repos,
+    }),
+  );
 
   useMount(() => {
     dispatch(SettingsActions.getRepos());
   });
 
-  /* useEffect(() => {
-    dispatch(SettingsActions.getRepos(cursor));
-  }, [cursor]);
- */
+  const handleAddRepo = (id?: string, name?: string) => {
+    dispatch(UserActions.addRepo(name));
+  };
+
   useEffect(() => {
     const rtCols = [
       { name: 'Repo name', width: 30 },
@@ -40,7 +43,21 @@ const AllRepos: React.FC = () => {
           element: r.description,
         },
         {
-          element: <View.RepoAddBtn key={r.id} id={r.id} />,
+          element: (
+            <Button
+              key={r.id}
+              iconOnly
+              className={cl.repoAddBtn}
+              disabled={userRepos?.includes(r.name!!)}
+              onClick={() => handleAddRepo(r.id, r.name)}
+            >
+              {userRepos?.includes(r.name!!) ? (
+                <CheckCircleIcon className={cl.repoAddedBtnIcon} />
+              ) : (
+                <PlusCircleIcon className={cl.repoAddBtnIcon} />
+              )}
+            </Button>
+          ),
         },
       ],
     }));
@@ -48,7 +65,7 @@ const AllRepos: React.FC = () => {
       columns: rtCols,
       rows: rtRows,
     });
-  }, [repos]);
+  }, [repos, userRepos]);
 
   const handleNext = () => {
     dispatch(SettingsActions.getRepos({ after: repos.pageInfo?.endCursor }));

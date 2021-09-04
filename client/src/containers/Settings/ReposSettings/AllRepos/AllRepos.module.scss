@@ -11,9 +11,17 @@
 }
 
 .repoAddBtn {
-  @apply h-6 w-6 focus:outline-none float-right;
+  @apply h-6 w-6 float-right;
 
   .repoAddBtnIcon {
+    @apply h-6 w-6 text-indigo-700;
+
+    :global(.dark) & {
+      @apply text-indigo-500;
+    }
+  }
+
+  .repoAddedBtnIcon {
     @apply h-6 w-6 text-green-700;
 
     :global(.dark) & {

@@ -1,5 +1,5 @@
 .main {
-  @apply uppercase text-gray-100 flex;
+  @apply uppercase focus:outline-none flex;
 
   &.primary {
     @apply text-indigo-600;
@@ -104,4 +104,8 @@
 
 .loading {
   @apply cursor-not-allowed;
+}
+
+.iconOnly {
+  @apply bg-transparent;
 }

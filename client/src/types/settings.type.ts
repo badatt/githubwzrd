@@ -25,5 +25,4 @@ export interface ISettingsState {
   loadingReposStatus: ValueOf<IStatus>;
   savingReposStatus: ValueOf<IStatus>;
   repos: IRepos;
-  userRepos: string[];
 }

@@ -20,12 +20,12 @@ export const LoadingButton = () => {
   return <Button text="save" loading />;
 };
 
-export const UserRepoName = (props: { name: string }) => {
+export const UserRepoName = (props: { name: string; onRemoveRepo?: (e: any) => void }) => {
   return (
     <div className={cl.userRepoName}>
-      <button className={cl.repoRemoveBtn}>
+      <Button iconOnly className={cl.repoRemoveBtn} onClick={props.onRemoveRepo}>
         <MinusCircle className={cl.repoRemoveIcon} />
-      </button>
+      </Button>
       <span>{props.name}</span>
     </div>
   );

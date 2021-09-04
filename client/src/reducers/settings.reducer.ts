@@ -8,15 +8,11 @@ export const settingsState: ISettingsState = {
   loadingReposStatus: STATUS.IDLE,
   savingReposStatus: STATUS.IDLE,
   repos: {},
-  userRepos: [],
 };
 
 export default {
   settings: createReducer<ISettingsState>(
     {
-      [SettingsActionTypes.SETTINGS_SET_USER_REPOS]: (draft: ISettingsState, { payload }) => {
-        draft.userRepos = payload;
-      },
       [SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST]: (draft: ISettingsState, {}) => {
         draft.loadingReposStatus = STATUS.RUNNING;
       },

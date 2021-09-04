@@ -7,13 +7,13 @@ import cl from './UserRepos.module.scss';
 
 const UserRepos: React.FC = () => {
   const [userReposTableData, setUserReposTableDate] = useState<ITableData>();
-  const { userRepos, savingReposStatus } = useShallowEqualSelector(({ settings }) => ({
-    userRepos: settings.userRepos,
+  const { userRepos, savingReposStatus } = useShallowEqualSelector(({ settings, user }) => ({
+    userRepos: user.data.repos,
     savingReposStatus: settings.savingReposStatus,
   }));
 
   useEffect(() => {
-    const rtCols = [{ name: 'Repo name', width: 100 }];
+    const rtCols = [{ name: `Selected Repos (${userRepos?.length})`, width: 100 }];
     const rtRows = userRepos?.map(r => ({
       cells: [
         {

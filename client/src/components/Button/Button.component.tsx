@@ -14,6 +14,7 @@ interface IButton {
   fullWidth?: boolean;
   bordered?: boolean;
   contained?: boolean;
+  iconOnly?: boolean;
 }
 
 type Props = IButton & IElementProps & IChildrenProp;
@@ -23,19 +24,20 @@ const Button = (props: Props): JSX.Element => {
     <button
       className={clsx(
         cl.main,
-        !props.disabled && cl[props.type],
-        cl[props.size],
-        props.fullWidth && cl.fullWidth,
-        props.bordered && cl.bordered,
-        props.contained && !props.bordered && cl.contained,
+        !props.disabled && !props.iconOnly && cl[props.type],
+        !props.iconOnly && cl[props.size],
+        !props.iconOnly && props.fullWidth && cl.fullWidth,
+        !props.iconOnly && props.bordered && cl.bordered,
+        !props.iconOnly && props.contained && !props.bordered && cl.contained,
         props.loading && cl.loading,
         props.disabled && cl.disabled,
+        props.iconOnly && cl.iconOnly,
         props.className,
       )}
       component-name="Button"
       onClick={props.disabled ? undefined : props.onClick}
     >
-      {props.icon && <span className={cl.btnIcon}>{props.icon && <i>{props.icon}</i>}</span>}
+      {props.icon && <i className={cl.btnIcon}>{props.icon}</i>}
       {props.loading && <RotatingCircleIcon className={cl.btnIcon} />}
       {props.text}
       {props.children}
@@ -52,6 +54,7 @@ Button.defaultProps = {
   fullWidth: false,
   bordered: false,
   contained: true,
+  iconOnly: false,
 };
 
 export default Button;
