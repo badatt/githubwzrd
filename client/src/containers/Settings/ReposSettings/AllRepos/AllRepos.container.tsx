@@ -1,24 +1,19 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useMount } from 'react-use';
 import { useShallowEqualSelector } from 'modules/hooks';
-import { Button, ITableData, Loader, Table } from 'components';
+import { ITableData, Table } from 'components';
 import { SettingsActions, UserActions } from 'actions';
-import { STATUS } from 'literals';
 import cl from './AllRepos.module.scss';
 import * as View from './AllRepos.view';
 
 const AllRepos: React.FC = () => {
   const dispatch = useDispatch();
   const [reposTableData, setReposTableData] = useState<ITableData>();
-  const { repos, isReposEmpty, loadingReposStatus, userRepos } = useShallowEqualSelector(
-    ({ settings, user }) => ({
-      repos: settings.repos,
-      isReposEmpty: settings.repos.data?.length == 0,
-      loadingReposStatus: settings.loadingReposStatus,
-      userRepos: user.data.repos,
-    }),
-  );
+  const { repos, userRepos } = useShallowEqualSelector(({ settings, user }) => ({
+    repos: settings.repos,
+    userRepos: user.data.repos,
+  }));
 
   useMount(() => {
     dispatch(SettingsActions.getRepos());
@@ -71,21 +66,13 @@ const AllRepos: React.FC = () => {
 
   return (
     <div className={cl.main}>
-      {loadingReposStatus == STATUS.RUNNING && <Loader />}
-      {loadingReposStatus == STATUS.SUCCESS && !isReposEmpty && (
-        <Fragment>
-          <div className={cl.actions}>
-            <View.PreviousBtn
-              disabled={!repos.pageInfo?.hasPreviousPage}
-              onClick={handlePrevious}
-            />
-            <View.NextBtn disabled={!repos.pageInfo?.hasNextPage} onClick={handleNext} />
-          </div>
-          <div className={cl.table}>
-            <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />
-          </div>
-        </Fragment>
-      )}
+      <div className={cl.actions}>
+        <View.PreviousBtn disabled={!repos.pageInfo?.hasPreviousPage} onClick={handlePrevious} />
+        <View.NextBtn disabled={!repos.pageInfo?.hasNextPage} onClick={handleNext} />
+      </div>
+      <div className={cl.table}>
+        <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />
+      </div>
     </div>
   );
 };

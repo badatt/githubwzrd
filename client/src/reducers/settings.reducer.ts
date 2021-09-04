@@ -15,6 +15,7 @@ export default {
     {
       [SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST]: (draft: ISettingsState, {}) => {
         draft.loadingReposStatus = STATUS.RUNNING;
+        draft.repos = {};
       },
       [SettingsActionTypes.SETTINGS_GET_REPOS_SUCCESS]: (draft: ISettingsState, { payload }) => {
         draft.repos = payload;

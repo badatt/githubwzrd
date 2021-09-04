@@ -10,7 +10,7 @@ export interface IReposAddBtn {
 
 export const ReposAddBtn = (props: IReposAddBtn & IElementProps) => {
   return (
-    <Button iconOnly className={cl.repoAddBtn} disabled={props.disabled}>
+    <Button iconOnly className={cl.repoAddBtn} disabled={props.disabled} onClick={props.onClick}>
       {props.isAddedAlready ? (
         <CheckCircleIcon className={cl.repoAddedBtnIcon} />
       ) : (
