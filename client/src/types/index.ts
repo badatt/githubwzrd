@@ -7,6 +7,7 @@ type Children = ReactChild | Array<Children> | ReactPortal | Boolean;
 export interface IElementProps {
   className?: string;
   onClick?: (event: any) => void;
+  disabled?: boolean;
 }
 
 export interface IChildrenProp {

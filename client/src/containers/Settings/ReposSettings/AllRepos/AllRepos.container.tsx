@@ -6,7 +6,7 @@ import { Button, ITableData, Loader, Table } from 'components';
 import { SettingsActions, UserActions } from 'actions';
 import { STATUS } from 'literals';
 import cl from './AllRepos.module.scss';
-import { CheckCircleIcon, PlusCircleIcon } from 'icons';
+import * as View from './AllRepos.view';
 
 const AllRepos: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const AllRepos: React.FC = () => {
     dispatch(SettingsActions.getRepos());
   });
 
-  const handleAddRepo = (id?: string, name?: string) => {
+  const handleAddRepo = (name?: string) => {
     dispatch(UserActions.addRepo(name));
   };
 
@@ -44,19 +44,13 @@ const AllRepos: React.FC = () => {
         },
         {
           element: (
-            <Button
+            <View.ReposAddBtn
               key={r.id}
-              iconOnly
               className={cl.repoAddBtn}
               disabled={userRepos?.includes(r.name!!)}
-              onClick={() => handleAddRepo(r.id, r.name)}
-            >
-              {userRepos?.includes(r.name!!) ? (
-                <CheckCircleIcon className={cl.repoAddedBtnIcon} />
-              ) : (
-                <PlusCircleIcon className={cl.repoAddBtnIcon} />
-              )}
-            </Button>
+              onClick={() => handleAddRepo(r.name)}
+              isAddedAlready={userRepos?.includes(r.name!!)}
+            />
           ),
         },
       ],
@@ -81,18 +75,11 @@ const AllRepos: React.FC = () => {
       {loadingReposStatus == STATUS.SUCCESS && !isReposEmpty && (
         <Fragment>
           <div className={cl.actions}>
-            <Button
-              size="sm"
-              text="previous"
+            <View.PreviousBtn
               disabled={!repos.pageInfo?.hasPreviousPage}
               onClick={handlePrevious}
             />
-            <Button
-              size="sm"
-              text="next"
-              disabled={!repos.pageInfo?.hasNextPage}
-              onClick={handleNext}
-            />
+            <View.NextBtn disabled={!repos.pageInfo?.hasNextPage} onClick={handleNext} />
           </div>
           <div className={cl.table}>
             <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />
