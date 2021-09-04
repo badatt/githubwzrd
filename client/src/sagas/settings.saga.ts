@@ -1,21 +1,24 @@
-import { request } from '@gilbarbara/helpers';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchJwt } from 'modules/auth';
 import { SettingsActionTypes } from 'literals';
 import { IStoreAction } from 'types';
-import { getUser } from 'actions/user.action';
+import { UserActions, SettingsActions } from 'actions';
+import api, { IApi } from 'modules/requests';
 
-export function* getRepos(): Generator {
+export function* getRepos(
+  { get }: IApi,
+  { payload }: IStoreAction<SettingsActions.IGetReposRequest>,
+): Generator {
   try {
-    const repos: any = yield call(request, `${process.env.API_URL}/repos`, {
-      headers: {
-        Authorization: `Bearer ${fetchJwt()}`,
+    const repos: any = yield call(get, '/repos', {
+      params: {
+        _a: payload?.after,
+        _b: payload?.before,
       },
     });
 
     yield put({
       type: SettingsActionTypes.SETTINGS_GET_REPOS_SUCCESS,
-      payload: repos,
+      payload: repos.data,
     });
   } catch (err) {
     yield put({
@@ -25,25 +28,21 @@ export function* getRepos(): Generator {
   }
 }
 
-export function* saveUserRepos({ payload }: IStoreAction): Generator {
+export function* saveUserRepos({ post }: IApi, { payload }: IStoreAction): Generator {
   try {
     const { repos } = payload;
     const body = {
       repos,
     };
-    yield call(request, `${process.env.API_URL}/repos`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${fetchJwt()}`,
-      },
-      body,
+    yield call(post, '/repos', {
+      data: body,
     });
 
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_SUCCESS,
     });
 
-    yield put(getUser());
+    yield put(UserActions.getUser());
   } catch (err) {
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_FAILURE,
@@ -57,7 +56,7 @@ export function* saveUserRepos({ payload }: IStoreAction): Generator {
  */
 export default function* root() {
   yield all([
-    takeLatest(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, getRepos),
-    takeLatest(SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_REQUEST, saveUserRepos),
+    takeLatest(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, getRepos, api),
+    takeLatest(SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_REQUEST, saveUserRepos, api),
   ]);
 }

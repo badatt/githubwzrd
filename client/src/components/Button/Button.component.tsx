@@ -33,7 +33,7 @@ const Button = (props: Props): JSX.Element => {
         props.className,
       )}
       component-name="Button"
-      onClick={props.onClick}
+      onClick={props.disabled ? undefined : props.onClick}
     >
       {props.icon && <span className={cl.btnIcon}>{props.icon && <i>{props.icon}</i>}</span>}
       {props.loading && <RotatingCircleIcon className={cl.btnIcon} />}

@@ -14,12 +14,22 @@ import AppRequest from 'models/AppRequest';
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
   const appRequest = req.body as AppRequest;
   const { org, gitToken } = req.currentUser;
+  const additionalParams: any = {};
 
-  let cursor = appRequest.cursor && `after: "${appRequest.cursor}",`;
+  if (appRequest.after) {
+    additionalParams.aft = appRequest.after;
+    additionalParams.fir = 100;
+  } else if (appRequest.before) {
+    additionalParams.bef = appRequest.before;
+    additionalParams.las = 100;
+  } else {
+    additionalParams.fir = 100;
+  }
+
   const query = `
-    query allRepos($login: String!){
+    query allRepos($login: String!, $aft: String, $bef: String, $fir: Int, $las: Int){
       organization(login:$login) {
-        repositories(first:100, ${cursor || ''} orderBy: { field: NAME, direction: ASC}) {
+        repositories(last:$las, before:$bef, first: $fir, after:$aft, orderBy: { field: NAME, direction: ASC}) {
           pageInfo {
             hasNextPage
             startCursor
@@ -43,6 +53,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     },
   } = await gh(gitToken)(query, {
     login: org,
+    ...additionalParams,
   });
   res.send({ data: nodes.filter((n: any) => !n.isArchived), pageInfo });
 };

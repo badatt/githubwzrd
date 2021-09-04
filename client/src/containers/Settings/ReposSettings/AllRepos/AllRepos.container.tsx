@@ -16,10 +16,15 @@ const AllRepos: React.FC = () => {
     isReposEmpty: settings.repos.data?.length == 0,
     loadingReposStatus: settings.loadingReposStatus,
   }));
+
   useMount(() => {
     dispatch(SettingsActions.getRepos());
   });
 
+  /* useEffect(() => {
+    dispatch(SettingsActions.getRepos(cursor));
+  }, [cursor]);
+ */
   useEffect(() => {
     const rtCols = [
       { name: 'Repo name', width: 30 },
@@ -45,14 +50,32 @@ const AllRepos: React.FC = () => {
     });
   }, [repos]);
 
+  const handleNext = () => {
+    dispatch(SettingsActions.getRepos({ after: repos.pageInfo?.endCursor }));
+  };
+
+  const handlePrevious = () => {
+    dispatch(SettingsActions.getRepos({ before: repos.pageInfo?.startCursor }));
+  };
+
   return (
     <div className={cl.main}>
       {loadingReposStatus == STATUS.RUNNING && <Loader />}
       {loadingReposStatus == STATUS.SUCCESS && !isReposEmpty && (
         <Fragment>
           <div className={cl.actions}>
-            <Button size="sm" text="previous" />
-            <Button size="sm" text="next" />
+            <Button
+              size="sm"
+              text="previous"
+              disabled={!repos.pageInfo?.hasPreviousPage}
+              onClick={handlePrevious}
+            />
+            <Button
+              size="sm"
+              text="next"
+              disabled={!repos.pageInfo?.hasNextPage}
+              onClick={handleNext}
+            />
           </div>
           <div className={cl.table}>
             <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />

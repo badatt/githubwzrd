@@ -20,6 +20,7 @@
   "dependencies": {
     "@gilbarbara/helpers": "0.2.0",
     "@tailwindcss/forms": "0.3.3",
+    "axios": "0.21.2",
     "clsx": "1.1.1",
     "history": "4.10.1",
     "immer": "9.0.2",

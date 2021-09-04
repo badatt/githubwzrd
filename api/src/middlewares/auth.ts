@@ -19,7 +19,8 @@ const handleJWT =
     }
 
     req.currentUser = user;
-    req.body.cursor = req.query['_c'];
+    req.body.after = req.query['_a'];
+    req.body.before = req.query['_b'];
 
     return next();
   };

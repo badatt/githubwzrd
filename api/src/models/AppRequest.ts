@@ -1,3 +1,4 @@
 export default class AppRequest {
-  public cursor?: string;
+  public after?: string;
+  public before?: string;
 }
