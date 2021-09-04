@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useShallowEqualSelector } from 'modules/hooks';
 import { ITableData, Table } from 'components';
 import { STATUS } from 'literals';
-import { UserActions } from 'actions';
+import { UserActions, SettingsActions } from 'actions';
 import * as View from './UserRepos.view';
 import cl from './UserRepos.module.scss';
 
@@ -17,6 +17,10 @@ const UserRepos: React.FC = () => {
 
   const handleRemoveRepo = (name?: string) => {
     dispatch(UserActions.removeRepo(name));
+  };
+
+  const handleOnSaveUserRepos = () => {
+    dispatch(SettingsActions.saveUserRepos(userRepos));
   };
 
   useEffect(() => {
@@ -39,7 +43,9 @@ const UserRepos: React.FC = () => {
     <div className={cl.main}>
       <div className={cl.actions}>
         {savingReposStatus === STATUS.RUNNING && <View.LoadingButton />}
-        {savingReposStatus !== STATUS.RUNNING && <View.ReposSaveBtn />}
+        {savingReposStatus !== STATUS.RUNNING && (
+          <View.ReposSaveBtn onClick={handleOnSaveUserRepos} />
+        )}
       </div>
       <div className={cl.table}>
         <Table columns={userReposTableData?.columns} rows={userReposTableData?.rows} />

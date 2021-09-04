@@ -14,5 +14,5 @@ export const getRepos = createAction(
 
 export const saveUserRepos = createAction(
   SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_REQUEST,
-  (repos: string[]) => ({ repos }),
+  (repos?: string[]) => ({ repos }),
 );

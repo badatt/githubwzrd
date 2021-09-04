@@ -17,7 +17,7 @@ export const ReposSaveBtn = (props: IElementProps) => {
 };
 
 export const LoadingButton = () => {
-  return <Button text="save" loading />;
+  return <Button type="secondary" text="save" size="sm" loading />;
 };
 
 export const UserRepoName = (props: { name: string; onRemoveRepo?: (e: any) => void }) => {
