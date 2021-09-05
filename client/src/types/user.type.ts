@@ -1,7 +1,7 @@
 import { ValueOf } from 'type-fest';
-import { Status } from './common.type';
+import { IStatus } from './common.type';
 
-export interface UserData {
+export interface IUserData {
   avatarUrl?: string;
   id?: string;
   name?: string;
@@ -10,7 +10,7 @@ export interface UserData {
   url?: string;
 }
 
-export interface UserState {
-  status: ValueOf<Status>;
-  data: UserData;
+export interface IUserState {
+  status: ValueOf<IStatus>;
+  data: IUserData;
 }

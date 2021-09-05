@@ -4,20 +4,16 @@
  */
 import React from 'react';
 import { nanoid } from 'nanoid';
-
 import { createAction } from 'modules/helpers';
-
 import { AppActionTypes } from 'literals';
-
-import { ShowAlertOptions } from 'types';
-
+import { IShowAlertOptions } from 'types';
 export { go, goBack, push, replace } from 'modules/history';
 
 export const hideAlert = createAction(AppActionTypes.HIDE_ALERT, (id: string) => ({ id }));
 
 export const showAlert = createAction(
   AppActionTypes.SHOW_ALERT,
-  (message: React.ReactNode, options: ShowAlertOptions) => {
+  (message: React.ReactNode, options: IShowAlertOptions) => {
     const timeout = options.variant === 'danger' ? 0 : 5;
 
     return {

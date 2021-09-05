@@ -1,17 +1,6 @@
 import React, { ReactNode } from 'react';
 import { TabPanel } from 'react-headless-tabs';
-import { IChildrenProp, IElementProps } from 'types';
-import classes from './Settings.module.css';
-
-type Props = IChildrenProp & IElementProps;
-
-export const TabsContainer = (props: Props) => (
-  <div className={classes['tabs-container']}>{props.children}</div>
-);
-
-export const TabsNavigation = (props: Props) => (
-  <nav className={classes['tabs-navigations']}>{props.children}</nav>
-);
+import cl from './Settings.module.scss';
 
 export const TabSelector = (props: {
   isActive: boolean;
@@ -20,9 +9,7 @@ export const TabSelector = (props: {
   onClick: () => void;
 }) => (
   <a
-    className={`${classes['tab-selector']} ${
-      props.isActive ? classes['tab-selector-active'] : classes['tab-selector-inactive']
-    }`}
+    className={`${cl.selector} ${props.isActive ? cl.active : cl.inactive}`}
     onClick={props.onClick}
     href={`#${props.id}`}
   >
@@ -30,10 +17,8 @@ export const TabSelector = (props: {
   </a>
 );
 
-export const Tabs = (props: Props) => <div className={classes['tabs']}>{props.children}</div>;
-
 export const Tab = (props: { isHidden: boolean; children: ReactNode }) => (
-  <TabPanel hidden={props.isHidden} className={classes['tab']}>
+  <TabPanel hidden={props.isHidden} component-name="TabPanel" className={cl.tab}>
     {props.children}
   </TabPanel>
 );

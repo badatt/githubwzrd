@@ -2,17 +2,30 @@ import { createReducer } from 'modules/helpers';
 
 import { UserActionTypes, STATUS } from 'literals';
 
-import { UserState } from 'types/user.type';
+import { IUserState } from 'types/user.type';
 
-export const userState: UserState = {
+export const userState: IUserState = {
   status: STATUS.IDLE,
   data: {},
 };
 
 export default {
-  user: createReducer<UserState>(
+  user: createReducer<IUserState>(
     {
-      [UserActionTypes.USER_GET_REQUEST]: (draft: UserState, {}) => {
+      [UserActionTypes.USER_SET_REPOS]: (draft: IUserState, { payload }) => {
+        draft.data.repos = payload;
+      },
+      [UserActionTypes.USER_ADD_REPO]: (draft: IUserState, { payload }) => {
+        if (draft.data.repos) {
+          draft.data.repos.push(payload.name);
+        } else {
+          draft.data.repos = [payload.name];
+        }
+      },
+      [UserActionTypes.USER_REMOVE_REPO]: (draft: IUserState, { payload }) => {
+        draft.data.repos?.splice(draft.data.repos.indexOf(payload.name), 1);
+      },
+      [UserActionTypes.USER_GET_REQUEST]: (draft: IUserState, {}) => {
         draft.status = STATUS.RUNNING;
       },
       [UserActionTypes.USER_GET_SUCCESS]: (draft, { payload }) => {

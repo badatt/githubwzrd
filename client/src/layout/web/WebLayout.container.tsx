@@ -4,14 +4,14 @@ import { Routes } from 'literals';
 import history from 'modules/history';
 import { HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
 import { HeaderContainer, FooterContainer, SystemAlerts } from 'containers';
-import * as LayoutView from './WebLayout.view';
+import cl from './WebLayout.module.scss';
 
 const Layout = () => {
   return (
     <Fragment>
-      <LayoutView.LayoutMain>
+      <main className={cl.main}>
         <HeaderContainer />
-        <LayoutView.Layout>
+        <article className={cl.layout}>
           <Router history={history}>
             <Switch>
               <Route exact path={Routes.SETTINGS} component={SettingsRoute} />
@@ -20,9 +20,9 @@ const Layout = () => {
             </Switch>
             <SystemAlerts />
           </Router>
-        </LayoutView.Layout>
+        </article>
         <FooterContainer />
-      </LayoutView.LayoutMain>
+      </main>
     </Fragment>
   );
 };

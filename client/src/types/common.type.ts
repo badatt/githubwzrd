@@ -1,18 +1,18 @@
 import React from 'react';
 
-export interface ActionCreator<P extends any[] = any[], A = any> {
-  (...args: P): StoreAction<A>;
+export interface IActionCreator<P extends any[] = any[], A = any> {
+  (...args: P): IStoreAction<A>;
 }
 
-export interface ActionsMapReducer<State> {
-  [type: string]: (draft: State, action: StoreAction) => any;
+export interface IActionsMapReducer<State> {
+  [type: string]: (draft: State, action: IStoreAction) => any;
 }
 
 export type AlertPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 
-export interface AsyncFlow {
+export interface IAsyncFlow {
   message: string;
-  status: Status;
+  status: IStatus;
 }
 
 export type GenericFunction<T = any> = (...args: any[]) => T;
@@ -36,7 +36,7 @@ export type Icons =
 
 export type PlainObject<T = any> = Record<string, T>;
 
-export interface RouteProps {
+export interface IRouteProps {
   component: React.ComponentType<any>;
   exact?: boolean;
   isAuthenticated: boolean;
@@ -44,7 +44,7 @@ export interface RouteProps {
   to?: string;
 }
 
-export interface Status {
+export interface IStatus {
   ERROR: 'error';
   IDLE: 'idle';
   READY: 'ready';
@@ -52,14 +52,14 @@ export interface Status {
   SUCCESS: 'success';
 }
 
-export interface StoreAction<T = any> {
+export interface IStoreAction<T = any> {
   error?: boolean;
   meta?: PlainObject;
   payload?: T;
   type: string;
 }
 
-export interface ShowAlertOptions {
+export interface IShowAlertOptions {
   icon?: Icons;
   id?: string;
   position?: AlertPosition;

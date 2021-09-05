@@ -1,0 +1,7 @@
+.main {
+  @apply inline-flex items-center mt-3;
+
+  .chkBox {
+    @apply h-5 w-5 text-indigo-600;
+  }
+}

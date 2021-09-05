@@ -8,14 +8,15 @@ import User from '../db/User';
 export interface IPull {
   title: string;
   url: string;
+  assignedToMe?: boolean;
+  reviewRequiredByMe?: boolean;
+  createdByMe?: boolean;
 }
 
 export interface IRelatedPull {
   repoName: string;
   repoUrl: string;
-  assigned?: IPull[];
-  reviewRequired?: IPull[];
-  created?: IPull[];
+  pulls?: IPull[];
 }
 
 export const relatedPulls = async (req: Request, res: Response, next: NextFunction) => {
@@ -67,16 +68,15 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
     const relatedPull: IRelatedPull = {
       repoName: repository.name,
       repoUrl: repository.url,
-      assigned: [],
-      reviewRequired: [],
-      created: [],
+      pulls: [],
     };
     for (const p of repository.pullRequests.nodes) {
       const pull: IPull = { title: p.title, url: p.url };
-      if (p.author.login === username) relatedPull.created.push(pull);
+      if (p.author.login === username) pull.createdByMe = true;
       if (p.reviewRequests.nodes.some((n: any) => n.requestedReviewer.login === username))
-        relatedPull.reviewRequired.push(pull);
-      if (p.assignees.nodes.some((n: any) => n.login === username)) relatedPull.assigned.push(pull);
+        pull.reviewRequiredByMe = true;
+      if (p.assignees.nodes.some((n: any) => n.login === username)) pull.assignedToMe = true;
+      relatedPull.pulls.push(pull);
     }
     response.push(relatedPull);
   }

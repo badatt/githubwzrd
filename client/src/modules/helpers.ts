@@ -2,7 +2,7 @@ import { now } from '@gilbarbara/helpers';
 import produce from 'immer';
 import { Reducer } from 'redux';
 
-import { ActionCreator, ActionsMapReducer, GenericFunction, StoreAction } from 'types';
+import { IActionCreator, IActionsMapReducer, GenericFunction, IStoreAction } from 'types';
 
 /**
  * Create an action
@@ -10,7 +10,7 @@ import { ActionCreator, ActionsMapReducer, GenericFunction, StoreAction } from '
 export function createAction<T extends GenericFunction>(
   type: string,
   payloadCreator: T,
-): ActionCreator<Parameters<T>, ReturnType<T>> {
+): IActionCreator<Parameters<T>, ReturnType<T>> {
   if (!payloadCreator) {
     throw new TypeError('Expected a function');
   }
@@ -25,10 +25,10 @@ export function createAction<T extends GenericFunction>(
  * Create a reducer
  */
 export function createReducer<State>(
-  actionsMap: ActionsMapReducer<State>,
+  actionsMap: IActionsMapReducer<State>,
   defaultState: State,
-): Reducer<State, StoreAction> {
-  return (state = defaultState, action: StoreAction) =>
+): Reducer<State, IStoreAction> {
+  return (state = defaultState, action: IStoreAction) =>
     produce(state, (draft: State) => {
       const fn = actionsMap[action.type];
 

@@ -1,19 +1,13 @@
-import { request } from '@gilbarbara/helpers';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchJwt } from 'modules/auth';
 import { UserActionTypes } from 'literals';
+import api, { IApi } from 'modules/requests';
 
-export function* getUser(): Generator {
+export function* getUser({ get }: IApi): Generator {
   try {
-    const user = yield call(request, `${process.env.API_URL}/me`, {
-      headers: {
-        Authorization: `Bearer ${fetchJwt()}`,
-      },
-    });
-
+    const user: any = yield call(get, '/me');
     yield put({
       type: UserActionTypes.USER_GET_SUCCESS,
-      payload: user,
+      payload: user.data,
     });
   } catch (err) {
     yield put({
@@ -27,5 +21,5 @@ export function* getUser(): Generator {
  * User Sagas
  */
 export default function* root() {
-  yield all([takeLatest(UserActionTypes.USER_GET_REQUEST, getUser)]);
+  yield all([takeLatest(UserActionTypes.USER_GET_REQUEST, getUser, api)]);
 }

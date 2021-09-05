@@ -5,6 +5,7 @@ import history, { locationIdGenerator } from 'modules/history';
 import AccountSettings from './AccountSettings/AccountSettings.container';
 import ReposSettings from './ReposSettings/ReposSettings.container';
 import * as SettingsView from './Settings.view';
+import cl from './Settings.module.scss';
 
 const tabs = [
   {
@@ -26,8 +27,8 @@ const Settings: React.FC = () => {
 
   return (
     <Fragment>
-      <SettingsView.TabsContainer>
-        <SettingsView.TabsNavigation>
+      <div className={cl.container}>
+        <nav className={cl.navigation}>
           {tabs.map(t => (
             <SettingsView.TabSelector
               key={locationIdGenerator(t.name)}
@@ -38,8 +39,8 @@ const Settings: React.FC = () => {
               {t.name}
             </SettingsView.TabSelector>
           ))}
-        </SettingsView.TabsNavigation>
-        <SettingsView.Tabs>
+        </nav>
+        <div className={cl.tabs}>
           {tabs.map(t => (
             <SettingsView.Tab
               key={locationIdGenerator(t.name)}
@@ -48,8 +49,8 @@ const Settings: React.FC = () => {
               {t.panel}
             </SettingsView.Tab>
           ))}
-        </SettingsView.Tabs>
-      </SettingsView.TabsContainer>
+        </div>
+      </div>
     </Fragment>
   );
 };

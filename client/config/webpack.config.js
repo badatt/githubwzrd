@@ -97,7 +97,8 @@ module.exports = webpackEnv => {
       options: {
         sourceMap: isEnvProduction,
         modules: {
-          getLocalIdent: createLocalIdent(),
+          localIdentName: '[name]__[local]__[hash:base64:5]',
+          getLocalIdent: isEnvProduction ? createLocalIdent() : undefined,
         },
       },
     },

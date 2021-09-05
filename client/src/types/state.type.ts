@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
 import { Variants } from 'styled-minimal/lib/types';
 import { AlertPosition, Icons } from './common.type';
-import { UserState } from './user.type';
-import { SettingsState } from './settings.type';
+import { IUserState } from './user.type';
+import { ISettingsState } from './settings.type';
 
-export interface AlertData {
+export interface IAlertData {
   icon: Icons;
   id: string;
   message: string;
@@ -13,15 +13,15 @@ export interface AlertData {
   variant: Variants;
 }
 
-export interface AppState {
-  alerts: AlertData[];
+export interface IAppState {
+  alerts: IAlertData[];
 }
 
-export interface StoreState {
+export interface IStoreState {
   form: {};
-  app: AppState;
-  user: UserState;
-  settings: SettingsState;
+  app: IAppState;
+  user: IUserState;
+  settings: ISettingsState;
 }
 
 export interface WithDispatch {

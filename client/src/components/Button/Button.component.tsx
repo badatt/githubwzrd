@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { IElementProps, IChildrenProp } from 'types';
-import classes from './Button.module.css';
+import cl from './Button.module.scss';
 import { RotatingCircleIcon } from 'icons';
 
 interface IButton {
@@ -14,6 +14,7 @@ interface IButton {
   fullWidth?: boolean;
   bordered?: boolean;
   contained?: boolean;
+  iconOnly?: boolean;
 }
 
 type Props = IButton & IElementProps & IChildrenProp;
@@ -22,23 +23,23 @@ const Button = (props: Props): JSX.Element => {
   return (
     <button
       className={clsx(
-        classes['main'],
+        cl.main,
+        !props.disabled && !props.iconOnly && cl[props.type],
+        !props.iconOnly && cl[props.size],
+        !props.iconOnly && props.fullWidth && cl.fullWidth,
+        !props.iconOnly && props.bordered && cl.bordered,
+        !props.iconOnly && props.contained && !props.bordered && cl.contained,
+        props.loading && cl.loading,
+        props.disabled && cl.disabled,
+        props.iconOnly && cl.iconOnly,
         props.className,
-        !props.disabled && classes[props.type],
-        classes[props.size],
-        props.fullWidth && classes['full-width'],
-        props.bordered && classes['bordered'],
-        props.contained && !props.bordered && classes['contained'],
-        props.loading && classes['loading'],
-        props.disabled && classes['disabled'],
       )}
-      onClick={props.onClick}
+      component-name="Button"
+      onClick={props.disabled ? undefined : props.onClick}
     >
-      {props.icon && (
-        <span className={classes['btn-icon']}>{props.icon && <i>{props.icon}</i>}</span>
-      )}
-      {props.loading && <RotatingCircleIcon className={classes['btn-icon']} />}
-      {props.text && <span>{props.text}</span>}
+      {props.icon && <i className={cl.btnIcon}>{props.icon}</i>}
+      {props.loading && <RotatingCircleIcon className={cl.btnIcon} />}
+      {props.text}
       {props.children}
     </button>
   );
@@ -53,6 +54,7 @@ Button.defaultProps = {
   fullWidth: false,
   bordered: false,
   contained: true,
+  iconOnly: false,
 };
 
 export default Button;

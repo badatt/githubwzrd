@@ -1,9 +1,9 @@
-import { Status } from 'types';
+import { IStatus } from 'types';
 export { default as AppActionTypes } from './app.literal';
 export { default as UserActionTypes } from './user.literal';
 export { default as SettingsActionTypes } from './settings.literal';
 
-export const STATUS: Status = {
+export const STATUS: IStatus = {
   IDLE: 'idle',
   RUNNING: 'running',
   READY: 'ready',

@@ -1,15 +1,18 @@
-import { request } from '@gilbarbara/helpers';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchJwt } from 'modules/auth';
 import { SettingsActionTypes } from 'literals';
-import { StoreAction } from 'types';
-import { getUser } from 'actions/user.action';
+import { IStoreAction } from 'types';
+import { UserActions, SettingsActions } from 'actions';
+import api, { IApi } from 'modules/requests';
 
-export function* getRepos(): Generator {
+export function* getRepos(
+  { get }: IApi,
+  { payload }: IStoreAction<SettingsActions.IGetReposRequest>,
+): Generator {
   try {
-    const repos: any = yield call(request, `${process.env.API_URL}/repos`, {
-      headers: {
-        Authorization: `Bearer ${fetchJwt()}`,
+    const repos: any = yield call(get, '/repos', {
+      params: {
+        _a: payload?.after,
+        _b: payload?.before,
       },
     });
 
@@ -25,25 +28,20 @@ export function* getRepos(): Generator {
   }
 }
 
-export function* saveUserRepos({ payload }: StoreAction): Generator {
+export function* saveUserRepos({ post }: IApi, { payload }: IStoreAction): Generator {
   try {
     const { repos } = payload;
     const body = {
       repos,
     };
-    yield call(request, `${process.env.API_URL}/repos`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${fetchJwt()}`,
-      },
-      body,
-    });
+    console.log(body);
+    yield call(post, '/repos', body);
 
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_SUCCESS,
     });
 
-    yield put(getUser());
+    yield put(UserActions.getUser());
   } catch (err) {
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_FAILURE,
@@ -57,7 +55,7 @@ export function* saveUserRepos({ payload }: StoreAction): Generator {
  */
 export default function* root() {
   yield all([
-    takeLatest(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, getRepos),
-    takeLatest(SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_REQUEST, saveUserRepos),
+    takeLatest(SettingsActionTypes.SETTINGS_GET_REPOS_REQUEST, getRepos, api),
+    takeLatest(SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_REQUEST, saveUserRepos, api),
   ]);
 }
