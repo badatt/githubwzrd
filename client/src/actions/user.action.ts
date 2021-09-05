@@ -15,3 +15,5 @@ export const addRepo = createAction(UserActionTypes.USER_ADD_REPO, (name?: strin
 export const removeRepo = createAction(UserActionTypes.USER_REMOVE_REPO, (name?: string) => ({
   name,
 }));
+
+export const signup = createAction(UserActionTypes.USER_SIGNUP_REQUEST, () => ({}));

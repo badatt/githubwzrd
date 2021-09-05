@@ -1,0 +1,19 @@
+.main {
+  @apply h-full self-center w-1/4 text-center;
+
+  .content {
+    @apply flex flex-col w-full space-y-4;
+
+    .title {
+      @apply text-4xl font-light tracking-wide mb-4;
+    }
+
+    .note {
+      @apply text-xs;
+    }
+
+    .themeSwitcher {
+      @apply flex justify-end;
+    }
+  }
+}

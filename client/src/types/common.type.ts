@@ -68,3 +68,10 @@ export interface IShowAlertOptions {
 }
 
 export type Transitions = 'fade' | 'slideDown' | 'slideLeft' | 'slideRight' | 'slideUp';
+
+export interface IError {
+  code?: number;
+  title?: string;
+  message?: string;
+  detail?: any;
+}
