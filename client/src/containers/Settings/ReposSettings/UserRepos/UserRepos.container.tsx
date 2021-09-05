@@ -10,10 +10,13 @@ import cl from './UserRepos.module.scss';
 const UserRepos: React.FC = () => {
   const dispatch = useDispatch();
   const [userReposTableData, setUserReposTableDate] = useState<ITableData>();
-  const { userRepos, savingReposStatus } = useShallowEqualSelector(({ settings, user }) => ({
-    userRepos: user.data.repos,
-    savingReposStatus: settings.savingReposStatus,
-  }));
+  const { userRepos, savingReposStatus, loadingUserStatus } = useShallowEqualSelector(
+    ({ settings, user }) => ({
+      userRepos: user.data.repos,
+      loadingUserStatus: user.status,
+      savingReposStatus: settings.savingReposStatus,
+    }),
+  );
 
   const handleRemoveRepo = (name?: string) => {
     dispatch(UserActions.removeRepo(name));
@@ -48,7 +51,11 @@ const UserRepos: React.FC = () => {
         )}
       </div>
       <div className={cl.table}>
-        <Table columns={userReposTableData?.columns} rows={userReposTableData?.rows} />
+        <Table
+          columns={userReposTableData?.columns}
+          rows={userReposTableData?.rows}
+          loading={loadingUserStatus === STATUS.RUNNING}
+        />
       </div>
     </div>
   );

@@ -6,14 +6,18 @@ import { ITableData, Table } from 'components';
 import { SettingsActions, UserActions } from 'actions';
 import cl from './AllRepos.module.scss';
 import * as View from './AllRepos.view';
+import { STATUS } from 'literals';
 
 const AllRepos: React.FC = () => {
   const dispatch = useDispatch();
   const [reposTableData, setReposTableData] = useState<ITableData>();
-  const { repos, userRepos } = useShallowEqualSelector(({ settings, user }) => ({
-    repos: settings.repos,
-    userRepos: user.data.repos,
-  }));
+  const { repos, userRepos, loadingReposStatus } = useShallowEqualSelector(
+    ({ settings, user }) => ({
+      repos: settings.repos,
+      userRepos: user.data.repos,
+      loadingReposStatus: settings.loadingReposStatus,
+    }),
+  );
 
   useMount(() => {
     dispatch(SettingsActions.getRepos());
@@ -71,7 +75,11 @@ const AllRepos: React.FC = () => {
         <View.NextBtn disabled={!repos.pageInfo?.hasNextPage} onClick={handleNext} />
       </div>
       <div className={cl.table}>
-        <Table columns={reposTableData?.columns} rows={reposTableData?.rows} />
+        <Table
+          columns={reposTableData?.columns}
+          rows={reposTableData?.rows}
+          loading={loadingReposStatus == STATUS.RUNNING}
+        />
       </div>
     </div>
   );

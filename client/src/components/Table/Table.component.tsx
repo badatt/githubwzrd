@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import clsx from 'clsx';
 import { IElementProps } from 'types';
 import Loader from 'components/Loader/Loader.component';
@@ -21,12 +21,54 @@ export interface IRow {
 export interface ITableData {
   columns?: IColumn[];
   rows?: IRow[];
+  loading?: boolean;
 }
 
 type Props = IElementProps & ITableData;
 
+const Tbody = (props: { rows?: IRow[]; columns?: IColumn[] }) => {
+  const { rows } = props;
+  return (
+    <Fragment>
+      {rows?.map((r, ri) => (
+        <tr key={ri} className={cl.tr}>
+          {r.cells?.map((c, ci) => (
+            <td
+              key={ci}
+              className={cl.td}
+              style={{ width: `${props.columns && props.columns[ci].width}%` }}
+            >
+              {c.element}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </Fragment>
+  );
+};
+
+const LoadingTbody = () => {
+  return (
+    <tr className={cl.tr}>
+      <td className={cl.td} style={{ width: `100%` }}>
+        <Loader />
+      </td>
+    </tr>
+  );
+};
+
+const EmptyTbody = () => {
+  return (
+    <tr className={cl.tr}>
+      <td className={cl.td} style={{ width: `100%` }}>
+        No data found
+      </td>
+    </tr>
+  );
+};
+
 export const Table = (props: Props): JSX.Element => {
-  const { columns, rows } = props;
+  const { columns, rows, loading } = props;
   const doesRowsExist = rows && rows.length > 0;
   return (
     <table component-name="Table" className={clsx(cl.table, props.className)}>
@@ -40,27 +82,8 @@ export const Table = (props: Props): JSX.Element => {
         </tr>
       </thead>
       <tbody className={cl.tbody}>
-        {doesRowsExist ? (
-          rows?.map((r, ri) => (
-            <tr key={ri} className={cl.tr}>
-              {r.cells?.map((c, ci) => (
-                <td
-                  key={ci}
-                  className={cl.td}
-                  style={{ width: `${props.columns && props.columns[ci].width}%` }}
-                >
-                  {c.element}
-                </td>
-              ))}
-            </tr>
-          ))
-        ) : (
-          <tr className={cl.tr}>
-            <td className={cl.td} style={{ width: `100%` }}>
-              <Loader />
-            </td>
-          </tr>
-        )}
+        {loading && <LoadingTbody />}
+        {!loading && (doesRowsExist ? <Tbody rows={rows} columns={columns} /> : <EmptyTbody />)}
       </tbody>
     </table>
   );

@@ -34,24 +34,24 @@ const init = (): AxiosInstance => {
   return instance;
 };
 
-async function get(url: string, config?: AxiosRequestConfig) {
-  return init().get(url, config);
+async function get(url: string, body?: any) {
+  return init().get(url, body);
 }
 
-async function post(url: string, config?: AxiosRequestConfig) {
-  return init().post(url, config);
+async function post(url: string, body?: any) {
+  return init().post(url, body);
 }
 
-async function put(url: string, config?: AxiosRequestConfig) {
-  return init().put(url, config);
+async function put(url: string, body?: any) {
+  return init().put(url, body);
 }
 
-async function patch(url: string, config?: AxiosRequestConfig) {
-  return init().patch(url, config);
+async function patch(url: string, body?: any) {
+  return init().patch(url, body);
 }
 
-async function del(url: string, config?: AxiosRequestConfig) {
-  return init().delete(url, config);
+async function del(url: string, body?: any) {
+  return init().delete(url, body);
 }
 
 export default {
@@ -63,9 +63,9 @@ export default {
 };
 
 export interface IApi {
-  get: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
-  post: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
-  put: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
-  patch: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
-  del: (url: string, config?: AxiosRequestConfig) => Promise<AxiosResponse<any>>;
+  get: (url: string, body?: any) => Promise<AxiosResponse<any>>;
+  post: (url: string, body?: any) => Promise<AxiosResponse<any>>;
+  put: (url: string, body?: any) => Promise<AxiosResponse<any>>;
+  patch: (url: string, body?: any) => Promise<AxiosResponse<any>>;
+  del: (url: string, body?: any) => Promise<AxiosResponse<any>>;
 }

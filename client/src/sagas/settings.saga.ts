@@ -34,9 +34,8 @@ export function* saveUserRepos({ post }: IApi, { payload }: IStoreAction): Gener
     const body = {
       repos,
     };
-    yield call(post, '/repos', {
-      data: body,
-    });
+    console.log(body);
+    yield call(post, '/repos', body);
 
     yield put({
       type: SettingsActionTypes.SETTINGS_SAVE_USER_REPOS_SUCCESS,
