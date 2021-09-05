@@ -7,6 +7,7 @@ import { IUserState } from 'types/user.type';
 export const userState: IUserState = {
   status: STATUS.IDLE,
   data: {},
+  error: {},
 };
 
 export default {
@@ -32,8 +33,19 @@ export default {
         draft.data = payload;
         draft.status = STATUS.SUCCESS;
       },
-      [UserActionTypes.USER_GET_FAILURE]: (draft, {}) => {
+      [UserActionTypes.USER_GET_FAILURE]: (draft, { payload }) => {
         draft.status = STATUS.ERROR;
+        draft.error = payload;
+      },
+      [UserActionTypes.USER_SIGNUP_REQUEST]: (draft, {}) => {
+        draft.status = STATUS.RUNNING;
+      },
+      [UserActionTypes.USER_SIGNUP_SUCCESS]: (draft, {}) => {
+        draft.status = STATUS.SUCCESS;
+      },
+      [UserActionTypes.USER_SIGNUP_FAILURE]: (draft, { payload }) => {
+        draft.status = STATUS.ERROR;
+        draft.error = payload;
       },
     },
     userState,

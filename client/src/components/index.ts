@@ -1,3 +1,4 @@
+export { default as Box } from './Box/Box.component';
 export { default as Button } from './Button/Button.component';
 export { default as Checkbox } from './Checkbox/Checkbox.components';
 export { default as DataField } from './DataField/DataField.component';
