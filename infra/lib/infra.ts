@@ -3,7 +3,7 @@ import { StackProps, Construct, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget, ApiGatewayv2Domain } from '@aws-cdk/aws-route53-targets';
 import { Bucket, BlockPublicAccess, ObjectOwnership } from '@aws-cdk/aws-s3';
-import { Distribution, OriginAccessIdentity, LambdaEdgeEventType } from '@aws-cdk/aws-cloudfront';
+import { Distribution, OriginAccessIdentity, LambdaEdgeEventType, ViewerProtocolPolicy } from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
@@ -111,6 +111,7 @@ export class InfraStack extends BaseStack {
     const distribution = new Distribution(this, 'CloudfrontWebDistribution', {
       defaultBehavior: {
         origin: s3Origin,
+        viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         edgeLambdas: [
           {
             eventType: LambdaEdgeEventType.VIEWER_REQUEST,
