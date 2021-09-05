@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { fetchJwt } from 'modules/auth';
+import { IError } from 'types';
 
 const init = (): AxiosInstance => {
   const options: AxiosRequestConfig = {
@@ -12,23 +13,16 @@ const init = (): AxiosInstance => {
   const instance = axios.create(options);
 
   instance.interceptors.response.use(undefined, error => {
-    let statusCode;
-    let errorData;
-    let message;
+    const reason: IError = {};
     if (error.response) {
-      // Extracting the status code from the response and passing it in Promise rejection error.
-      // This will enable to manipulate the functionalities based on status code.
-      statusCode = error.response.status;
-      message = error.response.data.errors[0].message; // eslint-disable-line prefer-destructuring
-      errorData = { message, statusCode };
-    } else if (error.request) {
-      message = 'There is a problem with the server.';
-      errorData = { message };
+      reason.code = error.response.status;
+      reason.detail = error.response.data;
+      reason.message = error.response.data && error.response.data.message;
     } else {
-      message = error;
-      errorData = { message };
+      reason.message = 'Unknown error';
+      reason.detail = error;
     }
-    return Promise.reject(errorData);
+    return Promise.reject(reason);
   });
 
   return instance;
