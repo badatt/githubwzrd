@@ -6,7 +6,7 @@ import * as View from './Header.view';
 import cl from './Header.module.scss';
 import ThemeSwitcher from 'containers/ThemeSwitcher/ThemeSwitcher.container';
 
-const Header: React.FC = () => {
+export default () => {
   const { data, getUserStatus } = useShallowEqualSelector(({ user }) => ({
     data: user?.data,
     getUserStatus: user.status,
@@ -26,5 +26,3 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;

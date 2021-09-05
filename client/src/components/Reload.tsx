@@ -8,7 +8,7 @@ export const ReloadWrapper = styled.div`
   }
 `;
 
-function Reload() {
+export default (): JSX.Element => {
   const handleClick = useCallback(() => {
     window.location.reload();
   }, []);
@@ -23,6 +23,4 @@ function Reload() {
       </Button>
     </ReloadWrapper>
   );
-}
-
-export default Reload;
+};

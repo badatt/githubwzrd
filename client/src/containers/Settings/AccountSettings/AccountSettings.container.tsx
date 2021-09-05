@@ -4,7 +4,7 @@ import { Paper, Separator } from 'components';
 
 import * as AccountSettingsView from './AccountSettings.view';
 
-const AccountSettings: React.FC = () => {
+export default () => {
   const { data } = useShallowEqualSelector(({ user }) => ({
     data: user.data,
   }));
@@ -24,5 +24,3 @@ const AccountSettings: React.FC = () => {
     </Fragment>
   );
 };
-
-export default AccountSettings;

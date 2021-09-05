@@ -8,7 +8,7 @@ import cl from './AllRepos.module.scss';
 import * as View from './AllRepos.view';
 import { STATUS } from 'literals';
 
-const AllRepos: React.FC = () => {
+export default () => {
   const dispatch = useDispatch();
   const [reposTableData, setReposTableData] = useState<ITableData>();
   const { repos, userRepos, loadingReposStatus } = useShallowEqualSelector(
@@ -84,5 +84,3 @@ const AllRepos: React.FC = () => {
     </div>
   );
 };
-
-export default AllRepos;

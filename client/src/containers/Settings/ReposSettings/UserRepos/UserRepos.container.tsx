@@ -7,7 +7,7 @@ import { UserActions, SettingsActions } from 'actions';
 import * as View from './UserRepos.view';
 import cl from './UserRepos.module.scss';
 
-const UserRepos: React.FC = () => {
+export default () => {
   const dispatch = useDispatch();
   const [userReposTableData, setUserReposTableDate] = useState<ITableData>();
   const { userRepos, savingReposStatus, loadingUserStatus } = useShallowEqualSelector(
@@ -60,5 +60,3 @@ const UserRepos: React.FC = () => {
     </div>
   );
 };
-
-export default UserRepos;

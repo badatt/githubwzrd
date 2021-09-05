@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import cl from './Footer.module.scss';
 
-const Footer = () => {
+export default () => {
   return (
     <Fragment>
       <footer className={cl.main}>
@@ -28,5 +28,3 @@ const Footer = () => {
     </Fragment>
   );
 };
-
-export default Footer;

@@ -11,7 +11,7 @@ import { getUser } from 'actions/user.action';
 import cl from './WebLayout.module.scss';
 import { Loader } from 'components';
 
-const Layout = () => {
+export default () => {
   const dispatch = useDispatch();
 
   const { getUserStatus, getUserError } = useShallowEqualSelector(({ user }) => ({
@@ -54,5 +54,3 @@ const Layout = () => {
     </main>
   );
 };
-
-export default Layout;

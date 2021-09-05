@@ -14,4 +14,5 @@ export const STATUS: IStatus = {
 export const Routes = {
   HOME: '/',
   SETTINGS: '/settings',
+  PULLS: '/pulls',
 };
