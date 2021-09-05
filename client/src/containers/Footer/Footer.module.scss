@@ -11,10 +11,10 @@
 
   .footer {
     @apply mx-4 flex items-center
-    h-full justify-between text-gray-800;
+    h-full justify-between;
 
     :global(.dark) & {
-      @apply bg-gray-800 text-gray-200;
+      @apply bg-gray-800;
     }
   }
 }

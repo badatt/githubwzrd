@@ -5,7 +5,7 @@ import { useMount } from 'react-use';
 import { Routes, STATUS } from 'literals';
 import history from 'modules/history';
 import { useShallowEqualSelector } from 'modules/hooks';
-import { SignupRoute, HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
+import { SignupRoute, HomeRoute, SettingsRoute, PullsRoute, NotFoundRoute } from 'routes';
 import { HeaderContainer, FooterContainer, SystemAlerts } from 'containers';
 import { getUser } from 'actions/user.action';
 import cl from './WebLayout.module.scss';
@@ -42,6 +42,7 @@ export default () => {
             <Router history={history}>
               <Switch>
                 <Route exact path={Routes.SETTINGS} component={SettingsRoute} />
+                <Route exact path={Routes.PULLS} component={PullsRoute} />
                 <Route exact path={Routes.HOME} component={HomeRoute} />
                 <Route component={NotFoundRoute} />
               </Switch>

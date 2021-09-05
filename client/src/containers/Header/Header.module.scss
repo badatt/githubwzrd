@@ -7,11 +7,7 @@
 
   .header {
     @apply mx-4 flex items-center
-    h-full justify-between text-gray-800;
-
-    :global(.dark) & {
-      @apply text-gray-200;
-    }
+    h-full justify-between;
 
     .navigation {
       @apply flex space-x-4;

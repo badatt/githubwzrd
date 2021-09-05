@@ -28,3 +28,10 @@ export const SignupRoute = (props: any) => (
     <SignupRouteRouteLazy {...props} />
   </Suspense>
 );
+
+const PullsRouteLazy = lazy(() => import('./Pulls.route'));
+export const PullsRoute = (props: any) => (
+  <Suspense fallback={<Loader full size="xl" type="grow" />}>
+    <PullsRouteLazy {...props} />
+  </Suspense>
+);
