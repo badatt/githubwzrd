@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { IStatus } from './common.type';
+import { IReposPageInfo, IStatus } from 'types';
 
 export interface IReposData {
   description?: string;
@@ -7,13 +7,6 @@ export interface IReposData {
   name?: string;
   id?: string;
   url?: string;
-}
-
-export interface IReposPageInfo {
-  endCursor?: string;
-  hasNextPage?: boolean;
-  hasPreviousPage?: boolean;
-  startCursor?: string;
 }
 
 export interface IRepos {

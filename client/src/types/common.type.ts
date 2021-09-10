@@ -75,3 +75,10 @@ export interface IError {
   message?: string;
   detail?: any;
 }
+
+export interface IReposPageInfo {
+  endCursor?: string;
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
+  startCursor?: string;
+}
