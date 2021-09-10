@@ -6,10 +6,12 @@ import { Routes, STATUS } from 'literals';
 import history from 'modules/history';
 import { useShallowEqualSelector } from 'modules/hooks';
 import { SignupRoute, HomeRoute, SettingsRoute, PullsRoute, NotFoundRoute } from 'routes';
-import { HeaderContainer, FooterContainer, SystemAlerts } from 'containers';
+import { SystemAlerts } from 'containers';
 import { getUser } from 'actions/user.action';
 import cl from './WebLayout.module.scss';
 import { Loader } from 'components';
+import HeaderContainer from './Header/Header.container';
+import FooterContainer from './Footer/Footer.container';
 
 export default () => {
   const dispatch = useDispatch();
