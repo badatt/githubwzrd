@@ -27,7 +27,7 @@ export default () => {
   });
 
   return (
-    <main className={cl.main}>
+    <div className={cl.layout}>
       {getUserStatus === STATUS.ERROR && getUserError.code === 404 && (
         <Router history={history}>
           <Switch>
@@ -40,7 +40,7 @@ export default () => {
       {getUserStatus === STATUS.SUCCESS && (
         <Fragment>
           <HeaderContainer />
-          <article className={cl.layout}>
+          <main className={cl.main}>
             <Router history={history}>
               <Switch>
                 <Route exact path={Routes.SETTINGS} component={SettingsRoute} />
@@ -50,10 +50,10 @@ export default () => {
               </Switch>
               <SystemAlerts />
             </Router>
-          </article>
+          </main>
           <FooterContainer />
         </Fragment>
       )}
-    </main>
+    </div>
   );
 };

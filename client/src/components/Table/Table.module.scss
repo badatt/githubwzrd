@@ -26,11 +26,8 @@
       @apply w-full block;
 
       .td {
-        @apply px-3 py-2 text-gray-800 w-full relative
+        @apply px-3 py-2 w-full relative
         inline-block overflow-ellipsis overflow-hidden whitespace-nowrap;
-        :global(.dark) & {
-          @apply text-gray-200;
-        }
       }
     }
   }
