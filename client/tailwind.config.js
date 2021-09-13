@@ -8,6 +8,10 @@ module.exports = {
         '3xs': '.5rem',
         '4xs': '.375rem',
       },
+      transitionProperty: {
+        height: 'height',
+        spacing: 'margin, padding',
+      },
     },
   },
   variants: {

@@ -1,0 +1,45 @@
+.main {
+  @apply flex flex-col w-full;
+
+  .item {
+    @apply bg-gray-50 flex flex-col
+    shadow-md rounded-sm w-full
+    border-b border-gray-300 cursor-pointer 
+    h-11 overflow-hidden;
+    transition: height 200ms cubic-bezier(0.4, 0, 0.2, 1), margin 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    :global(.dark) & {
+      @apply bg-gray-900 border-gray-800;
+    }
+
+    &.expanded {
+      @apply h-56 my-2 border border-indigo-500
+      rounded-md
+      transition-spacing duration-200;
+      transition: border 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.expanded:first-child {
+      @apply mt-0;
+    }
+
+    &.expanded:last-child {
+      @apply mb-0;
+    }
+    .title {
+      @apply p-2;
+    }
+
+    &.expanded .title {
+      @apply border-b border-indigo-500;
+    }
+
+    & .body {
+      @apply p-2 opacity-0 h-0 transition-opacity duration-200;
+    }
+
+    &.expanded .body {
+      @apply flex opacity-100 transition-opacity duration-200;
+    }
+  }
+}
