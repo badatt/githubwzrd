@@ -14,9 +14,12 @@ export default (props: IProps & IElementProps & IChildrenProp) => {
     setExpanded(!expanded);
   };
 
-  return (
-    <section className={clsx(cl.item, expanded && cl.expanded)} onClick={handleExpandItem}>
-      {props.children}
-    </section>
-  );
+  const childrenWithProps = React.Children.map(props.children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, { onExpandItem: handleExpandItem });
+    }
+    return child;
+  });
+
+  return <section className={clsx(cl.item, expanded && cl.expanded)}>{childrenWithProps}</section>;
 };

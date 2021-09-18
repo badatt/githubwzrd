@@ -4,8 +4,7 @@
   .item {
     @apply bg-gray-50 flex flex-col
     shadow-md rounded-sm w-full
-    border cursor-pointer 
-    h-11 overflow-hidden;
+    border h-11 overflow-hidden;
     transition: height 200ms cubic-bezier(0.4, 0, 0.2, 1), margin 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
     :global(.dark) & {
@@ -41,15 +40,8 @@
         @apply flex items-center;
 
         .titleActionIcon {
-          @apply h-5 w-5 text-gray-700;
-        }
-
-        .titleActionIconUp {
-          @apply hidden;
-        }
-
-        .titleActionIconDown {
-          @apply flex;
+          @apply flex h-5 w-5 text-gray-500 
+          transition-transform duration-200 transform;
         }
       }
     }
@@ -61,12 +53,8 @@
         @apply border-indigo-900 bg-indigo-900 bg-opacity-20;
       }
 
-      .titleActionIconUp {
-        @apply flex;
-      }
-
-      .titleActionIconDown {
-        @apply hidden;
+      .titleActionIcon {
+        @apply transition-transform duration-200 transform rotate-180;
       }
     }
 
