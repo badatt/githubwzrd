@@ -28,41 +28,46 @@
     &.expanded:last-child {
       @apply mb-0;
     }
-    .title {
+
+    .summary {
       @apply p-2 flex justify-between;
 
-      .titleMain {
+      .summaryMain {
         @apply flex;
       }
 
-      .titleAction {
+      .summaryAction {
         @apply flex items-center;
 
-        .titleActionIcon {
+        .summaryActionIcon {
           @apply flex h-5 w-5 text-gray-500 
           transition-transform duration-200 transform;
         }
       }
     }
 
-    &.expanded .title {
+    &.expanded .summary {
       @apply border-b border-indigo-300 bg-indigo-100;
 
       :global(.dark) & {
         @apply border-indigo-900 bg-indigo-900 bg-opacity-20;
       }
 
-      .titleActionIcon {
+      .summaryActionIcon {
         @apply transition-transform duration-200 transform rotate-180;
       }
     }
 
     & .body {
-      @apply m-2 hidden;
+      @apply p-2 hidden;
     }
 
     &.expanded .body {
-      @apply flex;
+      @apply block bg-gray-50;
+
+      :global(.dark) & {
+        @apply bg-gray-900;
+      }
     }
   }
 }

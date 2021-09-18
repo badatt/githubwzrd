@@ -11,11 +11,11 @@ export interface IProps {
 
 export default (props: IProps & IElementProps & IChildrenProp) => {
   return (
-    <div className={clsx(cl.title)}>
-      <div className={cl.titleMain}>{props.children}</div>
-      <div className={cl.titleAction}>
+    <div className={clsx(cl.summary)}>
+      <div className={cl.summaryMain}>{props.children}</div>
+      <div className={cl.summaryAction}>
         <Button iconOnly onClick={props.onExpandItem}>
-          <ChevronDownIcon className={cl.titleActionIcon} />
+          <ChevronDownIcon className={cl.summaryActionIcon} />
         </Button>
       </div>
     </div>
