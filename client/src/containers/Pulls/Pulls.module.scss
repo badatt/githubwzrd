@@ -1,3 +1,15 @@
 .main {
-  @apply flex gap-4;
+  @apply flex flex-col flex-1;
+
+  .header {
+    @apply flex;
+  }
+
+  .content {
+    @apply w-full;
+  }
+
+  .repoTitle {
+    @apply font-semibold;
+  }
 }

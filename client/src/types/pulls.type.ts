@@ -17,7 +17,7 @@ export interface IRelatedPullData {
 }
 
 export interface IRelatedPull {
-  data?: IRelatedPull[];
+  data?: IRelatedPullData[];
   pageInfo?: IReposPageInfo;
 }
 
