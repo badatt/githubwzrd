@@ -6,7 +6,11 @@
   }
 
   .content {
-    @apply w-full;
+    @apply w-full flex flex-wrap;
+
+    .repoCard {
+      @apply w-1/4;
+    }
   }
 
   .repoTitle {

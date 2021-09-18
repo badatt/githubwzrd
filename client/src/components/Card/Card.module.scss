@@ -1,0 +1,33 @@
+.wrap {
+  @apply p-1 flex w-full;
+  .main {
+    @apply bg-gray-50
+      shadow-lg rounded-md
+      flex flex-col;
+    height: max-content;
+
+    :global(.dark) & {
+      @apply bg-gray-900;
+    }
+
+    .header {
+      @apply p-2 flex justify-between font-semibold text-lg w-full;
+
+      .content {
+        @apply flex;
+      }
+
+      .gotoIcon {
+        @apply h-5 w-5;
+      }
+    }
+
+    .body {
+      @apply px-2 flex;
+    }
+
+    .footer {
+      @apply flex;
+    }
+  }
+}
