@@ -2,7 +2,7 @@
   @apply flex flex-col w-full h-full bg-gray-200 text-gray-800;
 
   :global(.dark) & {
-    @apply bg-gray-800 text-gray-200;
+    @apply bg-gray-800 text-gray-300;
   }
 }
 
