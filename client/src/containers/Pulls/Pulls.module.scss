@@ -10,6 +10,10 @@
 
     .repoCard {
       @apply w-1/4;
+
+      .repoCardBody {
+        @apply h-56 overflow-y-auto;
+      }
     }
   }
 

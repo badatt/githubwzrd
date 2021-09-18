@@ -12,11 +12,11 @@ export interface IProps {
 export default (props: IProps & IElementProps & IChildrenProp) => {
   const { goto } = props;
   return (
-    <div className={clsx(cl.header)}>
+    <div className={clsx(cl.header, props.className)}>
       <div className={cl.content}>{props.children}</div>
       {goto && (
-        <Link href={goto}>
-          <ExternalLinkIcon className={cl.gotoIcon} />
+        <Link href={goto} className={cl.gotoLink}>
+          <ExternalLinkIcon className={cl.gotoLinkIcon} />
         </Link>
       )}
     </div>

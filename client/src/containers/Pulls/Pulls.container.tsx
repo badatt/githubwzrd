@@ -29,8 +29,10 @@ export default (): JSX.Element => {
           data?.map(d => {
             return (
               <Card key={d.repoName} className={cl.repoCard}>
-                <CardHeader goto={d.repoUrl}>{d.repoName}</CardHeader>
-                <CardBody>
+                <CardHeader goto={d.repoUrl} className={cl.repoCardHeader}>
+                  {d.repoName}
+                </CardHeader>
+                <CardBody className={cl.repoCardBody}>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam rem, suscipit
                   debitis et quis mollitia, eum delectus eaque velit repellat nesciunt itaque.
                   Repellat omnis non et voluptatem fugit. Vero, velit! Odio nostrum dolores nobis

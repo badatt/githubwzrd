@@ -11,14 +11,30 @@
     }
 
     .header {
-      @apply p-2 flex justify-between font-semibold text-lg w-full;
+      @apply p-2 relative font-semibold text-lg w-full;
 
       .content {
-        @apply flex;
+        @apply inline-block whitespace-nowrap 
+        overflow-hidden overflow-ellipsis;
+        max-width: 95%;
+      }
+    }
+
+    .gotoLink {
+      @apply hidden;
+    }
+
+    &:hover .gotoLink {
+      @apply block h-10 w-10 top-0 right-0 absolute
+      bg-gradient-to-tr
+      from-transparent to-gray-200;
+
+      :global(.dark) & {
+        @apply from-transparent to-gray-800;
       }
 
-      .gotoIcon {
-        @apply h-5 w-5;
+      .gotoLinkIcon {
+        @apply h-5 w-5 text-gray-500 absolute top-1 right-1;
       }
     }
 
