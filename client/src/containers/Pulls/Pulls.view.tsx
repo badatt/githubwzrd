@@ -1,16 +1,12 @@
 import React, { Fragment } from 'react';
-import { IRelatedPullData } from 'types';
+import { IRelatedPull } from 'types';
 import cl from './Pulls.module.scss';
 
-export const RepoTitle = (props: { title?: string }) => {
-  return <h3 className={cl.repoTitle}>{props.title}</h3>;
-};
-
-export const RelatePullData = (props: { relatedPullData: IRelatedPullData }) => {
-  const { relatedPullData } = props;
+export const RelatePullData = (props: { relatedPull: IRelatedPull }): JSX.Element => {
+  const { relatedPull } = props;
   return (
     <Fragment>
-      {relatedPullData.pulls?.map(p => {
+      {relatedPull.pulls?.map(p => {
         return <p key={p.title}>{p.title}</p>;
       })}
     </Fragment>

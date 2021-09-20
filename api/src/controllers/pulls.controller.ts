@@ -16,6 +16,9 @@ export interface IPull {
 export interface IRelatedPull {
   repoName: string;
   repoUrl: string;
+  anyAssignedToMe?: boolean;
+  anyReviewRequiredByMe?: boolean;
+  anyCreatedByMe?: boolean;
   pulls?: IPull[];
 }
 
@@ -72,10 +75,18 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
     };
     for (const p of repository.pullRequests.nodes) {
       const pull: IPull = { title: p.title, url: p.url };
-      if (p.author.login === username) pull.createdByMe = true;
-      if (p.reviewRequests.nodes.some((n: any) => n.requestedReviewer.login === username))
+      if (p.author.login === username) {
+        relatedPull.anyCreatedByMe = true;
+        pull.createdByMe = true;
+      }
+      if (p.reviewRequests.nodes.some((n: any) => n.requestedReviewer.login === username)) {
+        relatedPull.anyReviewRequiredByMe = true;
         pull.reviewRequiredByMe = true;
-      if (p.assignees.nodes.some((n: any) => n.login === username)) pull.assignedToMe = true;
+      }
+      if (p.assignees.nodes.some((n: any) => n.login === username)) {
+        relatedPull.anyAssignedToMe = true;
+        pull.assignedToMe = true;
+      }
       relatedPull.pulls.push(pull);
     }
     response.push(relatedPull);

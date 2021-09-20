@@ -22,6 +22,7 @@ export interface ITableData {
   columns?: IColumn[];
   rows?: IRow[];
   loading?: boolean;
+  hideHeader?: boolean;
 }
 
 type Props = IElementProps & ITableData;
@@ -68,23 +69,29 @@ const EmptyTbody = () => {
 };
 
 export const Table = (props: Props): JSX.Element => {
-  const { columns, rows, loading } = props;
+  const { columns, rows, loading, hideHeader } = props;
   const doesRowsExist = rows && rows.length > 0;
   return (
     <table component-name="Table" className={clsx(cl.table, props.className)}>
-      <thead className={cl.thead}>
-        <tr className={cl.tr}>
-          {columns?.map((c, i) => (
-            <th key={i} scope="col" className={cl.th} style={{ width: `${c.width}%` }}>
-              {c.name ? c.name : c.element}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      {!hideHeader && (
+        <thead className={cl.thead}>
+          <tr className={cl.tr}>
+            {columns?.map((c, i) => (
+              <th key={i} scope="col" className={cl.th} style={{ width: `${c.width}%` }}>
+                {c.name ? c.name : c.element}
+              </th>
+            ))}
+          </tr>
+        </thead>
+      )}
       <tbody className={cl.tbody}>
         {loading && <LoadingTbody />}
         {!loading && (doesRowsExist ? <Tbody rows={rows} columns={columns} /> : <EmptyTbody />)}
       </tbody>
     </table>
   );
+};
+
+Table.defaultProps = {
+  hideHeader: false,
 };

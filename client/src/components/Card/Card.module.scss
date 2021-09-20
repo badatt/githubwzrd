@@ -2,8 +2,8 @@
   @apply p-1 flex w-full;
   .main {
     @apply bg-gray-50
-      shadow-lg rounded-md
-      flex flex-col;
+      shadow-lg
+      flex flex-col w-full;
     height: max-content;
 
     :global(.dark) & {
@@ -11,11 +11,11 @@
     }
 
     .header {
-      @apply p-2 relative font-semibold text-lg w-full;
+      @apply p-2 relative text-lg w-full;
 
       .content {
         @apply inline-block whitespace-nowrap 
-        overflow-hidden overflow-ellipsis;
+        overflow-hidden overflow-ellipsis font-semibold;
         max-width: 95%;
       }
     }
@@ -39,11 +39,14 @@
     }
 
     .body {
-      @apply px-2 flex;
+      @apply px-2;
     }
 
     .footer {
-      @apply flex;
     }
+  }
+
+  .rounded {
+    @apply rounded-md;
   }
 }

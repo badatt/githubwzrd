@@ -9,15 +9,27 @@
     @apply w-full flex flex-wrap;
 
     .repoCard {
-      @apply w-1/4;
+      @apply flex w-1/4;
+
+      &::before {
+        content: '';
+        display: flex;
+        width: 4px;
+        height: 50%;
+        background-color: red;
+      }
+
+      &::before {
+        content: '';
+        display: flex;
+        width: 4px;
+        height: 50%;
+        background-color: green;
+      }
 
       .repoCardBody {
         @apply h-56 overflow-y-auto;
       }
     }
-  }
-
-  .repoTitle {
-    @apply font-semibold;
   }
 }

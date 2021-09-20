@@ -12,7 +12,7 @@ export default (): JSX.Element => {
   const dispatch = useDispatch();
 
   const { data, isLoading } = useShallowEqualSelector(({ pulls }) => ({
-    data: pulls.relatedPulls?.data,
+    data: pulls.relatedPullData?.data,
     isLoading: pulls.loadingPullsStatus,
   }));
 
@@ -26,23 +26,18 @@ export default (): JSX.Element => {
       <div className={cl.content}>
         {isLoading === STATUS.RUNNING && <Loader centered />}
         {isLoading === STATUS.SUCCESS &&
-          data?.map(d => {
-            return (
-              <Card key={d.repoName} className={cl.repoCard}>
-                <CardHeader goto={d.repoUrl} className={cl.repoCardHeader}>
-                  {d.repoName}
-                </CardHeader>
-                <CardBody className={cl.repoCardBody}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam rem, suscipit
-                  debitis et quis mollitia, eum delectus eaque velit repellat nesciunt itaque.
-                  Repellat omnis non et voluptatem fugit. Vero, velit! Odio nostrum dolores nobis
-                  molestias omnis quos vitae veniam eius, doloribus, officiis libero ullam dicta,
-                  totam saepe itaque? Accusamus repellat quos rerum! Perferendis veniam ratione
-                  vitae blanditiis aperiam nisi porro.
-                </CardBody>
-              </Card>
-            );
-          })}
+          data
+            ?.filter(p => p.pulls!!.length > 0)
+            .map(d => {
+              return (
+                <Card key={d.repoName} className={cl.repoCard}>
+                  <CardHeader goto={d.repoUrl}>{d.repoName}</CardHeader>
+                  <CardBody className={cl.repoCardBody}>
+                    <View.RelatePullData relatedPull={d} />
+                  </CardBody>
+                </Card>
+              );
+            })}
       </div>
     </div>
   );

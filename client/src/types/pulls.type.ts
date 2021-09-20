@@ -10,18 +10,21 @@ export interface IPull {
   createdByMe?: boolean;
 }
 
-export interface IRelatedPullData {
+export interface IRelatedPull {
   repoName: string;
   repoUrl: string;
+  anyAssignedToMe?: boolean;
+  anyReviewRequiredByMe?: boolean;
+  anyCreatedByMe?: boolean;
   pulls?: IPull[];
 }
 
-export interface IRelatedPull {
-  data?: IRelatedPullData[];
+export interface IRelatedPullData {
+  data?: IRelatedPull[];
   pageInfo?: IReposPageInfo;
 }
 
 export interface IPullsState {
   loadingPullsStatus?: ValueOf<IStatus>;
-  relatedPulls?: IRelatedPull;
+  relatedPullData?: IRelatedPullData;
 }
