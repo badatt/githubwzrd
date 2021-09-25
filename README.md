@@ -21,3 +21,5 @@ jake run-client-dev       # Run Client in dev mode in local
 jake build-api-serverless # Buid API project for serverless deployment
 jake cdk-sbx              # Deploy infrastructure in sbx
 ```
+
+## config goes here
