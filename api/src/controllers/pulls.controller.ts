@@ -27,13 +27,14 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
   const userItem = await db.tryGetAsync(new User(), { id: userId, org: org });
   if (userItem.repos.length === 0) return next(new APIError({ message: 'No repos found', status: NOT_FOUND }));
 
+  // TODO change query to pull only OPEN state pulls
   const querTemplate = `
     query relatedPulls($org: String!, $repo: String!) {
       organization(login:$org) {
         repository(name: $repo) {
           name
           url
-          pullRequests(states:OPEN, first:100, orderBy: {field: CREATED_AT, direction: DESC} ) {
+          pullRequests(first:100, orderBy: {field: CREATED_AT, direction: DESC} ) {
             totalCount
             nodes {
               title

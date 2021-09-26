@@ -11,24 +11,68 @@
     .repoCard {
       @apply flex w-1/4;
 
-      &::before {
-        content: '';
-        display: flex;
-        width: 4px;
-        height: 50%;
-        background-color: red;
-      }
+      .anyReviewRequiredByMe {
+        @apply border-yellow-400 border-l-4;
 
-      &::before {
-        content: '';
-        display: flex;
-        width: 4px;
-        height: 50%;
-        background-color: green;
+        :global(.dark) & {
+          @apply border-yellow-600;
+        }
       }
 
       .repoCardBody {
-        @apply h-56 overflow-y-auto;
+        @apply h-56 flex flex-col p-1;
+
+        .relatedPullActions {
+          @apply flex justify-end;
+        }
+
+        .relatedPull {
+          @apply overflow-y-auto 
+          p-1;
+
+          .pull {
+            @apply flex justify-between text-sm 
+            border-t border-gray-300 p-1;
+
+            &:last-child {
+              @apply border-b;
+            }
+
+            :global(.dark) & {
+              @apply border-gray-700;
+            }
+
+            &.reviewRequiredByMe {
+              @apply relative;
+
+              &::before {
+                content: '';
+                @apply bg-yellow-400 w-1 h-1 absolute 
+                rounded-full block bottom-1/2;
+              }
+
+              :global(.dark) &::before {
+                @apply bg-yellow-600;
+              }
+
+              span {
+                @apply ml-2;
+              }
+            }
+
+            .title {
+              @apply relative truncate;
+            }
+
+            .linkIcon {
+              @apply hidden text-gray-500;
+            }
+
+            &:hover .linkIcon {
+              @apply block;
+            }
+          }
+        }
       }
     }
   }
