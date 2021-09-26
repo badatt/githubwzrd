@@ -1,15 +1,15 @@
-.main {
-  @apply flex flex-col w-full h-full bg-gray-200;
+.layout {
+  @apply flex flex-col w-full h-full bg-gray-200 text-gray-800;
 
   :global(.dark) & {
-    @apply bg-gray-800;
+    @apply bg-gray-800 text-gray-300;
   }
 }
 
-.main > * {
+.display > * {
   @apply flex;
 }
 
-.layout {
+.main {
   @apply flex flex-1 mx-4 overflow-y-auto;
 }

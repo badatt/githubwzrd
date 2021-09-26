@@ -20,7 +20,7 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-function NotFound() {
+export default (): JSX.Element => {
   return (
     <Background key="404" data-testid="NotFound">
       <StyledContainer fullScreen ySpacing>
@@ -31,6 +31,4 @@ function NotFound() {
       </StyledContainer>
     </Background>
   );
-}
-
-export default NotFound;
+};

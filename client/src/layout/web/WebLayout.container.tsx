@@ -5,13 +5,15 @@ import { useMount } from 'react-use';
 import { Routes, STATUS } from 'literals';
 import history from 'modules/history';
 import { useShallowEqualSelector } from 'modules/hooks';
-import { SignupRoute, HomeRoute, SettingsRoute, NotFoundRoute } from 'routes';
-import { HeaderContainer, FooterContainer, SystemAlerts } from 'containers';
+import { SignupRoute, HomeRoute, SettingsRoute, PullsRoute, NotFoundRoute } from 'routes';
+import { SystemAlerts } from 'containers';
 import { getUser } from 'actions/user.action';
 import cl from './WebLayout.module.scss';
 import { Loader } from 'components';
+import HeaderContainer from './Header/Header.container';
+import FooterContainer from './Footer/Footer.container';
 
-const Layout = () => {
+export default () => {
   const dispatch = useDispatch();
 
   const { getUserStatus, getUserError } = useShallowEqualSelector(({ user }) => ({
@@ -25,7 +27,7 @@ const Layout = () => {
   });
 
   return (
-    <main className={cl.main}>
+    <div className={cl.layout}>
       {getUserStatus === STATUS.ERROR && getUserError.code === 404 && (
         <Router history={history}>
           <Switch>
@@ -38,21 +40,20 @@ const Layout = () => {
       {getUserStatus === STATUS.SUCCESS && (
         <Fragment>
           <HeaderContainer />
-          <article className={cl.layout}>
+          <main className={cl.main}>
             <Router history={history}>
               <Switch>
                 <Route exact path={Routes.SETTINGS} component={SettingsRoute} />
+                <Route exact path={Routes.PULLS} component={PullsRoute} />
                 <Route exact path={Routes.HOME} component={HomeRoute} />
                 <Route component={NotFoundRoute} />
               </Switch>
               <SystemAlerts />
             </Router>
-          </article>
+          </main>
           <FooterContainer />
         </Fragment>
       )}
-    </main>
+    </div>
   );
 };
-
-export default Layout;

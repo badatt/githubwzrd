@@ -1,12 +1,14 @@
 import React from 'react';
-import { Page, Paper } from 'components';
+import history from 'modules/history';
+import { Button, Page, Paper } from 'components';
+import { Routes } from 'literals';
 
-function Home() {
+export default (): JSX.Element => {
   return (
     <Page title="Dashboard">
-      <Paper>Welcome !</Paper>
+      <Paper>
+        <Button onClick={() => history.push(Routes.PULLS)} text="Pulls" />
+      </Paper>
     </Page>
   );
-}
-
-export default Home;
+};

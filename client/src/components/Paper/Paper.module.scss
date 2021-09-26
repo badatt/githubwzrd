@@ -1,8 +1,9 @@
 .main {
-  @apply p-4 bg-gray-50 text-gray-800
+  @apply p-4 bg-gray-50
     shadow-lg rounded-md w-max;
+  height: max-content;
 
   :global(.dark) & {
-    @apply bg-gray-900 text-gray-200;
+    @apply bg-gray-900;
   }
 }

@@ -18,7 +18,7 @@ const tabs = [
   },
 ];
 
-const Settings: React.FC = () => {
+export default () => {
   const [selectedTab, setSelectedTab] = useTabs(tabs.map(t => locationIdGenerator(t.name)));
 
   useMount(() => {
@@ -54,5 +54,3 @@ const Settings: React.FC = () => {
     </Fragment>
   );
 };
-
-export default Settings;

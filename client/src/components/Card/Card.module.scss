@@ -1,0 +1,52 @@
+.wrap {
+  @apply p-1 flex w-full;
+  .main {
+    @apply bg-gray-50
+      shadow-lg
+      flex flex-col w-full;
+    height: max-content;
+
+    :global(.dark) & {
+      @apply bg-gray-900;
+    }
+
+    .header {
+      @apply p-2 relative text-xl w-full;
+
+      .content {
+        @apply inline-block whitespace-nowrap 
+        overflow-hidden overflow-ellipsis font-semibold;
+        max-width: 95%;
+      }
+    }
+
+    .gotoLink {
+      @apply hidden;
+    }
+
+    &:hover .gotoLink {
+      @apply block h-10 w-10 top-0 right-0 absolute
+      bg-gradient-to-tr
+      from-transparent to-gray-200;
+
+      :global(.dark) & {
+        @apply from-transparent to-gray-800;
+      }
+
+      .gotoLinkIcon {
+        @apply h-5 w-5 text-gray-500 absolute top-1 right-1;
+      }
+    }
+
+    .body {
+      @apply px-2;
+    }
+
+    .footer {
+    }
+  }
+
+  .rounded {
+    @apply rounded-md;
+  }
+}

@@ -2,12 +2,10 @@ import React from 'react';
 import { Page } from 'components';
 import { SettingsContainer } from 'containers';
 
-function Settings() {
+export default (): JSX.Element => {
   return (
     <Page title="Settings">
       <SettingsContainer />
     </Page>
   );
-}
-
-export default Settings;
+};

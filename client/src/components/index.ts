@@ -1,8 +1,11 @@
+export * from './Accordion';
 export { default as Box } from './Box/Box.component';
 export { default as Button } from './Button/Button.component';
+export * from './Card';
 export { default as Checkbox } from './Checkbox/Checkbox.components';
 export { default as DataField } from './DataField/DataField.component';
 export { default as Image } from './Image';
+export { default as Link } from './Link/Link.component';
 export { default as Loader } from './Loader/Loader.component';
 export { default as Page } from './Page/Page.component';
 export { default as Paper } from './Paper/Paper.component';

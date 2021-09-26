@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { IStatus, IError } from './common.type';
+import { IStatus, IError } from 'types';
 
 export interface IUserData {
   avatarUrl?: string;

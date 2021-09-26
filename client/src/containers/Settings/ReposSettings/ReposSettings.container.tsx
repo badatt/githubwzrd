@@ -3,11 +3,7 @@ import cl from './ReposSettings.module.scss';
 import AllRepos from './AllRepos/AllRepos.container';
 import UserRepos from './UserRepos/UserRepos.container';
 
-const ReposSettings: React.FC = () => {
-  /* const handleReposSettingsSubmit = (data: any) => {
-    dispatch(SettingsActions.saveUserRepos(Object.keys(data).filter(d => data[d])));
-  }; */
-
+export default () => {
   return (
     <div className={cl.main}>
       <AllRepos />
@@ -15,5 +11,3 @@ const ReposSettings: React.FC = () => {
     </div>
   );
 };
-
-export default ReposSettings;

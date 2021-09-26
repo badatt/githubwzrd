@@ -1,0 +1,20 @@
+.main {
+  @apply flex flex-col mt-1 h-6;
+
+  .separator {
+    @apply border-gray-400 h-1;
+
+    :global(.dark) & {
+      @apply border-gray-600;
+    }
+  }
+
+  .footer {
+    @apply mx-4 flex items-center
+    h-full justify-between;
+
+    :global(.dark) & {
+      @apply bg-gray-800;
+    }
+  }
+}
