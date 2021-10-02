@@ -18,10 +18,10 @@ export const RelatedPulls = (props: {
     <>
       {relatedPulls
         ?.filter(p => p.pulls!!.length > 0)
-        .map(d => {
+        .map((d, i) => {
           return (
             <Card
-              key={d.repoName}
+              key={i}
               className={clsx(cl.repoCard)}
               styleName={clsx(d.anyReviewRequiredByMe && cl.anyReviewRequiredByMe)}
             >
@@ -48,10 +48,10 @@ export const RelatedPull = (props: { relatedPull: IRelatedPull }): JSX.Element =
   const { relatedPull } = props;
   return (
     <div className={cl.relatedPull}>
-      {relatedPull.pulls?.map(p => {
+      {relatedPull.pulls?.map((p, i) => {
         return (
           <div
-            key={p.title}
+            key={i}
             className={clsx(cl.pull, p.reviewRequiredByMe && cl.reviewRequiredByMe)}
           >
             <span className={cl.title}>{p.title}</span>

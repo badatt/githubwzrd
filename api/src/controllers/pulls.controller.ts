@@ -28,7 +28,7 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
   if (userItem.repos.length === 0) return next(new APIError({ message: 'No repos found', status: NOT_FOUND }));
 
   // TODO change query to pull only OPEN state pulls
-  const querTemplate = `
+  const queryTemplate = `
     query relatedPulls($org: String!, $repo: String!) {
       organization(login:$org) {
         repository(name: $repo) {
@@ -60,15 +60,23 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
           }
         }
       }
+      rateLimit {
+        limit
+        cost
+        remaining
+        resetAt
+      }
     }
   `;
 
   const response: IRelatedPull[] = [];
+  let rl;
 
   for (const repo of userItem.repos) {
     const {
-      organization: { repository },
-    } = await gh(gitToken)(querTemplate, { org, repo });
+      organization: { repository }, rateLimit
+    } = await gh(gitToken)(queryTemplate, { org, repo });
+    rl = rateLimit;
     const relatedPull: IRelatedPull = {
       repoName: repository.name,
       repoUrl: repository.url,
@@ -93,5 +101,5 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
     response.push(relatedPull);
   }
 
-  res.send({ data: response });
+  res.send({ data: response, rateLimit: rl });
 };

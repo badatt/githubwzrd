@@ -5,7 +5,7 @@ import { IError } from 'types';
 const init = (): AxiosInstance => {
   const options: AxiosRequestConfig = {
     baseURL: process.env.API_URL,
-    timeout: 10000,
+    timeout: 300000,
     headers: {
       authorization: `Bearer ${fetchJwt()}`,
     },

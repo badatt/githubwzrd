@@ -10,4 +10,5 @@ export default keyMirror({
   USER_SIGNUP_REQUEST: undefined,
   USER_SIGNUP_SUCCESS: undefined,
   USER_SIGNUP_FAILURE: undefined,
+  USER_RATE_LIMIT_SUCCESS: undefined,
 });
