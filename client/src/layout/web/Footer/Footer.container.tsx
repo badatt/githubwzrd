@@ -13,7 +13,7 @@ export default () => {
   if (rateLimit?.resetAt) {
     const resetDate = new Date(rateLimit?.resetAt!!);
     const currentDate = new Date();
-    resetTime = Math.ceil((resetDate - currentDate) / 60000);
+    resetTime = Math.ceil((Number(resetDate) - Number(currentDate)) / 60000);
   }
 
   return (

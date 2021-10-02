@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <div className={cl.layout}>
-      {getUserStatus === STATUS.ERROR && getUserError.code === 404 && (
+      {getUserStatus === STATUS.ERROR && getUserError?.code === 404 && (
         <Router history={history}>
           <Switch>
             <Route path={Routes.HOME} component={SignupRoute} />
