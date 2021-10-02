@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { IStatus, IError } from 'types';
+import { IStatus, IError, IRateLimit } from 'types';
 
 export interface IUserData {
   avatarUrl?: string;
@@ -13,5 +13,6 @@ export interface IUserData {
 export interface IUserState {
   status: ValueOf<IStatus>;
   data: IUserData;
-  error: IError;
+  error?: IError;
+  rateLimit?: IRateLimit;
 }

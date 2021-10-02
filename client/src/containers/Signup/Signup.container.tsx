@@ -17,13 +17,14 @@ const Signup = () => {
       <Paper className={cl.content}>
         <h1 className={cl.title}>Hello !</h1>
         <p>
-          Githubwzrd is data intensive solution that aims to bring relevant data from your github
+          Githubwzrd is data intensive app that aims to bring relevant data from your github
           account and project in a friendly way.
         </p>
         <Button text="Sign up" size="lg" type="secondary" fullWidth onClick={handleSignup} />
         <p className={cl.note}>
-          * By clicking signup, you consent to share your github data with githubwzrd app. We are
-          obliged ONLY to read data.
+          * By clicking signup, you consent to let githubwzrd app read your github data. We are
+          obliged ONLY to read data and NOT mutate it. We store very minimal information which 
+          can delete if you wish to.
         </p>
         <div className={cl.themeSwitcher}>
           <ThemeSwitcher />

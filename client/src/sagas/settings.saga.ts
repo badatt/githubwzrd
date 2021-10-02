@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { SettingsActionTypes } from 'literals';
+import { SettingsActionTypes, UserActionTypes } from 'literals';
 import { IStoreAction } from 'types';
 import { UserActions, SettingsActions } from 'actions';
 import api, { IApi } from 'modules/requests';
@@ -19,6 +19,10 @@ export function* getRepos(
     yield put({
       type: SettingsActionTypes.SETTINGS_GET_REPOS_SUCCESS,
       payload: repos.data,
+    });
+    yield put({
+      type: UserActionTypes.USER_RATE_LIMIT_SUCCESS,
+      payload: repos.data.rateLimit,
     });
   } catch (err) {
     yield put({

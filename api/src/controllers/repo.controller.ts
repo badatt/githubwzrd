@@ -45,17 +45,24 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
           }
         }
       }
+      rateLimit {
+        limit
+        cost
+        remaining
+        resetAt
+      }
     }
   `;
   const {
     organization: {
       repositories: { nodes, pageInfo },
     },
+    rateLimit
   } = await gh(gitToken)(query, {
     login: org,
     ...additionalParams,
   });
-  res.send({ data: nodes.filter((n: any) => !n.isArchived), pageInfo });
+  res.send({ data: nodes.filter((n: any) => !n.isArchived), pageInfo, rateLimit });
 };
 
 export const postUserRepos = async (req: Request, res: Response, next: NextFunction) => {

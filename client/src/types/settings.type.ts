@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { IReposPageInfo, IStatus } from 'types';
+import { IRateLimit, IReposPageInfo, IStatus } from 'types';
 
 export interface IReposData {
   description?: string;
@@ -12,6 +12,7 @@ export interface IReposData {
 export interface IRepos {
   data?: IReposData[];
   pageInfo?: IReposPageInfo;
+  rateLimit?: IRateLimit;
 }
 
 export interface ISettingsState {

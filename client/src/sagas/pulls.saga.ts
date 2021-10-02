@@ -1,14 +1,18 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { PullsActionTypes } from 'literals';
+import { PullsActionTypes, UserActionTypes } from 'literals';
 import api, { IApi } from 'modules/requests';
 
 export function* getRelatedPulls({ get }: IApi): Generator {
   try {
-    const repos: any = yield call(get, '/pulls');
+    const pulls: any = yield call(get, '/pulls');
 
     yield put({
       type: PullsActionTypes.PULLS_GET_ALL_SUCCESS,
-      payload: repos.data,
+      payload: pulls.data,
+    });
+    yield put({
+      type: UserActionTypes.USER_RATE_LIMIT_SUCCESS,
+      payload: pulls.data.rateLimit,
     });
   } catch (err) {
     yield put({

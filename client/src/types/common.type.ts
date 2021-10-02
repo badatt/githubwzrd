@@ -82,3 +82,10 @@ export interface IReposPageInfo {
   hasPreviousPage?: boolean;
   startCursor?: string;
 }
+
+export interface IRateLimit {
+  cost?: number;
+  limit?: number;
+  remaining?: number;
+  resetAt?: string;
+}
