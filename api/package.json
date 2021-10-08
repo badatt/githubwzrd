@@ -1,7 +1,7 @@
 {
   "name": "@githubwzrd/api",
   "version": "1.0.0",
-  "description": "ReST API for @githubwzrd/client, a personalized gihub productivity improver tool for organizations",
+  "description": "ReST API for @githubwzrd/client, a personalized github productivity improver tool for organizations",
   "main": "index.js",
   "repository": "https://github.com/badatt/githubwzrd.git",
   "author": "badatt <dev.badatt@gmail.com>",
