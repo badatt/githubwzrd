@@ -3,7 +3,13 @@ import { StackProps, Construct, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget, ApiGatewayv2Domain } from '@aws-cdk/aws-route53-targets';
 import { Bucket, BlockPublicAccess, ObjectOwnership } from '@aws-cdk/aws-s3';
-import { Distribution, OriginAccessIdentity, LambdaEdgeEventType, ViewerProtocolPolicy } from '@aws-cdk/aws-cloudfront';
+import {
+  Distribution,
+  OriginAccessIdentity,
+  LambdaEdgeEventType,
+  ViewerProtocolPolicy,
+  CachePolicy,
+} from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 import { Code, Runtime, Function } from '@aws-cdk/aws-lambda';
 import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
@@ -118,6 +124,7 @@ export class InfraStack extends BaseStack {
             functionVersion: webAuthLambda.currentVersion,
           },
         ],
+        cachePolicy: CachePolicy.CACHING_DISABLED,
       },
       certificate: webApplicationCertificate.certificate,
       domainNames: [this.rootDomain],
