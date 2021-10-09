@@ -12,7 +12,7 @@ export const session = async (req: Request, res: Response, next: NextFunction) =
 export const me = async (req: Request, res: Response, next: NextFunction) => {
   const currentUser = req.currentUser;
   const userItem = await db.tryGetAsync(new User(), { id: currentUser.userId, org: currentUser.org });
-  if (!userItem) return next(new APIError({ message: 'User not found', status: NOT_FOUND }));
+  if (!userItem) throw new APIError({ message: 'User not found', status: NOT_FOUND });
   const { username, gitToken } = currentUser;
   const { user } = await gh(gitToken)(
     `

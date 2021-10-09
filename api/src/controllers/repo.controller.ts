@@ -57,7 +57,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     organization: {
       repositories: { nodes, pageInfo },
     },
-    rateLimit
+    rateLimit,
   } = await gh(gitToken)(query, {
     login: org,
     ...additionalParams,
@@ -69,7 +69,7 @@ export const postUserRepos = async (req: Request, res: Response, next: NextFunct
   const currentUser = req.currentUser;
   const userRepos = req.body as UserRepos;
   const userItem = await db.tryGetAsync(new User(), { id: currentUser.userId, org: currentUser.org });
-  if (!userItem) return next(new APIError({ message: 'User not found', status: NOT_FOUND }));
+  if (!userItem) throw new APIError({ message: 'User not found', status: NOT_FOUND });
   userItem.repos = userRepos.repos;
   await db.mapper.update(userItem);
   res.status(NO_CONTENT).send();
