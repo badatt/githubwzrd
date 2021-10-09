@@ -102,7 +102,5 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
     response.push(relatedPull);
   }
 
-  console.log('Pulls response', response);
-
   res.send({ data: response, rateLimit: rl });
 };

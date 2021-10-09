@@ -16,7 +16,7 @@ import { EdgeFunction } from '@aws-cdk/aws-cloudfront/lib/experimental';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
 import { Effect, PolicyStatement, ArnPrincipal } from '@aws-cdk/aws-iam';
 import { LambdaProxyIntegration } from '@aws-cdk/aws-apigatewayv2-integrations';
-import { DomainName, HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2';
+import { DomainName, HttpApi, HttpMethod, CorsPreflightOptions, CorsHttpMethod } from '@aws-cdk/aws-apigatewayv2';
 
 export class InfraStack extends BaseStack {
   projectName: string;
@@ -164,6 +164,15 @@ export class InfraStack extends BaseStack {
       defaultDomainMapping: {
         domainName: domainName,
       },
+      description: `${this.projectName} API`,
+      corsPreflight: {
+        allowCredentials: true,
+        allowHeaders: ['*'],
+        allowMethods: [CorsHttpMethod.ANY],
+        allowOrigins: [`https://${this.rootDomain}`],
+        exposeHeaders: ['*'],
+        maxAge: Duration.minutes(5),
+      },
     });
     this.routes({
       httpApi: httpApi,
@@ -179,7 +188,7 @@ export class InfraStack extends BaseStack {
 
   routes = (props: { httpApi: HttpApi; routes: string[] }) => {
     props.routes.forEach((route) => {
-      const repoLambda = new Function(this, `Lambda${route}`, {
+      const lf = new Function(this, `Lambda${route}`, {
         functionName: `${this.projectName}-${route}`,
         code: Code.fromAsset('lambda/bootstrap'),
         runtime: Runtime.NODEJS_14_X,
@@ -189,9 +198,10 @@ export class InfraStack extends BaseStack {
           JWT_SECRET: '{{resolve:secretsmanager:GithubwzrdCookieAuthorizerCrypto:SecretString:PUBLIC_KEY}}',
           NODE_ENV: this.targetEnv,
         },
+        timeout: Duration.minutes(15),
       });
 
-      repoLambda.addPermission('droid-access', {
+      lf.addPermission('droid-access', {
         principal: new ArnPrincipal('arn:aws:iam::261778676253:user/github-droid'),
         action: 'lambda:UpdateFunctionCode',
       });
@@ -202,9 +212,9 @@ export class InfraStack extends BaseStack {
         resources: ['*'],
       });
 
-      repoLambda.addToRolePolicy(lambdaPolicy);
+      lf.addToRolePolicy(lambdaPolicy);
       const repoLambdaIntegration = new LambdaProxyIntegration({
-        handler: repoLambda,
+        handler: lf,
       });
 
       props.httpApi.addRoutes({
