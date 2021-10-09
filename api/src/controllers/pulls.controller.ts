@@ -23,8 +23,11 @@ export interface IRelatedPull {
 }
 
 export const relatedPulls = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('Start Pulls');
   const { org, gitToken, userId, username } = req.currentUser;
+  console.log('Current User', req.currentUser);
   const userItem = await db.tryGetAsync(new User(), { id: userId, org: org });
+  console.log('User Item', userItem);
   if (userItem.repos.length === 0) return next(new APIError({ message: 'No repos found', status: NOT_FOUND }));
 
   // TODO change query to pull only OPEN state pulls
@@ -74,7 +77,8 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
 
   for (const repo of userItem.repos) {
     const {
-      organization: { repository }, rateLimit
+      organization: { repository },
+      rateLimit,
     } = await gh(gitToken)(queryTemplate, { org, repo });
     rl = rateLimit;
     const relatedPull: IRelatedPull = {
@@ -100,6 +104,8 @@ export const relatedPulls = async (req: Request, res: Response, next: NextFuncti
     }
     response.push(relatedPull);
   }
+
+  console.log('Pulls response', response);
 
   res.send({ data: response, rateLimit: rl });
 };
