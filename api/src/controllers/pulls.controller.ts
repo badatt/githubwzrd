@@ -25,6 +25,7 @@ export interface IRelatedPull {
 export const relatedPulls = async (req: Request, res: Response, next: NextFunction) => {
   const { org, gitToken, userId, username } = req.currentUser;
   const userItem = await db.tryGetAsync(new User(), { id: userId, org: org });
+  throw new Error('Sample exception');
   if (userItem.repos.length === 0) return next(new APIError({ message: 'No repos found', status: NOT_FOUND }));
 
   // TODO change query to pull only OPEN state pulls
