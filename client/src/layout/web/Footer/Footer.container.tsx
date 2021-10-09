@@ -25,8 +25,7 @@ export default () => {
           <p className={cl.rateLimit}>
             {rateLimit && (
               <>
-                <u>{rateLimit?.remaining}</u> of {rateLimit?.limit} Github API requests consumed
-                till now.
+                <u>{rateLimit?.remaining}</u> of {rateLimit?.limit} Github API requests remaining.
               </>
             )}
             {resetTime && <> Resets in {resetTime} minutes.</>}
