@@ -14,14 +14,14 @@
   }
 
   &.secondary {
-    @apply text-green-600;
+    @apply text-pink-600;
 
     &.contained {
-      @apply bg-green-600 text-gray-100;
+      @apply bg-pink-600 text-gray-100;
     }
 
     &.bordered {
-      @apply text-green-600 border-green-600 border-2 border-solid;
+      @apply text-pink-600 border-pink-600 border-2 border-solid;
     }
   }
 

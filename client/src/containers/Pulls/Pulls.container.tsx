@@ -9,9 +9,10 @@ import * as View from './Pulls.view';
 export default (): JSX.Element => {
   const dispatch = useDispatch();
 
-  const { data, loadingStatus } = useShallowEqualSelector(({ pulls }) => ({
+  const { data, loadingStatus, error } = useShallowEqualSelector(({ pulls }) => ({
     data: pulls.relatedPullData?.data,
     loadingStatus: pulls.loadingPullsStatus,
+    error: pulls.error,
   }));
 
   useMount(() => {
@@ -22,7 +23,7 @@ export default (): JSX.Element => {
     <div className={cl.main}>
       <div className={cl.header}></div>
       <div className={cl.content}>
-        <View.RelatedPulls loadingStatus={loadingStatus} relatedPulls={data} />
+        <View.RelatedPulls loadingStatus={loadingStatus} relatedPulls={data} error={error} />
       </div>
     </div>
   );

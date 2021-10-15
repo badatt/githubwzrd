@@ -18,6 +18,7 @@
     "ES6"
   ],
   "dependencies": {
+    "-": "^0.0.1",
     "@gilbarbara/helpers": "0.2.0",
     "@tailwindcss/forms": "0.3.3",
     "axios": "0.21.2",
@@ -181,6 +182,7 @@
     "ts-pnp": "1.2.0",
     "type-fest": "1.1.1",
     "typescript": "4.2.4",
+    "url-loader": "4.1.1",
     "web-vitals": "1.1.2",
     "webpack": "4.46.0",
     "webpack-cli": "4.7.0",

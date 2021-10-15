@@ -1,5 +1,5 @@
 .table {
-  @apply shadow block table-fixed w-full;
+  @apply shadow-lg block table-fixed w-full;
 
   .thead {
     @apply bg-indigo-700 shadow-md w-full block;

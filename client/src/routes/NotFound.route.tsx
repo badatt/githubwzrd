@@ -22,7 +22,7 @@ const StyledContainer = styled(Container)`
 
 export default (): JSX.Element => {
   return (
-    <Background key="404" data-testid="NotFound">
+    <Background key="404">
       <StyledContainer fullScreen ySpacing>
         <Heading fontSize={100}>404</Heading>
         <Link to="/">

@@ -1,0 +1,156 @@
+.disabled {
+  @apply text-gray-500;
+}
+
+.fullWidth {
+  @apply w-full;
+}
+
+.centered {
+  @apply text-center;
+}
+
+.trunc {
+  @apply truncate;
+}
+
+.b {
+  @apply font-bold;
+}
+
+.u {
+  @apply underline;
+}
+
+.i {
+  @apply italic;
+}
+
+.uc {
+  @apply uppercase;
+}
+
+.lc {
+  @apply lowercase;
+}
+
+.cc {
+  @apply capitalize;
+}
+
+.xs {
+  @apply text-xs;
+}
+
+.sm {
+  @apply text-sm;
+}
+
+.md {
+  @apply text-base;
+}
+
+.lg {
+  @apply text-lg;
+}
+
+.xl {
+  @apply text-xl;
+}
+
+.primary {
+  @apply text-indigo-600;
+
+  :global(.dark) & {
+    @apply text-indigo-400;
+  }
+}
+
+.secondary {
+  @apply text-pink-600;
+
+  :global(.dark) & {
+    @apply text-pink-400;
+  }
+}
+
+.danger {
+  @apply text-red-600;
+
+  :global(.dark) & {
+    @apply text-red-400;
+  }
+}
+
+.success {
+  @apply text-green-600;
+
+  :global(.dark) & {
+    @apply text-green-400;
+  }
+}
+
+.title1 {
+  @apply text-4xl font-medium my-2;
+}
+
+.subtitle1 {
+  @apply text-2xl font-medium my-1;
+}
+
+.title2 {
+  @apply text-3xl font-light my-2;
+}
+
+.subtitle2 {
+  @apply text-xl font-light my-1;
+}
+
+.caption {
+  @apply text-xs font-normal uppercase;
+}
+
+.code {
+  @apply bg-gray-300 border border-gray-400 
+  rounded-md font-mono px-1 mx-1 text-red-500;
+
+  :global(.dark) & {
+    @apply bg-gray-700 border-gray-600 text-red-400;
+  }
+}
+
+.body1 {
+  @apply text-base mb-4;
+}
+
+.body2 {
+  @apply text-sm mb-2;
+}
+
+.hero {
+  @apply text-8xl font-light my-4;
+}
+
+.h1 {
+  @apply text-xl;
+}
+
+.h2 {
+  @apply text-6xl;
+}
+
+.h3 {
+  @apply text-5xl;
+}
+
+.h4 {
+  @apply text-4xl;
+}
+
+.h5 {
+  @apply text-3xl;
+}
+
+.h6 {
+  @apply text-2xl;
+}

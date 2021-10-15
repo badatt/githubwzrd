@@ -12,6 +12,10 @@ module.exports = {
         height: 'height',
         spacing: 'margin, padding',
       },
+      fontFamily: {
+        sans: ["Roboto"],
+        mono: ["RobotoMono"]
+      }
     },
   },
   variants: {

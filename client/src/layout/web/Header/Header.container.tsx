@@ -22,7 +22,7 @@ export default () => {
           <View.Avatar avatarUrl={data.avatarUrl} getUSerStatus={getUserStatus} />
         </nav>
       </main>
-      <View.Separator />
+      {/* <View.Separator /> */}
     </header>
   );
 };

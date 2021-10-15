@@ -1,5 +1,5 @@
 import { ValueOf } from 'type-fest';
-import { IRateLimit, IReposPageInfo } from 'types';
+import { IError, IRateLimit, IReposPageInfo } from 'types';
 import { IStatus } from './common.type';
 
 export interface IPull {
@@ -28,4 +28,5 @@ export interface IRelatedPullData {
 export interface IPullsState {
   loadingPullsStatus?: ValueOf<IStatus>;
   relatedPullData?: IRelatedPullData;
+  error?: IError;
 }

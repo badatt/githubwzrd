@@ -6,7 +6,7 @@
   }
 
   .content {
-    @apply w-full flex flex-wrap;
+    @apply w-full flex flex-wrap justify-center;
 
     .repoCard {
       @apply flex w-1/4;

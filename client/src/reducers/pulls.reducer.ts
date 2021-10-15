@@ -20,8 +20,9 @@ export default {
         draft.relatedPullData = payload;
         draft.loadingPullsStatus = STATUS.SUCCESS;
       },
-      [PullsActionTypes.PULLS_GET_ALL_FAILURE]: (draft: IPullsState, {}) => {
+      [PullsActionTypes.PULLS_GET_ALL_FAILURE]: (draft: IPullsState, { payload }) => {
         draft.loadingPullsStatus = STATUS.ERROR;
+        draft.error = payload;
       },
     },
     pullsState,

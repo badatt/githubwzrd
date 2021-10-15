@@ -1,18 +1,26 @@
 import React from 'react';
 import clsx from 'clsx';
-import { IRelatedPull } from 'types';
+import { IError, IRelatedPull } from 'types';
 import { STATUS } from 'literals';
 import cl from './Pulls.module.scss';
-import { Link, Card, CardHeader, CardBody, Loader } from 'components';
+import { Link, Card, CardHeader, CardBody, Loader, Box } from 'components';
 import { ExternalLinkIcon, EyeIcon } from 'icons';
 
 export const RelatedPulls = (props: {
   loadingStatus?: string;
   relatedPulls?: IRelatedPull[];
+  error?: IError;
 }): JSX.Element => {
-  const { loadingStatus, relatedPulls } = props;
+  const { loadingStatus, relatedPulls, error } = props;
   if (loadingStatus === STATUS.RUNNING) {
     return <Loader centered />;
+  }
+  if (loadingStatus === STATUS.ERROR) {
+    return (
+      <Box>
+        <h5>{error?.message}</h5>
+      </Box>
+    );
   }
   return (
     <>
@@ -50,10 +58,7 @@ export const RelatedPull = (props: { relatedPull: IRelatedPull }): JSX.Element =
     <div className={cl.relatedPull}>
       {relatedPull.pulls?.map((p, i) => {
         return (
-          <div
-            key={i}
-            className={clsx(cl.pull, p.reviewRequiredByMe && cl.reviewRequiredByMe)}
-          >
+          <div key={i} className={clsx(cl.pull, p.reviewRequiredByMe && cl.reviewRequiredByMe)}>
             <span className={cl.title}>{p.title}</span>
             <Link href={p.url}>
               <ExternalLinkIcon className={cl.linkIcon} />
