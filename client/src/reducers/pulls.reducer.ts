@@ -5,24 +5,45 @@ import { PullsActionTypes, STATUS } from 'literals';
 import { IPullsState } from 'types/pulls.type';
 
 export const pullsState: IPullsState = {
-  loadingPullsStatus: STATUS.IDLE,
-  relatedPullData: {},
+  relatedPullsData: {
+    status: STATUS.IDLE,
+  },
+  relatedPullData: [],
 };
 
 export default {
   pulls: createReducer<IPullsState>(
     {
       [PullsActionTypes.PULLS_GET_ALL_REQUEST]: (draft: IPullsState, {}) => {
-        draft.loadingPullsStatus = STATUS.RUNNING;
-        draft.relatedPullData = {};
+        draft.relatedPullsData = {
+          status: STATUS.RUNNING,
+        };
       },
       [PullsActionTypes.PULLS_GET_ALL_SUCCESS]: (draft: IPullsState, { payload }) => {
-        draft.relatedPullData = payload;
-        draft.loadingPullsStatus = STATUS.SUCCESS;
+        draft.relatedPullsData = { ...payload, status: STATUS.SUCCESS };
       },
       [PullsActionTypes.PULLS_GET_ALL_FAILURE]: (draft: IPullsState, { payload }) => {
-        draft.loadingPullsStatus = STATUS.ERROR;
-        draft.error = payload;
+        draft.relatedPullsData = { error: payload, status: STATUS.ERROR };
+      },
+      [PullsActionTypes.PULLS_GET_BY_REPO_REQUEST]: (draft: IPullsState, { payload }) => {},
+      [PullsActionTypes.PULLS_GET_BY_REPO_SUCCESS]: (draft: IPullsState, { payload }) => {
+        console.log(payload);
+        draft.relatedPullData = [
+          ...draft.relatedPullData,
+          {
+            ...payload,
+            status: STATUS.SUCCESS,
+          },
+        ];
+      },
+      [PullsActionTypes.PULLS_GET_BY_REPO_FAILURE]: (draft: IPullsState, { payload }) => {
+        draft.relatedPullData = [
+          ...draft.relatedPullData,
+          {
+            error: payload,
+            status: STATUS.ERROR,
+          },
+        ];
       },
     },
     pullsState,
